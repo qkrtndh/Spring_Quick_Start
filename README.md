@@ -218,6 +218,21 @@
 <p>실습코드에서 쓸데없이 sonyspeaker 객체가 두개 생성되고 스피커 교체시 볼륨메소드 두개를 모두 수정해야 한다. 의존관계에 있는 speaker객체애 대한 객체 생성 코드를 samsungtv소스에  명시했기 때문이다. 스프링은 이 문제를 의존성 주입으로 해결한다.</p>
 
 
+<H2>3.2 생성자 인젝션 이용하기</H2>
+<p>스프링 컨테이너는 xml 설정 파일에 등록된 클래스를 찾아서 객체 생성할때 기본적으로 매개변수가 없는 기본 생성자를 호출한다. 하지만 컨테이너가 기본 생성자 말고 매개변수를 가진 다른 생성자를 호출하도록 설정할 수 있는데, 이 기능을 이용하여 생성자 인젝선을 처리한다. 생성자 인젝션을 사용하면 생성자의 매개변수로 의존관계에 있는 객체의 주소 정보를 전달할 수 있다.</p>
+<p>이때 xml 설정은 </p>
+<br />
+<p><bean id="tv" class="com.springbook.biz.SamsungTV" init-method="initMethod" destroy-method="destroyMethod" lazy-init="true" scope="singleton"></p>
+<br />
+<p>		<constructor-arg ref="sony"></constructor-arg>
+</p>
+<br />
+	<p></bean></p>
+<p><bean id="sony" class="com.springbook.biz.SonySpeaker"></bean></p>
+
+
+<p>생성자 인젝션을 위해서 samsungtv bean 등록설정에서 시작 태그와 종료태그 사이에 constructor-arg 엘리먼트를 추가하면 된다. 그리고 생성자 인자로 전달할 객체의 아이디를 constructor-arg 엘리먼트에 ref 속성으로 참조한다</p>
+
 
 <H3></H3>
 <p></p>
