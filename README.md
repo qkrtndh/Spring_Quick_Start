@@ -112,6 +112,39 @@
 
 
 
-<H4></H4>
+<H1>2 스프링 컨테이너 및 설정 파일</H1>
+<p>대부분 IoC컨테이너는 각 컨테이너에서 관리할 객체들을 위한 별도의 설정 파일이 있다. Servlet컨테이너는 web.xml파일등. 해당 컨테이너가 생성하고 관리할 클래스들을 등록한다.</p>
+<p>스프링 프레임워크도 다른 컨테이너와 마찬가지로 자신이 관리할 클래스들이 등록된 xml파일이 필요하다. 스프링 컨테이너가 사용할 xml파일은 앞에서 설치한 STS를 이용하면 간단하게 만들 수 있다.</p>
+
+<H2>2.1 스프링 IoC 시작하기</H2>
+<H3>2.1.1 스프링 설정 파일 생성</H3>
+<p>BoardWeb 프로적트에 src/main/resources소스 폴더를 선택하여 new->others 에서 spring bean configuration file을 선택한다.</p>
+<p>file name에  applicationContext를 입력하면 스프링 설정파일이 생성된다. 기본적으로 beans루트 엘리먼트와 네임스페이스 관련 설정들이 추가되어 제공된다.</p>
+<p>이때 bean 엘리먼트를 사용하는데 클래스 하나당 하나의 bean 설정이 필요하다. bean 엘리먼트에서 가장 중요한것은 class 속성값이다 패키지경로가 포함된 클래스 경로를 지정해야한다.</p>
+
+<H3>2.1.2 스프링 컨테이너 구동 및 테스트</H3>
+<p>코드 참조</p>
+<ol>  
+ <li>TVUser 클라이언트가 스프링 설정 파일을 로딩하여 컨테이너 구동</li>  
+ <li>스프링 설정 파일에 bean 등록된 SamsungTV 객체 생성</li>  
+ <li>getBean 메소드로 이름이 tv인 객체를 요청 (look up)</li>  
+ <li>SamsungTV 객체 반환</li>
+</ol>
+<p>중요한 점은 실행되는 TV를 LgTV로 변경할 때 applicationContext.xml 파일만 수정하면 된다는 점이다. 즉 TVUser 클라이언트 소스를 수정하지 ㅇ낳고도 동작하는 TV를 변경할 수 있으며, 기존에 BeanFactory 클래스를 사용했던 것보다 유지보수가 좀 더 편해졌다.</p>
+
+
+<H3>2.1.3 스프링 컨테이너의 종류</H3>
+<p>스프링에서는 BeanFactory와 이를 상속한 applicationContext 두 가지 유형의 컨테이너를 제공한다.</p>
+<p>BeanFactory는 스프링 설정 파일에 등록된 bean객체를 생성하고 관리하는 가장기본적인 컨테이너 기능만 제공한다. 컨테이너가 구동될 때 bean객체를 생성하는 것이 아니라 클라이언트의 요청(look up)에 의해서만 bean객체가 생성되는 지연 로딩 방식을 사용한다. 따라서 일반적인 스프링 프로젝트에서 BeanFactory를 사용할 일은 없다.</p>
+<br />
+<p>ApplicationContext는 BeanFactory가 제공하는 bean 객체 관리 기능 외에도 트랜잭션 관리나 메세지 기반의 다국어 처리등 다양한 기능을 지원한다. 컨테이너가 구동되는 시점에 bean 등록된 클래스들을 객체 생성하는 즉시 로딩방식으로 동작한다. 웹 애플리케이션 개발도 지원하므로 대부분 스ㅡ링 프로젝트는 applicationContext 유형의 컨테이너를 이용한다.</p>
+<p>ApplicationContext의 구현 클래스는 매우 다양하지만 그중 가장 많이 사용되는 두가지만 알아보도록 한다. </p>
+
+<br>
+
+<p>GenericXmlApplicationContext - 파일 시스템이나 클래스 경로에 있는 xml 설정 파일을 로딩하여 구동하는 컨테이너이다.</p>
+<p>XmlWebApplicationContext - 웹 기반의 스프링 애플리케이션을 개발할 때 사용하는 컨테이너 이다.</p>
+
+<H3></H3>
 <p></p>
 <p></p>

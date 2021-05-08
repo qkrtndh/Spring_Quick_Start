@@ -1,16 +1,22 @@
 package com.springbook.biz;
 
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
+
 public class TVUser {
 
 	public static void main(String[] args) {
-		BeanFactory factory = new BeanFactory();
-		TV tv = (TV)factory.getBean(args[0]);
-			
+		//1.  spring 컨테이너 구동
+		AbstractApplicationContext factory = new GenericXmlApplicationContext("applicationContext.xml");
+
+		//2. spring 컨테이너로부터 필요한 객체를 요청(look up)한다
+		TV tv = (TV)factory.getBean("tv");
 		tv.powerOn();
 		tv.volumeUp();
 		tv.volumeDown();
 		tv.powerOff();
-
+		
+		//3. spring 컨테이너를 종료한다.
+		factory.close();
 	}
-//실행시 run config~~ 아규먼트윗 상자칸에 lg나 samsung 입력
 }
