@@ -1,6 +1,6 @@
 package com.springbook.biz;
 
-public class SamsungTV {
+public class SamsungTV implements TV {
 	public void powerOn() {
 		System.out.println("SamsungTV---전원킴.");
 	}
