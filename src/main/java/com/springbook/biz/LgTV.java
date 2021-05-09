@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component("tv")
 //@Component
 public class LgTV implements TV{
-	//@Autowired
+	@Autowired
 	//@Qualifier("apple")
-	@Resource(name = "apple")
+	//@Resource(name = "apple")
 	private Speaker speaker;
 	public LgTV() {
 		System.out.println("===> LgTV 객체 생성");

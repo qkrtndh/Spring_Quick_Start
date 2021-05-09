@@ -1,7 +1,7 @@
 package com.springbook.biz;
 
 import org.springframework.stereotype.Component;
-@Component("sony")
+//@Component("sony")
 public class SonySpeaker implements Speaker{
 	
 	public SonySpeaker() {
