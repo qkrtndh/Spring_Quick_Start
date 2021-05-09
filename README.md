@@ -474,9 +474,12 @@ Map<string,string>
 <p>DAO 클래스를 작성했으면 DAO클래스에서 단축키를 이용하여 BoardService인터페이스를 작성한다. 이때 인터페이스가 만들어지는 동시에 BoardDAO클래스에는 implements코드가 자동으로 설정되는데 이 implements를 삭제해야 한다.</p>
 <p>클래스 다이어그램을 확인해보면 알지만 BoardService 인터페이스는 BoardServiceImpl클래스가 구현해야 하고, BoardDAO클래스는 독립된 클래스이다.</p>
 
-<H2>5.5</H2>
-<p></p>
-<p></p>
+<H2>5.5 Service구현 클래스 작성</H2>
+<p>이제 마지막으로 BoardService 인터페이슬르 구현한 BoardServiceImpl 클래슬르 구현하면 비즈니스 컴포넌트가 마무리 된다.</p>
+<p>BoardServiceImpl클래스의 비즈니스 메소드를 구현할 때, 멤버변수로 선언된 BoardDAO를 이용하면 된다.</p>
+<p>BoardService 인터페이스를 구현한 BoardServiceImpl 클래스는 BoardService 인터페이스의 모든 추상 메소드를 재정의 하여 구현해야 한다. 그리고 클래스 선언부에 객체생성을 위한 @Service가 선언되어 있고, 클라이언트 프로그램에서 boardService라는 이름으로 객체 요청을 할 수 있도록 아이디도 설정했다.</p>
+<p>BoardServiceImpl은 데이터베이스 연동이 포함된 비즈니스 로직 처리를 위해 BoardDAO타입의 객체를 멤버변수로 가지고 있다. 그리고 이 변수에 BoardDAO타입의 객체를 의존성 주입하기 위해 @Autowired를 설정했다.</p>
+
 
 <H3></H3>
 <p></p>
