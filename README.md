@@ -430,3 +430,18 @@ Map<string,string>
 
 <p>어노테이션을 이처럼 나눈 이유는 단순히 해당 클래스를 분류하기 위함뿐만이 아니고, 컨트롤러는 객체를 MVC아키텍처에서 컨트롤러 객체로 인식하고, Repository는 DB 연동 과정에서 발생하는 예외를 변환해주는 특별한 기능이 추가된다.</p>
 
+<H1>5. 비즈니스 컴포넌트 실습1</H1>
+<H2>5.1 BoardService 컴포넌트 구조</H2>
+<p>일반적으로 비즈니스 컴포넌트는 네 개의 자바 파일로 구성된다. 그리고 각 자바 파일을 작성하는 순서와 이름도 규칙도 어느정도는 정해져있는 것이 일반적이다.</p>
+
+![KakaoTalk_20210509_150924127](https://user-images.githubusercontent.com/65153512/117562269-9f7b1400-b0d8-11eb-9e96-af084caaa48f.jpg)
+
+<p>다음은 BOARD 테이블과 관련된 BoardService 컴포넌트에 대한 클래스 다이어그램이며, BoardVO, BoardDAO, BoardService, BoardServiceImpl 클래스로 구현되어 있다.</p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
