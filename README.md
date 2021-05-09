@@ -445,9 +445,17 @@ Map<string,string>
 
 <p>BOARD 테이블 이름 뒤에 VO나 DTO를 붙여서 클래스 이름으로 사용한다. 그리고 BOARD테이블에 포함된 칼럼과 같은 이름의 멤버변수를 private 접근제한다로 선언한다. 그리고 private변수에 접근하는 getter/setter 메소드를 선언하면 VO클래스는 마무리된다.</p>
 <p>옵션으로 toString() 메소드도 생성해 놓으면 나중에 VO객체의 값을 출력할 때 요긴하게 사용할 수 있다.</p>
-<H3></H3>
+
+<H2>5.3 DAO 클래스 작성</H2>
+<p>DAO 클래스는 데이터 베이스 연동을 담당하는 클래스이다. 따라서 DAO 클래스에는 CRUD기능의 메소드가 구현되어야 하는데, 이때 우리가 사용할 H2데이터 베이스에서 제공하는 JDBC 드라이버가 필요하다.</p>
 <p></p>
-<p></p>
+
+<H3>5.3.1 드라이버 내려받기</H3>
+<p>BoardWeb 프로젝트에 있는 pom.xml 파일을 열고 데이터베이스 dependency를 추가한다. 추가하면 Maven Dependencies 에 추가된것을 확인할 수 있다.(코드참조)</p>
+
+<H3>5.3.2 JDBC Utility 클래스</H3>
+<p>Mybatis같은 프레임워크를 사용하기 전 까지는 데이터베이스 연동 처리를 JDBC로 할 것이다. 따라서 모든 DAO클래스에서 공통으로 사용할 JDBCUtil클래스를 작성하여 Connection획득과 해제 작업을 공통으로 처리한다.</p>
+<p>JDBCUtil클래스 코드참조</p>
 
 <H3></H3>
 <p></p>
