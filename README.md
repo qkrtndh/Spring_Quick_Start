@@ -222,14 +222,14 @@
 <p>스프링 컨테이너는 xml 설정 파일에 등록된 클래스를 찾아서 객체 생성할때 기본적으로 매개변수가 없는 기본 생성자를 호출한다. 하지만 컨테이너가 기본 생성자 말고 매개변수를 가진 다른 생성자를 호출하도록 설정할 수 있는데, 이 기능을 이용하여 생성자 인젝선을 처리한다. 생성자 인젝션을 사용하면 생성자의 매개변수로 의존관계에 있는 객체의 주소 정보를 전달할 수 있다.</p>
 <p>이때 xml 설정은 </p>
 <br />
-<p><bean id="tv" class="com.springbook.biz.SamsungTV" init-method="initMethod" destroy-method="destroyMethod" lazy-init="true" scope="singleton"></p>
-<br />
-<p>		<constructor-arg ref="sony"></constructor-arg>
-</p>
-<br />
-	<p></bean></p>
-<p><bean id="sony" class="com.springbook.biz.SonySpeaker"></bean></p>
 
+~~~
+<bean id="tv" class="com.springbook.biz.SamsungTV" init-method="initMethod" destroy-method="destroyMethod" lazy-init="true" scope="singleton">
+
+		<constructor-arg ref="sony"></constructor-arg>
+	</bean>
+<bean id="sony" class="com.springbook.biz.SonySpeaker"></bean>
+~~~
 
 <p>생성자 인젝션을 위해서 samsungtv bean 등록설정에서 시작 태그와 종료태그 사이에 constructor-arg 엘리먼트를 추가하면 된다. 그리고 생성자 인자로 전달할 객체의 아이디를 constructor-arg 엘리먼트에 ref 속성으로 참조한다</p>
 
@@ -264,6 +264,37 @@
 <p>p:변수명-ref="참조할 객체의 이름이나 아이디"</p>
 <p>기본형이나 문자형 변수에 직접 값을 설정할 때</p>
 <p>p:변수명="설정할 값"</p>
+
+<H2>3.4 컬렉션 객체 설정</H2>
+<p>프로그램을 개발하다 보면 배열이나 List 같은 컬렉션 객체를 이용하여 데이터 집합을 사용해야 하는 경우가 있다.</p>
+<p>이때 컬렉션 객체를 의존성 주입하면 되는데 스프링에서는 이를위해 컬렉션 매핑과 관련된 엘리먼트를 지원한다.</p>
+
+컬렉션 유형| 엘리먼트
+---|---
+java.util.List, 배열|<list>
+java.util.Set|<set>
+java.util.Map|<map>
+java.util.Properties|<props>
+
+
+<H3>3.4.1</H3>
+<p>List 타입 매핑</p>
+<p>배열 객체나 java.util.List 객체는 <list>태그를 사용해서 설정한다.</p>
+<p>List 컬렉션을 멤버변수로 가지는 CollectionBean 클래스를 작성하고, 작성된 CollctionBean 클래스를 스프링 설정 파일에 bean 등록한다</p>
+
+~~~
+<bean id="collectionBean" class="com.springbook.biz.CollectionBean">
+		<property name="addressList">
+			<list>
+				<value>서울시 강남구 역삼동</value>
+				<value>서울시 성동구 행담동</value>
+			</list>
+		</property>
+	</bean>
+~~~
+
+<p>위 설정은 두 개의 문자여 ㄹ주소가 저장된 List객체를 CollectionBean 객체의 setAddressList()호출시 인자로 전달하여  addressList멤버변수를 초기화 하는 설정이다.</p>
+<p>클라이언트 프로그램을 작성하여 List컬렉션이 정상적으로 의존성 주입 되었는지 확인한다.</p>
 
 <H3></H3>
 <p></p>
