@@ -438,6 +438,17 @@ Map<string,string>
 
 <p>다음은 BOARD 테이블과 관련된 BoardService 컴포넌트에 대한 클래스 다이어그램이며, BoardVO, BoardDAO, BoardService, BoardServiceImpl 클래스로 구현되어 있다.</p>
 
+<H2>5.2 VO(Value Object) 클래스 작성</H2>
+<p>vo클래스는 레이어와 레이어 사이에서 관련된 데이터를 한꺼번에 주고받을 목적으로 사용하는 클래스이다.</p>
+<p>DTO(Data Transfer Object)라 하기도 하는데, 데이터 전달을 목적으로 사용하는 객체이므로 결국 같은 의미의 용어라고 생각하면 된다.</p>
+<p>VO 클래스를 작성하려면 가장 먼저 데이터베이스에 생성되어 있는 테이블의 구조를 확인해야 한다.</p>
+
+<p>BOARD 테이블 이름 뒤에 VO나 DTO를 붙여서 클래스 이름으로 사용한다. 그리고 BOARD테이블에 포함된 칼럼과 같은 이름의 멤버변수를 private 접근제한다로 선언한다. 그리고 private변수에 접근하는 getter/setter 메소드를 선언하면 VO클래스는 마무리된다.</p>
+<p>옵션으로 toString() 메소드도 생성해 놓으면 나중에 VO객체의 값을 출력할 때 요긴하게 사용할 수 있다.</p>
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
