@@ -470,6 +470,22 @@ Map<string,string>
 상세조회|get테이블명(혹은 select테이블명)
 목록검색|get테이블명List(혹은 select테이블명List)
 
+<H2>5.4 Service 인터페이스 작성</H2>
+<p>DAO 클래스를 작성했으면 DAO클래스에서 단축키를 이용하여 BoardService인터페이스를 작성한다. 이때 인터페이스가 만들어지는 동시에 BoardDAO클래스에는 implements코드가 자동으로 설정되는데 이 implements를 삭제해야 한다.</p>
+<p>클래스 다이어그램을 확인해보면 알지만 BoardService 인터페이스는 BoardServiceImpl클래스가 구현해야 하고, BoardDAO클래스는 독립된 클래스이다.</p>
+
+<H2>5.5</H2>
+<p></p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>

@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository("boardDAO")
-public class BoardDAO {
+public class BoardDAO{
 	
 	//JDBC 관련 변수
 	
@@ -26,6 +26,7 @@ public class BoardDAO {
 	
 	//CRUD 구현
 	//글 등록
+	
 	public void insertBoard(BoardVO vo) {
 		System.out.println("===> JDBC로 insertBoard() 기능 처리");
 		try {
@@ -43,6 +44,7 @@ public class BoardDAO {
 		}
 	}
 	//글 수정
+	
 	public void updateBoard(BoardVO vo) {
 		System.out.println("===> JDBC로 updateBoard() 기능 처리");
 		try {
@@ -60,6 +62,7 @@ public class BoardDAO {
 		}
 	}
 	//글 삭제
+	
 	public void deleteBoard(BoardVO vo) {
 		System.out.println("===> JDBC로 deleteBoard() 기능 처리");
 		try {
@@ -75,6 +78,7 @@ public class BoardDAO {
 		}
 	}
 	//글 상세 조회
+	
 	public BoardVO getBoard(BoardVO vo) {
 		System.out.println("===> JDBC로 getBoard() 기능 처리");
 		BoardVO board = null;
@@ -102,6 +106,7 @@ public class BoardDAO {
 	}
 	
 	//글목록 조회
+
 	public List<BoardVO> getBoardList(BoardVO vo) {
 		System.out.println("===> JDBC로 getBoardList() 기능 처리");
 		List<BoardVO> boardList = new ArrayList<BoardVO>();
@@ -115,7 +120,7 @@ public class BoardDAO {
 				board.setTitle(rs.getString("TITLE"));
 				board.setWriter(rs.getString("WRITER"));
 				board.setContent(rs.getString("CONTENT"));
-				board.setRegDate(rs.getDate("REGDATE")));
+				board.setRegDate(rs.getDate("REGDATE"));
 				board.setCnt(rs.getInt("CNT"));
 				boardList.add(board);
 			}
