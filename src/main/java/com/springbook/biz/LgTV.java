@@ -1,12 +1,14 @@
 package com.springbook.biz;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("tv")
 //@Component
 public class LgTV implements TV{
 	@Autowired
+	@Qualifier("apple")
 	private Speaker speaker;
 	public LgTV() {
 		System.out.println("===> LgTV 객체 생성");
