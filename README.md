@@ -277,8 +277,7 @@ java.util.Map|<map>
 java.util.Properties|<props>
 
 
-<H3>3.4.1</H3>
-<p>List 타입 매핑</p>
+<H3>3.4.1 List 타입 매핑</H3>
 <p>배열 객체나 java.util.List 객체는 <list>태그를 사용해서 설정한다.</p>
 <p>List 컬렉션을 멤버변수로 가지는 CollectionBean 클래스를 작성하고, 작성된 CollctionBean 클래스를 스프링 설정 파일에 bean 등록한다</p>
 
@@ -296,9 +295,46 @@ java.util.Properties|<props>
 <p>위 설정은 두 개의 문자여 ㄹ주소가 저장된 List객체를 CollectionBean 객체의 setAddressList()호출시 인자로 전달하여  addressList멤버변수를 초기화 하는 설정이다.</p>
 <p>클라이언트 프로그램을 작성하여 List컬렉션이 정상적으로 의존성 주입 되었는지 확인한다.</p>
 
-<H3></H3>
+<H3>3.4.2 Set 타입 매핑</H3>
+<p>중복 값을 허용하지 않는 집합 객체를 사용할 때는 java.util.Set 이라는 컬렉션을 사용하며 <set> 태그를 사용한다.</p>
 <p></p>
-<p></p>
+
+<H3>3.4.3 Map 타입 매핑</H3>
+<p>특정 key로 데이터를 등록하고 사용할 때는 java.util.Map 컬렉션을 사용하며, <map>태그를 사용한다.</p>
+<p>스프링 설정파일에서 key 와 value를 설정한다.</p>
+<p>자바파일의 경우 Map<string,string></p>
+~~~
+<bean id="collectionBean" class="com.springbook.biz.CollectionBean">
+	<property name="addressList">
+		<map>
+			<entry>
+				<key><value>고길동</value></key>
+				<value>서울시 성동구 행담동</value>
+			</entry>
+			<entry>
+				<key><value>마이콜</value></key>
+				<value>서울시 강서구 화곡동</value>
+			</entry>
+		</map>
+	</property>
+</bean>
+~~~
+
+<H3>3.4.4 Properities 타입 매핑</H3>
+<p>key=value 형태의 데이터를 등록하고 사용할 때는 java.util.Properities 컬렉션을 사용하며 <props> 태그를 사용한다.</p>
+<p>자바파일의 경우 꺽쇠없는 형태이다. (참조)</p>
+
+~~~
+<bean id="collectionBean" class="com.springbook.biz.CollectionBean">
+	<property name="addressList">
+		<props>
+			<prop key ="고길동">서울시 강남구 역삼동</value>
+			<prop key ="마이콜">서울시 강서구 화곡동</value>
+		</props>
+	</property>
+</bean>
+~~~
+
 
 <H3></H3>
 <p></p>
