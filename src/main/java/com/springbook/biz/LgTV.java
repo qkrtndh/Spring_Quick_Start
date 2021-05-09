@@ -1,6 +1,13 @@
 package com.springbook.biz;
 
+import org.springframework.stereotype.Component;
+
+@Component("tv")
+//@Component
 public class LgTV implements TV{
+	public LgTV() {
+		System.out.println("===> LgTV 객체 생성");
+	}
 	
 	@Override
 	public void powerOn() {
