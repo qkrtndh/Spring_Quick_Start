@@ -302,7 +302,12 @@ java.util.Properties|<props>
 <H3>3.4.3 Map 타입 매핑</H3>
 <p>특정 key로 데이터를 등록하고 사용할 때는 java.util.Map 컬렉션을 사용하며, <map>태그를 사용한다.</p>
 <p>스프링 설정파일에서 key 와 value를 설정한다.</p>
-<p>자바파일의 경우 Map<string,string></p>
+<p>자바파일의 경우</p>
+
+~~~
+Map<string,string>
+~~~
+
 ~~~
 <bean id="collectionBean" class="com.springbook.biz.CollectionBean">
 	<property name="addressList">
