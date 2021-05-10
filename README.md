@@ -225,6 +225,32 @@ Around|메소드 호출 자체를 가로채 비즈니스 메소드 실행 전후
 <p>클라이언트의 요청을 가로챈 어드바이스는 클라이언트가 호출한 비즈니스 메소드를 호출하기 위해 ProceedingJoinPoint 객체를 매개변수로 받아야한다.
 스프링 설정파일에 애스팩트 설정을 추가한다.</p>
 
+<H1>4. JoinPoint와 바인드 변수</H1>
+<p>횡단 관심에 해당하는 어드바이스 메소드를 의미 있게 구현하려면 클라이언트가 호출한 비즈니스 메소드의 정보가 필요하다. 예를들면 after Throwing 기능의 어드바이스 메소드를 구현할때,예외가 발생한 비즈니스 메소드 이름이 무엇인지 그 메소드가 속한 클래스와 패키지 정보는
+무엇인지 알아야 정확한 예외 처리 로직을 구현할 수 있다. 스프링에서는 이런 다양한 정보들을 이용할 수 있도록 JoinPoint 인터페이스를 제공한다.</p>
+
+<H2>4.1 JoinPoint 메소드</H2>
+<p>4-1</p>
+
+메소드|설명
+----|----
+Signature getSignature()|클라이언트가 호출한 메소드의 시그니처(리턴타입, 이름, 매개변수) 정보가 저장된 Signature 객체 패턴
+Object getTarget()|클라이언트가 호출한 비즈니스 메소드를 포함하는 비즈니스 객체 리턴
+Object[] getArgs()|클라이언트가 메소드를 호출할 때 넘겨준 인자 목록을 Object 배열로 리턴
+
+<p>우리가 이전에 around 어드바이스 메소드를 구현할 때 사용한 ProceedingJoinPoint 인터페이스는 JoinPoint를 상속했다. 따라서 JoinPoint가 가진 모든 메소드를 지원하며, proceed()메소드를 추가했다고 생각하면 된다.</p>
+<p>주의할 점은 bfore,after,after-returning,after-throwing어드바이스에서는 JoinPoint를, Around만 ProceedingJoinPoint를 매개변수로 사용해야 한다.</p>
+<p>getSignature()메소드가 리턴하는 Signature 객체를 이용하면, 호출되는 메소드에 대한 다양한 정보를 얻을 수 있다.</p>
+
+메소드|설명
+----|----
+String getName()|클라이언트가 호출한 메소드 이름 리턴
+String toLongStgring()|클라이언트가 호출한 메소드의 리턴타입, 이름, 매개변수를 패키지 경로까지 포함하여 리턴
+String toShortString()|클라이언트가 호출한 메소드 시그니처를 축약한 문자열로 리
+
+<p>JoinPoint는 어드바이스 종류에 따라 사용방법이 다소 다르다. 각 어드바이스에서 joinpoint를 사용하는 방법을 살펴보자</p>
+<p>JoinPoint 객체를 사용하려면 단지 JoinPoint를 어드바이스 메소드 매개변수로 선언만 하면 된다. 그러면 클라이언트가 비즈니스 메소드를 호출할  떄, 스프링 컨테이너가 JoinPoint객체를 생성하고 메소드 호출과 관련된 모든 정보를 joinpoint 객체에 저장하여 어드바이스 메소드를 호출할때 인자로 넘겨준다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
