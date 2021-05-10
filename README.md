@@ -34,6 +34,32 @@
 <p>결국 Advice 클래스가 LogAdvice 에서 Log4jAdvice로 바뀌는 순간 BoardServiceImpl클래스의 생성자를 수정해야 한다. 그리고 메소드가 변경되었으므로 모두 수정해야 한다.</p>
 <p>정리하면, OOP처럼 모듈화가 뛰어난 언어를 통해 개발하더라도 공통모듈에 해당하는 Advice 클래스 객체를 생성하고 공통 메소드를 호출하는 코드가 비즈니스 메소드에 있다면, 핵심 관심과 횡단 관심을 완벽하게 분리할 수는 없다. 하지만 스프링의 AOP 는 OOP의 이런 한계를 극복하게 해준다.</p>
 
+<H2>1.2 AOP 시작하기</H2>
+<p>이번에는 스프링의 AOP를 이용해서 핵심 관심과 횡단 관심을 분리한다.</p>
+<p>이 실습을 통해 BoardServiceImpl 소스와 LogAdvice, Log4jAdvice 클래스의 메소드를 무관하게 실행할 수 있다.</p>
+
+<H3>1.2.1 비즈니스 클래스 수정</H3>
+<p>BoardServiceImpl 클래스를 원래상태로 되돌린다. 이로인해 LogAdvice, Log4jAdvice 클래스와 상관이 없는 클래스가 되었다.</p>
+
+<H3>1.2.2 AOP 라이브러리 추가</H3>
+<p>본격적으로 AOP를 적용하기 위해서 우선 BoardWeb 프로젝트에 있는 pom.xml 파일을 수정하여 AOP관련 라이브러리를 추가한다.</p>
+
+~~~
+<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.8</version>
+		</dependency>
+~~~
+
+<p>aspectjweaver를 내려받을 수 있도록 설정을 추가하고, Maven Dependencies에 라이브러리가 추가되었는지 확인한다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
