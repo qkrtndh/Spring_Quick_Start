@@ -1,4 +1,4 @@
-package com.springbook.biz.board;
+package polymorphism;
 
 import org.springframework.stereotype.Component;
 

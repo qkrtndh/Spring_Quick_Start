@@ -1,4 +1,4 @@
-package com.springbook.biz.board;
+package polymorphism;
 
 public class BeanFactory {
 	public Object getBean(String beanName) {
