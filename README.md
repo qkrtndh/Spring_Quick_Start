@@ -64,9 +64,11 @@
 <p>AOP 설정을 추가하려면 AOP에서 제공하는 엘리먼트들을 사용해야 한다. 따라서 스프링 설정 파일에서 namespaces탭에서 aop 네임스페이스를 추가한다.</p>
 <p>LogAdvice클래스를 bean등록한 후 AOP 관련 설정을 추가한다. 자세한 설명은 뒤에서 계속한다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H3>1.2.4 테스트 및 결과 확인</H3>
+<p>이제 BoardServiceClient 프로그램을 실행하여 insertBoard와 getBoardList 메소드가 호출될 때 LogAdvice 클래스의 printLog 메소드가 실행되는지 확인해본다.</p>
+<p>LogAdvice 를 Log4jAdivce 로 교체하고 싶으면, BoardServiceImpl를 수정할 필요 없이 스프링설정 파일의 AOP 설정만 수정하면 된다.</p>
+<p>스프링의 AOP는 클라이언트가 핵심 관심에 해당하는 비즈니스 메소드를 호출할 때, 횡단 관심에 해당하는 메소드를 적절하게 실행해준다. 이때 핵심 관심 메소드와 횡단 관심 메소드 사이에서 소스상의 결합은 발생하지 않으며, 이것이 우리가 AOP를 사용하는 주된 목적이다.</p>
+
 
 <H3></H3>
 <p></p>
