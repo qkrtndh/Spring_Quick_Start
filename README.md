@@ -522,6 +522,6 @@ Map<string,string>
 <p>작성된 UserService 컴포넌트를 테스트 하기 위해 스프링 설정 파일에 UserServiceImpl와 UserDAO 클래스를 bean 등록한다. 그리고 UserServiceImpl 클래스에서 UserDAO 객체를 의존성 주입하기 위한 property 설정을 추가한다.</p>
 <p>이후 UserServiceClient 프로그램을 작성한다.</p>
 
-<H2></H2>
-<p></p>
-<p></p>
+<H2>6.7 어노테이션 적용</H2>
+<p>Setter 인젝션 설정으로 테스트 한 UserService 컴포넌트를 어노테이션 설저으로 변경해본다.</p>
+<p>설정파일의 setter인젝션 관련 설정을 제거한다. 이후 UserDAO와 UserServiceImpl클래스에 어노테이션을 추가한다.</p>
