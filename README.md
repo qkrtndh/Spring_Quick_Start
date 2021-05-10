@@ -64,11 +64,48 @@
 <p>AOP 설정을 추가하려면 AOP에서 제공하는 엘리먼트들을 사용해야 한다. 따라서 스프링 설정 파일에서 namespaces탭에서 aop 네임스페이스를 추가한다.</p>
 <p>LogAdvice클래스를 bean등록한 후 AOP 관련 설정을 추가한다. 자세한 설명은 뒤에서 계속한다.</p>
 
+~~~
+	<context:component-scan base-package="com.springbook.biz"></context:component-scan>
+	<bean id="log" class="com.springbook.biz.board.Log4jAdvice"></bean>
+	<aop:config>
+		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
+		<aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
+		<aop:aspect ref="log">
+			<aop:before pointcut-ref="allPointcut" method="printLogging"/>	
+		</aop:aspect>
+	</aop:config>
+~~~
+
 <H3>1.2.4 테스트 및 결과 확인</H3>
 <p>이제 BoardServiceClient 프로그램을 실행하여 insertBoard와 getBoardList 메소드가 호출될 때 LogAdvice 클래스의 printLog 메소드가 실행되는지 확인해본다.</p>
 <p>LogAdvice 를 Log4jAdivce 로 교체하고 싶으면, BoardServiceImpl를 수정할 필요 없이 스프링설정 파일의 AOP 설정만 수정하면 된다.</p>
 <p>스프링의 AOP는 클라이언트가 핵심 관심에 해당하는 비즈니스 메소드를 호출할 때, 횡단 관심에 해당하는 메소드를 적절하게 실행해준다. 이때 핵심 관심 메소드와 횡단 관심 메소드 사이에서 소스상의 결합은 발생하지 않으며, 이것이 우리가 AOP를 사용하는 주된 목적이다.</p>
 
+<H1>2. AOP 용어 및 기본 설정</H1>
+<H2>2.1 AOP 용어 정리</H2>
+
+<H3>2.1.1 조인포인트(Joinpoint)</H3>
+<p>조인 포인트는 클라이언트가 호출하는 모든 비즈니스 메소드로서, BoardServiceImpl이나 UserServiceImpl 클래스의 모든 메소드를 조인 포인트라고 생각하면 된다.</p>
+<p>조인포인트를 포인트컷 대상 또는 포인트컷 후보 라고도 하는데, 이는 조인포인트 중에서 포인트컷이 선택되기 때문이다.</p>
+
+<H3>2.1.2 포인트컷(Pointcut)</H3>
+<p>클라이언트가 호출하는 모든 비즈네스 메소드가 조인 포인트라면, 포인트컷은 필터링된 조인포인트를 의미한다.</p>
+<p>예를들어 트랜잭션을 처리하는 공통 기능을 만들었다고 가정하자. 이 횡단 관심 기능은 등록, 수정, 삭제 기능의 비즈니스 메소드에 대해서는 당연히 동작해야 하지만, 검색 기능의 메소드에 대해서는 트랜잭션과 무관하므로 동작하지 않는다. 이렇게 수 많은 비즈니스 메소드 중에서
+우리가 원하는 특정 메소드에서만 횡단  관심에 해당하는 공통기능을 수행시키기 위해서 포인트컷이 필요하다. 포인트컷을 이용하면 메소드가 포함된 클래스와 패키지는 물론이고, 메소드 시그니처까지 정확하게 지정할 수 있다.</p>
+<p>포인트컷을 테스트하기 위해 스프링 설정 파일에 기존에 사용하던 포인트컷을 복사하여 하나 더 추가해본다.</p>
+
+~~~
+<aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))"/>
+~~~
+<p>포인트컷은 aop:pointcut 엘리먼트로 선언하며, id 속성으로 포인트컷을 식별하기 위한 유일한 문자열을 선언한다. 이 아이디가 나중에 포인트컷을 참조할 때 사용된다.</p>
+<p>중요한것은 expression 속성인데, 이 값을 어떻게 설정하는지에 따라 필터링 되는 메소드가 달라진다.</p>
+<br />
+<p>* com.springbook.biz..*Impl.get*(..)</p>
+<p>가장 앞의 *은 리턴타입, com.springbook.biz는 패키지 경로, *Impl은 클래스명, *(..) 혹은 get*(..)은 메소드명 및 매개변수이다.</p>
+<br />
+<p>처음 등록한 allPointcut은 리턴타입과 매개변수를 무시하고, com.springbook.biz 패키지로 시작하는 클래스중 Impl로 끝나는 클래스의 모든 메소드를 포인트컷으로 설정했다.</p>
+<p>두번째 등록한 getPointcut은 allPointcut과 같지만 get으로 시작하는 메소드만 포인트컷으로 설정했다.</p>
+<p>마지막으로 aop:before 엘리먼트에서 appPointcut 부분을 getPointcut으로 수정하여 실행해본다. insert에는 반응하지 않고 get메소드에만 반응하는 것을 볼 수있다.</p>
 
 <H3></H3>
 <p></p>

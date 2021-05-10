@@ -15,8 +15,9 @@
 	<bean id="log" class="com.springbook.biz.board.Log4jAdvice"></bean>
 	<aop:config>
 		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
+		<aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))"/>
 		<aop:aspect ref="log">
-			<aop:before pointcut-ref="allPointcut" method="printLogging"/>	
+			<aop:before pointcut-ref="getPointcut" method="printLogging"/>	
 		</aop:aspect>
 	</aop:config>
 </beans>
