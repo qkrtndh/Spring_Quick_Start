@@ -491,9 +491,16 @@ Map<string,string>
 <p>스프링 컨테이너를 구동하고 BoardService 컴포넌트를 사용하는 클라이언트 프로그램을 다음과 같이 작ㅎ성하여 글 등록 기능과 글 목록 검색 기능을 테스트한다.</p>
 <p>작성된 클라이언트 프로그램을 실행하기전 반드시 H2 서버가 구동중인지 확인해야 한다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H1>6. 비즈니스 컴포넌트 실습 2</H1>
+<p>BoardService 컴포넌트를 만들었으면 이제 회원정보를 UserService 컴포넌트를 추가로 개발한다. 이번에는 어노테이션 없이 Setter 인젝션으로 의존성을 주입하고 나서 어노테이션으로 변경해보도록 한다.</p>
+<H2>6.1 UserService 컴포넌트 구조</H2>
+<p>UserService 컴포넌트에 대한 클래스 다이어그램이다. BoardService 보다 심플하게 구성되어 있다.</p>
+
+![3](https://user-images.githubusercontent.com/65153512/117607891-e67c0e80-b197-11eb-958c-aa1223f0f69f.jpg)
+
+<H2>6.2 Value Object 클래스 작성</H2>
+<p>VO 클래스를 작성하기 위해서 USERS 테이블의 구조를 확인한다.</p>
+<p>users테이블의 칼럼 이름과 매핑되는 멤버변수를 가진 UserVO클래스를 작성한다.</p>
 
 <H3></H3>
 <p></p>
