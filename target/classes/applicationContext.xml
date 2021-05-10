@@ -13,11 +13,13 @@
 	
 	<context:component-scan base-package="com.springbook.biz"></context:component-scan>
 	<bean id="log" class="com.springbook.biz.board.Log4jAdvice"></bean>
+	<bean id="before" class="com.springbook.biz.common.BeforeAdvice"></bean>
+	<bean id="afterReturning" class="com.springbook.biz.common.AfterReturningAdvice"></bean>
 	<aop:config>
 		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
 		<aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))"/>
-		<aop:aspect ref="log">
-			<aop:after pointcut-ref="getPointcut" method="printLogging"/>	
+		<aop:aspect ref="afterReturning">
+			<aop:after-returning pointcut-ref="getPointcut" method="afterLog"/>	
 		</aop:aspect>
 	</aop:config>
 </beans>
