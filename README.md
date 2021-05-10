@@ -3,7 +3,7 @@
 
 <img src="http://image.yes24.com/momo/TopCate853/MidCate001/85204414.jpg">
 
-<p>위의 책을 보며 공부한 것을 정리</p>
+<p>위의 책을 보며 공부한 것을 정리(1/5)</p>
 
 <H1>1. 프레임워크 개요</H1>
 <H2>1.1 프레임 워크의 개념</H2>
@@ -505,6 +505,15 @@ Map<string,string>
 <H2>6.3 DAO 클래스 작성</H2>
 <p>JDBCUtil 클래스를 이용하여 UserDAO 클래스의 메소드를 구현한다. 다만 UserDAO클래스에는  회원 정보 하나를 검색하는 getUser메소드만 구현한다.</p>
 <p>UserDAO 클래스는 정상적인 bean 등록으로 객체를 생성할 예정이므로 어노테이션은 설정하지 않는다.</p>
+
+
+<H2>6.4 Service 인터페이스 작성</H2>
+<p>UserDAO클래스에서 이클립스 단축키 alt + shift + t 로 인터페이슬르 작성한다. UserDAO클래스에 추가되는 상속은 삭제한다.</p>
+
+
+<H2>6.5 Service 구현 클래스 작성</H2>
+<p>UserService 인터페이스를 구현하는 UserServiceImpl 클래스를 만든다.</p>
+<p>UserServiceImpl 클래스의 비즈니스 메소드를 구현할 때, 멤버변수로 선언된 UserDAO 객체를 이용하여 DB 연동을 처리하면 된다. UserServiceImpl 클래스에는 Setter 인젝션 처리를 위한 Setter 메소두가 추가되었다.</p>
 
 
 <H3></H3>

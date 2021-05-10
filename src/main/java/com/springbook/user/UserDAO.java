@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 
 import com.springbook.biz.JDBCUtil;
 
-public class UserDAO {
+public class UserDAO{
 	//JDBC 관련 변수
 	private Connection conn = null;
 	private PreparedStatement stmt = null;
