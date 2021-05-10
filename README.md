@@ -4,6 +4,8 @@
 <img src="http://image.yes24.com/momo/TopCate853/MidCate001/85204414.jpg">
 
 <p>위의 책을 보며 공부한 것을 정리(1/5)</p>
+<P>※패키지명이나, 클래스 위치등에 오류가 있음※</p>
+<p>경로수정 하였으나 test소스 수행시 오류 발생</p>
 
 <H1>1. 프레임워크 개요</H1>
 <H2>1.1 프레임 워크의 개념</H2>
@@ -516,6 +518,10 @@ Map<string,string>
 <p>UserServiceImpl 클래스의 비즈니스 메소드를 구현할 때, 멤버변수로 선언된 UserDAO 객체를 이용하여 DB 연동을 처리하면 된다. UserServiceImpl 클래스에는 Setter 인젝션 처리를 위한 Setter 메소두가 추가되었다.</p>
 
 
-<H3></H3>
+<H2>6.6 UserService 컴포넌트 테스트</H2>
+<p>작성된 UserService 컴포넌트를 테스트 하기 위해 스프링 설정 파일에 UserServiceImpl와 UserDAO 클래스를 bean 등록한다. 그리고 UserServiceImpl 클래스에서 UserDAO 객체를 의존성 주입하기 위한 property 설정을 추가한다.</p>
+<p>이후 UserServiceClient 프로그램을 작성한다.</p>
+
+<H2></H2>
 <p></p>
 <p></p>
