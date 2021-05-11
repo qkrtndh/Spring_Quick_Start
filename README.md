@@ -509,10 +509,14 @@ jdbc.password=
 ~~~
 <p>query 메소드가 실행되면 여러건의 ROW정보가 검색되며 검색된 데이터 ROW 수만큼 RowMapper 객체의 mapRow 메소드가 실행된다. 그리고 이렇게 ROW 정보가 매핑된 VO 객체 여러개가 List 컬렉션에 저장되어 리턴된다.</p>
 
-<H2></H2>
-<H3></H3>
-<p></p>
-<p></p>
+<H2>DAO 클래스 구현</H2>
+<p>스프링 JDBC를 이용하기 위한 모든 설정이 마무리됐으면, 이제 JdbcTemplate 객체를 이용하여 DAO클래스만 구현하면 된다. 그런데 DAO 클래스에서 JdbcTemplate 객체를 얻는 방법은 두 가지이다.</p>
+<H3>6.5.1 첫번째 방법 : JdbcDaoSupport 클래스 상속</H3>
+<p>DAO 클래스를 구현할 때, JdbcDaoSupport클래스를 부모 클래스로 지정하면(extends JdbcDaoSupport) getJdbcTemplate 메소드를 상속 받을 수 있다. 
+그리고 getJdbcTemplate 메소드를 호출하면 JdbcTemplate 객체가 리턴되어 모든 메소드를 JdbcTemplate 객체로 구현할 수 있다.</p>
+<p>그런데 문제는 getJdbcTemplate 메소드가 JdbcTemplate 객체를 리턴하려면 DataSource 객체를 가지고 있어야 한다. 따라서 반드시 부모 클래스인 JdbcDaoSupport 클래스의 setDataSource 메소드를 호출하여 데이터 소스 객체 의존성을 주입해야 한다.</p>
+<p>@Autowired 어노텡리션은 주로 변수 위에 선언하는데 메소드 위에 선언해도 동작ㅎ나다 . 해당 메소드를 스프링 컨테이너가 자동으로 호출해주며, 이때 메소드 배개변수 타입을 확인하고 해당 타입의 객체가 메모리에 존재하면 그 객체를 인자로 넘겨준다.</p>
+
 
 <H3></H3>
 <p></p>
