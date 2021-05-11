@@ -386,9 +386,23 @@ String toShortString()|클라이언트가 호출한 메소드 시그니처를 �
 
 <p>설정 추가 후 라이브러리에 DBCP라이브러리가 등록되었는지 확인한다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H3>6.3.2 DataSource 설정</H3>
+<p>JdbcTemplate 클래스가 JDBC API를 이용하여 DB연동을 처리하려면 반드시 데이터베이스로부터 커넥션을 얻어야 한다. 따라서 JdbcTemplate 객체가 사용할 DataSource를 bean 등록하여 스프링 컨테이너가 생성하도록 해야 한다.</p>
+<p>사실 DataSource 설정은 스프링 JDBC만을 위한 설정은 아니다. 이후에 테스트할 트랜잭션 처리나, Mybatis 연동, JPA 연동에서도 DataSource가 사용되므로 매우 중요한 설정이라고 할 수 있다.</p>
+<p>DataSource 인터페이스를 구현한 클래스는 다양하지만, 일반적으로 가장 많이 사용하는 Apache의 BasicDataSource를 등록한다. BasicDataSource 객체는 연결에 필요한 프로퍼티 들을 setter 인젝션으로 설정해주면 된다. 그리고 BasicDataSource 객첵 삭제되기 전에 연결을 해제하고자 close() 메소드를 destroy-method 속성으로 지정한다.</p>
+
+<p>XML 설정</p>
+
+~~~
+	<!-- DataSource 설정 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.h2.Driver"></property>
+		<property name="url" value="jdbc:h2:~/test"></property>
+		<property name="username" value="sa"></property>
+		<property name="password" value=""></property>
+	</bean>
+~~~
+
 
 <H3></H3>
 <p></p>
