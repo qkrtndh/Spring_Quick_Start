@@ -376,6 +376,11 @@ String toShortString()|클라이언트가 호출한 메소드 시그니처를 �
 <p>스프링 JDBC를 이용하려면 BoardWeb 프로젝트에 있는 pom.xml 파일에 DBCP관련 depencency 설정을 추가해야 한다.</p>
 
 ~~~
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 		<!-- DBCP -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -465,6 +470,49 @@ jdbc.password=
 		System.out.println("전체 게시글 수 : "+cnt + "건");
 	}
 ~~~
+
+<H3>6.4.3 queryForObject() 메소드</H3>
+<p>queryForObject 메소드는 select 구문의실행 결과를 특정 자바 객체(value Object)로 매핑하여 리턴받을 때 사용한다. queryForObject 메소드는 검색 결과가 없거나 검색 결과가 두 개 이상이면 예외를 발생시킨다.</p>
+<p>중요한 것은 검색 결과를 자바 객체로 매핑할 RowMapper 객체를 반드시 지정해야 한다.</p>
+
+~~~
+메소드 - Object queryForObject(String sql)
+	Object queryForObject(String sql, RowMapper<T> rowMapper)
+	Object queryForObject(String sql, Object[] args, RowMapper<T> rowMapper)
+	
+	//글 상세 조회
+	public BoardVO getBoard(BoardVO vo){
+사용예		String BOARD_GET="select * from board where seq =?";
+		int cnt = jdbcTemplate.queryForInt(BOARD_TOT_COUNT);
+		System.out.println("전체 게시글 수 : "+cnt + "건");
+	}
+~~~
+
+<p>검색 결과를 특정 VO객체에 매핑하여 리턴하려면 RowMapper 인터페이스를 구현한 RowMapper 클래스가 필요하다. 결국 RowMapper 클래스는 테이블당 하나씩은 필요하다.</p>
+<p>RowMapper 인터페이스에는 mapRow 메소드가 있어서 검색 결과로 얻어낸 Row 정보를 어떤 VO에 어떻게 매핑할 것인지를 구현해주면 된다.</p>
+<p>RowMapper 객체를 queryForObject 메소드의 매개변수로 넘겨주면, 스프링 컨테이너는 SQL 구문을 수행한 후 자동으로 RowMapper 객체의 mapRow 메소드를 호출한다</p>
+
+<H3>6.4.4 query 메소드</H3>
+<p>queryForObject가 select 문으로 객체 하나를 검색할 때 사용하는 메소드라면, query메소드는 select 문의 실행 결과가 목록일 때 사용한다.
+기본사용법은 queryForObject 메소드와 같다. 따라서 query 메소드에서도 검색 결과를 VO객체에 매핑하려면 RowMapper 객체를 사용한다.</p>
+
+~~~
+메소드 - List query(String sql)
+	List query(String sql, RowMapper<T> rowMapper)
+	List query(String sql, Object[] args, RowMapper<T> rowMapper)
+	
+	//글 목록 조회
+	public List<BoardVO> getBoardList(BoardVO vo){
+사용예		String BOARD_LIST="select * from board order by seq desc";
+		return jdbcTemplate.query(BOARD_LIST,new BoardRowMapper());
+	}
+~~~
+<p>query 메소드가 실행되면 여러건의 ROW정보가 검색되며 검색된 데이터 ROW 수만큼 RowMapper 객체의 mapRow 메소드가 실행된다. 그리고 이렇게 ROW 정보가 매핑된 VO 객체 여러개가 List 컬렉션에 저장되어 리턴된다.</p>
+
+<H2></H2>
+<H3></H3>
+<p></p>
+<p></p>
 
 <H3></H3>
 <p></p>
