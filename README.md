@@ -371,6 +371,21 @@ String toShortString()|클라이언트가 호출한 메소드 시그니처를 �
 <p>그러면 JdbcTemplate 클래스는 내부적으로 JDBC API를 이용하여 실제 DB연동 작업을 처리한다. 하지만 JdbcTemplate 클래스가 어떻게 JDBC API를 이용하는지 DAO 클래스 개발자는 전혀 신경 쓸 필요 없다.</p>
 
 
+<H2>6.3 스프링 JDBC 설정</H2>
+<H3>6.3.1 라이브러리 추가</H3>
+<p>스프링 JDBC를 이용하려면 BoardWeb 프로젝트에 있는 pom.xml 파일에 DBCP관련 depencency 설정을 추가해야 한다.</p>
+
+~~~
+		<!-- DBCP -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+~~~
+
+<p>설정 추가 후 라이브러리에 DBCP라이브러리가 등록되었는지 확인한다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
