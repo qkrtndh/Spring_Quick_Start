@@ -18,7 +18,7 @@ public class LogAdvice {
 	//Advice
 	@Before("allPointcut()")
 	public void printLLog() {
-		System.out.println("[공통 로그] 비즈니스 로직 수행 전 동작");
+		//System.out.println("[공통 로그] 비즈니스 로직 수행 전 동작");
 	}
 	
 	
