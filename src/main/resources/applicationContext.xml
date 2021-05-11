@@ -21,8 +21,8 @@
 	<aop:config>
 		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))"/>
 		<aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))"/>
-		<aop:aspect ref="before">
-			<aop:before pointcut-ref="allPointcut" method="beforeLog"/>	
+		<aop:aspect ref="afterThrowing">
+			<aop:after-throwing pointcut-ref="allPointcut" method="exceptionLog" throwing="exceptObj"/>	
 		</aop:aspect>
 	</aop:config>
 </beans>
