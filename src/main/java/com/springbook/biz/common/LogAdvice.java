@@ -11,12 +11,8 @@ import org.springframework.stereotype.Service;
 @Aspect //Aspect = Pointcut + Advice
 public class LogAdvice {
 	
-	//Pointcut
-	@Pointcut ("execution(* com.springbook.biz..*Impl.*(..))")
-	public void allPointcut() {}
-	
 	//Advice
-	@Before("allPointcut()")
+	@Before("PointcutCommon.allPointcut()")
 	public void printLLog() {
 		//System.out.println("[공통 로그] 비즈니스 로직 수행 전 동작");
 	}
