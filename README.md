@@ -418,6 +418,36 @@ jdbc.password=
 <p>이제 Properties 파일에 설정된 프로퍼티들을 이용하여 DataSource를 설정하려면 다음과 같이 context:property-placeholder 엘리먼트를 사용한다.</p>
 <p>프로퍼티 파일을 사용하려면 context:property-placeholder 엘리먼트로 프로퍼티 파일의 위치를 등록해야 한다. 그리고 ${}구문을 이용하여 프로퍼티 이름을 지정하면 프로퍼티 값으로 치환하여 실행된다.</p>
 
+<H2>6.4</H2>
+<p>스프링 JDBC를 위한 기본 설정이 마무리됐으면 이제 JdbcTemplate 객체를 이용하여 DB연동을 간단하게 처리할 수 있다.</p>
+
+<H3>6.4.1 update() 메소드</H3>
+<p>INSERT, UPDATE, DELETE 구문을 처리하려면 JdbcTemplate 클래스의 update 메소드를 사용한다. update 메소드의 사용법은 ?에 값을 설정하는 방식에 따라 크게 두 가지 형태가 있다.</p>
+<p>첫번째는 SQL구문에 설정된 ? 수만큼 값들을 차례대로 나열하는 것이다.</p>
+
+~~~
+메소드 - int update(String sql, Object . . . args)
+	
+	//글 수정
+	public void updateBoard(BoardVO vo){
+사용예		String BOARD_UPDATE="update board set title = ?, content=?, where seq=?";
+		int cnt = jdbcTemplate.update(BOARD_UPDATE,vo.getTitle(),vo.getContent(),vo.getSeq());
+		System.out.println(cnt + "건 데이터 수정");
+~~~
+
+<p>두번째는 Object 배열 객체에 SQL 구성문에 설정된 ? 수만큼 값들을 세팅하여 배열 객체를 두번째 인자로 전달하는 방식이다.</p>
+
+~~~
+메소드 - int update(String sql, Object[] args)
+	
+	//글 수정
+	public void updateBoard(BoardVO vo){
+		String BOARD_UPDATE="update board set title = ?, content=?, where seq=?";
+사용예		Object[] args = {vo.getTitle(),vo.getContent(),vo.getSeq()};
+		int cnt = jdbcTemplate.update(BOARD_UPDATE,args);
+		System.out.println(cnt + "건 데이터 수정");
+~~~
+
 <H3></H3>
 <p></p>
 <p></p>
