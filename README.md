@@ -404,6 +404,20 @@ String toShortString()|클라이언트가 호출한 메소드 시그니처를 �
 ~~~
 
 
+<H3>6.3.3 프로퍼티 파일을 활용한 DataSource 설정</H3>
+<p>PropertyPlaceholderConfigurer를 이용하면 외부의 프로퍼티 파일을 참조하여 DataSource를 설정할 수 있다.</p>
+<p>실습을 위해 src/main/resources 소스 폴더에 config폴더를 생성하고 config폴더에 database.properties파일을 작성한다.</p>
+
+~~~
+jdbc.driver=org.h2.driver
+jdbc.url=jdbc:h2:~/test
+jdbc.username=sa
+jdbc.password=
+~~~
+
+<p>이제 Properties 파일에 설정된 프로퍼티들을 이용하여 DataSource를 설정하려면 다음과 같이 context:property-placeholder 엘리먼트를 사용한다.</p>
+<p>프로퍼티 파일을 사용하려면 context:property-placeholder 엘리먼트로 프로퍼티 파일의 위치를 등록해야 한다. 그리고 ${}구문을 이용하여 프로퍼티 이름을 지정하면 프로퍼티 값으로 치환하여 실행된다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
