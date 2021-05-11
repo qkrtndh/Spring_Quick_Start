@@ -274,10 +274,12 @@ String toShortString()|클라이언트가 호출한 메소드 시그니처를 �
 <p>이 설정은 비즈니스 메소드에서 발생한 예외 객체를 exceptObj라는 바인드 변수에 바인드 하라는 설정이다. throwing속성은 aop:afger-throwing 엘리먼트에서만 사용할 수 있는 속성이며, 속성값은 어드바이스 메소드 매개변수로 선언된 바인드 변수 이름과 같아야 한다.</p>
 <p>발생한 예외 객체의 종류에 따라 다양하게 예외처리를 할 수도 있다.</p>
 
+<H2>4.5 Around 어드바이스</H2>
+<p>Around 어드바이스는 다른 어드바이스와는 다르게 반드시 ProceedingJoinPoint 객체를 배개변수로 받아야 한다. ProceedingJoinPoint 객체는 비즈니스 메소드를 호출하는 proceed() 메소드를 가지고 있으며 JoinPoint를 상속한다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
-
 
 <H3></H3>
 <p></p>
