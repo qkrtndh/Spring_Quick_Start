@@ -433,6 +433,7 @@ jdbc.password=
 사용예		String BOARD_UPDATE="update board set title = ?, content=?, where seq=?";
 		int cnt = jdbcTemplate.update(BOARD_UPDATE,vo.getTitle(),vo.getContent(),vo.getSeq());
 		System.out.println(cnt + "건 데이터 수정");
+	}
 ~~~
 
 <p>두번째는 Object 배열 객체에 SQL 구성문에 설정된 ? 수만큼 값들을 세팅하여 배열 객체를 두번째 인자로 전달하는 방식이다.</p>
@@ -446,7 +447,28 @@ jdbc.password=
 사용예		Object[] args = {vo.getTitle(),vo.getContent(),vo.getSeq()};
 		int cnt = jdbcTemplate.update(BOARD_UPDATE,args);
 		System.out.println(cnt + "건 데이터 수정");
+	}
 ~~~
+
+<H3>6.4.2 queryForInt() 메소드</H3>
+<p>SELECT 구문으로 검색된 적숫값을 리턴 받으려면 queryForInt() 메소드를 사용한다. 매개변수의 의미는 update메소드와 같다</p>
+
+~~~
+메소드 - int queryForInt(String sql)
+	int queryForInt(String sql, Object... args)
+	int queryForInt(String sql, Object[] args)
+	
+	//전체 개시글 수 조회
+	public int getBoardTotalCount(BoardVO vo){
+사용예		String BOARD_TOT_COUNT="select count(*) from board";
+		int cnt = jdbcTemplate.queryForInt(BOARD_TOT_COUNT);
+		System.out.println("전체 게시글 수 : "+cnt + "건");
+	}
+~~~
+
+<H3></H3>
+<p></p>
+<p></p>
 
 <H3></H3>
 <p></p>
