@@ -554,6 +554,7 @@ PlatformTransactionManager 인터페이스를 구현한 클래스들이다.</p>
 
 <br />
 <p>tx:method 엘리먼트의 속성 설명</p>
+
 속성|의미
 ----|----
 name|트랜잭션이 적용될 메소드 이름 지정
