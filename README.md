@@ -53,6 +53,20 @@ DB연동관리|UserVO user = UserDAO.getUser(vo);
 
 ![12](https://user-images.githubusercontent.com/65153512/117961217-d4959980-b358-11eb-9388-6bfbe6ac7c59.jpg)
 
+<H2>1.3 글 목록 검색 기능 구현</H2>
+<p>로그인에 성공한 다음 글 목록 화면으로 이동한다. BOARD 테이블에서 게시글을 검색하여 글 목록 화면을 구성하는 .getBoardList.jsp 파일을 작성한다.</p>
+<p>getBoardList.jsp 파일에는 사용자가 입력한 검색 관련 정보를 추출해야 하는데, 검색 기능은 나중에 추가한다. 곧바로 BoardVO와 BoardDAO 객체를 이용하여 BOARD테이블에 저장된 게시글 목록을 검색한다. 그리고 검색 결과로 얻은 List<BoardVO> 객체를 이용하여 게시글 목록 화면을 구성한다.</p>
+<p>앞의 소스에서 게시글 제목에 하이퍼링크를 설정했는데, 사용자가 게시글 제목을 선택했을 때 해당 글의 상세 정보를 조회하여 출력하기 위해서 getBoard.jsp 파일로 링크를 연결했다. 이때, 사용자가 클릭한 게시글 번호를 넘겨주고자 getBoard.jsp 파일 뒤에 ?를 추가하고 쿼리 문자열 정보를 넘겼다.</p>
+
+~~~
+<td align="left"><a href="getBoard.jsp?seq=<%= board.getSeq() %>">
+~~~
+<p>이제 로그인에 성공하면 글 목록화면으로, 실패시 로그인 화면으로 리다이렉트 된다.</p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
