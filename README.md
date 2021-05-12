@@ -518,9 +518,12 @@ jdbc.password=
 <p>@Autowired 어노테이션은 주로 변수 위에 선언하는데 메소드 위에 선언해도 동작ㅎ나다 . 해당 메소드를 스프링 컨테이너가 자동으로 호출해주며, 이때 메소드 배개변수 타입을 확인하고 해당 타입의 객체가 메모리에 존재하면 그 객체를 인자로 넘겨준다.</p>
 
 
-<H3></H3>
-<p></p>
-<p></p>
+<H3>6.5.2 두번째 방법 JdbcTemplate 클래스 bean 등록, 의존성 주입.</H3>
+<p>DAO 클래스에서 JdbcTemplate 객체를 얻는 두 번째 방법은 JdbcTemplate 클래스를 bean 등록하고, 의존성 주입으로 처리하는 것이다. 일반적으로 이 방법을 사용한다. 
+먼저 스프링 설정 파일에 JdbcTemplate클래스를 bean 등록한다.</p>
+<p>이때 반드시 JdbcTemplate객체에 DataSource 객체를 의존성 주입해야 한다. 그리고나서 DAO 클래스에는 @Autowired 어노테이션을 이용하여 JdbcTemplate 타입의 객체를 의존성 주입 처리하면 된다.</p>
+<p>JdbcDaoSupport 클래스를 상속하여 구현하는 것 보다 더 깔끔해진 것을 볼 수 있다. JdbcTemplate 객체를 이용하여 BoardDAOSpring 클래스를 구현했으면 BoardServiceImpl클래스가 BoardDAOSpring 객체를 이용하여 DB 연동을 처리하도록 수정한다.</p>
+
 
 <H3></H3>
 <p></p>
