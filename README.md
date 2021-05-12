@@ -575,7 +575,12 @@ rollback-for|트랜잭션을 롤백할 예외 지정
 ![10](https://user-images.githubusercontent.com/65153512/117938568-24b53180-b342-11eb-9889-3cea43127582.jpg)
 
 <p>1. 클라이언트가 BoardServiceImpl 객체의 insertBoard() 메소드를 호출하면, 2. insertBoard 메소드의 비즈니스 로직이 수행된다. 만약 insertBoard메소드 수행중에 문제가 발생하면 3. txAdvice로 등록한 어드바이스가 동작하여, 참조하는 4. txManager의  rollback메소드를 호출한다. 만약 문제없이 정상으로 수행되었다면 commit 메소드를 호출한다</p>
-<p></p>
+
+<H2>7.5 트랜잭션 설정 테스트</H2>
+<p>지금까지 작성한 트랜잭션 관련 설정이 실제 트랜젝션 관리를 지원하는지 간단히 테스트해보도록 한다. BoardServiceClient에서 명시적으로 100번 글을 등록하도록 한다.</p>
+<p>BoardServiceImpl클래스의 insertBoard 메소드에서 BoardDAOSpring의 insertBoard메소드를 연속으로 두 번 호출한다. 첫번째 입력은 성공하지만, Board 테이블에 SEQ컬럼이 기본키로 지정되어 있어 두번째 입력에서 예외가 발생한다. 하지만 트랜잭션은 메소드 단위로 관리되므로 발생한 예외로 인해 BoardServiceImpl클래스의 insertBoard메소드의 작업 결과는 모두 롤백 처리 된다.</p>
+<p>BoardServiceImpl에서 BoardDAOSpring 객체의 insertBoard 메소드를 호출하므로 BoardDAOSpring의 insertBoard 메소드와 SQL구문을 다음처럼 수정한다.(단 다음 실습부터는 원래의 것을 사용한다.)</p>
+<p>seq칼럼을 자동 증가하도록 작성한 sql을 수정하여 사용자가 입력한 100번글이 insert되도록 수정했다. 이제 BoardServiceClient 프로그램을 실행하면 에러메세지를 확인할 수 있다. 이후 insertboard메소드 부분만 주석처리하여 목록을 확인해보면 추가되지 않았음을 볼 수 있다.</p>
 
 <H3></H3>
 <p></p>
