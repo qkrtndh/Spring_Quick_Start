@@ -30,5 +30,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/h2/bin/h2-1.4.200.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
