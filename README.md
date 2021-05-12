@@ -84,9 +84,9 @@ DB연동관리|UserVO user = UserDAO.getUser(vo);
 <p>사용자가 수정버튼을 누르면 title,content파라미터와 함께 hidden 으로 설정한 게시글 번호를 가지고 updateboard_proc.jsp 파일을 호출한다.</p>
 <p>글 등록과 마찬가지로 인코딩처리를 한다. </p>
 
-<H2></H2>
-<p></p>
-<p></p>
+<H2>1.7 글 삭제 기능 구현</H2>
+<p>사용자가 상세 화면에서 글 삭제 링크를 클릭하면 deleteBoard_proc.jsp 파일에서 해당 게시글을 삭제처리 한다.삭제할 게시글 번호를 deleteBoard_proc.jsp파일에 전송해야 하므로 뒤에 seq파라미터 정보를 추가한다.</p>
+<p>deleteBoard_proc.jsp 파일에서는 삭제요청된 게시글 번호를 추출하여 BoardVO객체에 저장한다. 이때 getParameter메소드는 문자열로 리턴하므로 integer클래스를 이용하여 int로 변환한다.</p>
 
 <H2></H2>
 <p></p>
