@@ -46,6 +46,13 @@ DB연동관리|UserVO user = UserDAO.getUser(vo);
 <p>사용자가 id와 password 파라미터에 해당하는 값을 입력하고, submit 타입의 로그인 버튼을 클릭하면 id와 password 파라미터 정보를 가지고 'login_proc.jsp' 파일을 호출할 것이다.</p>
 <p>작성된 login.jsp 파일을 실행하면 서버가 구동되고 브라우저에 화면이 출력된다.</p>
 
+<H3>1.2.2 로그인 인증 처리</H3>
+<p>어제 사용자가 입력한 아이디 비밀번호를 추출하여 로그인을 처리하는 login_proc.jsp 파일을 작성한다.</p>
+<p>사용자가 입력한 아이디와 비밀번호를 request 객체로부터 추출한다. 그리고 Model에 해당하는 UserVO와 UserDAO 객체를 이용하여 사용자 정보를 검색한다. 그리고 검색 결과로 UserVO객체가 리턴되면 로그인 성공이고, null이 리턴되면 로그인 실패로처리한다.</p>
+<p>USERS 테이블에 등록된 계정으로 로그인에 성공하면 글 목록 화면(getBoardList.jsp)으로 이동하고, 실패하면 다시 로그인하도록 로그인화면(login.jsp)으로 이동한다. 화면 내비게이션 방법으로는 포워드방식과 리다이렉트 방식 두가지가 있다. 단순화를 위해 우선 리다이렉트 방식만 사용한다.</p>
+
+![12](https://user-images.githubusercontent.com/65153512/117961217-d4959980-b358-11eb-9388-6bfbe6ac7c59.jpg)
+
 <H3></H3>
 <p></p>
 <p></p>
