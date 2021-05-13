@@ -169,6 +169,31 @@ getBoard.jsp에 있던 코드를 DispatcherServlet 클래스에 /getBoard.do 분
 가장 큰변화는 view기능의 jsp파일로 controller기능의 자바로직을 DispatcherServlet으로 이동했다. 따라서 proc파일들은 삭제해도 된다.</p>
 <p>Controller로직은 사용지 입력 정보 추출, Model을 이용한  DB연동 처리, 화면 내비게이션에 해당하는 자바코드를 의미한다.</p>
 
+<H2>4. MVC프레임워크 개발</H2>
+<H2>4.1 MVC프레임워크 구조</H2>
+<p>지금까지 개발한 게시판 프로그램은 MVC 아키텍처를 적용하긴 했지만, DispathcerServlet 클래스 하나로 Controller 기능을 구현했다. 하지만 이렇게 하나의 서블릿으로 
+Controller를 구현하면 클라이언트의 모든 요청을 하나의 서블릿이 처리하게 된다. 따라서 수많은 분기 처리 로직을 가질 수 밖에 없고, 이는 오히려 개발과 유지보수를 어렵게 만든다.</p>
+<p>controller를 서블릿 클래스 하나로 구현하는 것은 여러 측면에서 문제가 있으며, 다양한 디자인 패턴을 결합하여 개발과 유지보수의 편의성이 보장되도록 잘 만들어야 한다.
+하지만 프레임워크에서 제공하는 controller를 사용하면 우리가 직접 구현하지 않아도 된다. struts나 Spring(MVC) 같은 MVC 프레임워크를 사용하는 이유는 바로 이런 프레임 워크들이 효율적인 Controller를 제공하기 때문이다.</p>
+<p>본격적으로 Spring MVC를 적용하기 전  SpringMVC와 동일한 구조의 프레임워크를 직접 구현하여 적용한다. 이 과정을 통해 SpringMVC의 구성요소와 동작원리를 더욱 쉽게 이해할 수 있다.</p>
+
+![14](https://user-images.githubusercontent.com/65153512/118096418-4bd83580-b40c-11eb-8cb8-016bfb5920a3.jpg)
+
+<p>이 그림은 우리가 개발할 MVC프레임워크의 구조를 표현한 것이다.</p>
+
+클래스|기능
+----|----
+DispatcherServlet|유일한 서블릿 클래스로서 모든 클라이언트의 요청을 가장 먼저 처리하는 Front Controller
+HandlerMapping|클라이언트의 요청을 처리할 Controller 매핑
+Controller|실질적인 클라이언트의 요청 처리
+ViewResolver|Controller가 리턴한 View 이름으로 실행될 JSP경로 완성
+
+<p>로그인 기능을 구현하면서 각 구성 요소들을 만들어본다.</p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
