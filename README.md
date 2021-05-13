@@ -120,10 +120,11 @@ Controller| Servlet 클래스|자바 개발자 또는 MVC 프레임워크
 <p>Controller는 직접 구현해도 되지만, MVC 프레임워크가 제공하는 Controller를 사용할 수 있으며, 더 효율적이고 안정정깅다. 문제는 프레임워크에서 제공하는 
 controller 구조가 복잡하고 어렵다. 이번 실습은 controller 적용보다는 기능 이해에 중점을 둔다.</p>
 
-<H3></H3>
-<H3></H3>
-<p></p>
-<p></p>
+<H2>3.2 Controller 구현하기</H2>
+<H3>3.2.1 서블릿 생성 및 등록</H3>
+<p>Controller 기능을 수행하는 서블릿 클래스를 하나 추가하여 기존의 Model1 기반으로 개발된 게시판 프로그램을 MVC 아키텍처로 변경하자. Controller에 해당하는 서블릿 클래스를 구현할 때 이클립스의 기능을 이용하면 좀 더 쉽게 작성할 수 있다.</p>
+<p>DispatcherServlet 클래스가 만들어지는 순간 WEB-INF/web.xml 파일에 서블릿 관련 설정이 자동으로 추가된다. 이 설정에서 description과 display-name은 의미 없는 설정이므로 삭제한다.</p>
+<p>(책 참조p.266) 현 설정은 클라이언트의 모든 *.do요청을 DispatcherServlet 클래스의 객체가 처리한다는 설정이다. 확장자 do는 언제든지 다른 이름으로 변경할 수 있다.</p>
 
 <H3></H3>
 <p></p>
