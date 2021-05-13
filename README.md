@@ -190,6 +190,36 @@ ViewResolver|Controller가 리턴한 View 이름으로 실행될 JSP경로 완�
 
 <p>로그인 기능을 구현하면서 각 구성 요소들을 만들어본다.</p>
 
+<H2>4.2 MVC 프레임워크 구현</H2>
+<H3>4.2.1 Contorller 인터페이스 작성</H3>
+<p>Controller를 구성하는 요소 중 DispatcherSerlvet은 클라이언트의 요청을 가장 먼저 받아들이는 Front Controller다. 하지만 클라이언트의 요청을 처리하기 위해 DispatcherServlet이 하는 일은 거이 없으며, 실질적 요청 처리는 각 Controller에서 담당한다.</p>
+<p>구체적인 Controller 클래스들을 구현하기에 앞서 모든 Controller를 같은 타입으로 관리하기 위한 인터페이스를 만들어야 한다. 클라이언트의 요청을 받은 DispatcherServlet은  HandlerMapping을 통해 Controller객체를 검색하고, 검색된 Controller를 실행한다.
+이때 어떤 Cotroller객체가 검색되더라도 같은 코드를 실행하려면 모든 Controller의 최상위인터페이스가 필요하다.</p>
+
+<H3>4.2.2 LoginController 구현</H3>
+<p>컨트롤러 인터페이스를 구현한 LoginController 클래스를 만든다.</p>
+<p>로그인 처리 소스는 DispatcherServlet과 같다 하지만 Controller인터페이스의 handleRequest를 재정의 했으므로 처리 기능 마지막은 리다이렉트가아닌 리턴한다.</p>
+<p>로그인에 실패했을 때 login.jsp가 아닌이유는 나중에 추가할 viewResolver 클래스에서 다루는데, 우선 handleRequest 메소드가 확장자 없는 문자열을 리턴하면 자동으로 .jsp가 붙는다는 것만 이해한다.</p>
+
+<H3>4.2.3 HandlerMapping 클래스 작성</H3>
+<p>HandlerMapping은 모든 Controller 객체들을 저장하고 있다가, 클라이언트의 요청이 들어오면 요청을 처리할 특정  Controller를 검색하는 기능을 제공한다. HandlerMapping 객체는 DispatcherServlet이 사용하는 객체이다. 따라서DispatcherServlet이 생성되고 init()메소드가 호출될 때 단 한번 생성된다.</p>
+<p>Map 타입의 컬렉션을 멤버변수로 가지고 있으면서 게시판 프로그램에 필요한 모든 Controller 객체들을 등록하고 관리한다. getController메소드는 매개변수로 받은 path 에 해당하는 Controller객체를 HashMap컬렉션으로부터 검색하여 리턴한다. 지금은 LoginController객체 하나만 등록되어 있지만, 앞으로 계속 Controller 객체들이 추가될 것이다.</p>
+
+<H3>4.2.4 ViewResolver 클래스 작성</H3>
+<p>ViewResolver 클래스는 Controller가 리턴한 View 이름에 접두사(perpix)와 접미사(suffix)를 결합하여 최종적으로 실행될 view경로와 파일명을 완성한다
+ViewResolver도 HandlerMapping과 마찬가지로 DispatcherServlet의 init()메소드가 호출될 때 생성된다.</p>
+<p>ViewResolver 는 setPrefix와 setSuffix 메소드로 접두사와 접미사를 초기화한다. 그리고 getView 메소드가 호출될 때 viewName 앞에 prefix를 결합하고 viewName뒤에 suffix를 결합하여 리턴한다.</p>
+
+<H3>4.2.5 DispatcherServlet 수정</H3>
+<p>DispatcherServlet은 Front Controller 기능의 클래스로서 Controller 구성 요소 중 가장 중요한 역할을 수행한다. 수정하기 전 복사본을 만들어 후에 재사용하도록 한다.</p>
+<p>수정된 DispatcherServlet 클래스에는 init 메소드가 정의되어 있다. 서블릿의 init 메소드는 서블릿 객체가 생성된 후에 멤버변수를 초기화하기 위해 자동으로 수행된다.
+따라서 init 메소드에서 DispatcherServlet이 사용할 HandlerMapping와 ViewResolver객체를 초기화하고, 이 둘을 이용하여 사용자 요청을 처리 한다.</p>
+<p>가장 중요한 process 메소드를 보면 클라이언트의 요청 path정보를 추출하는 추출하는 코드를 제외한 대부분이 수정되었다. 클라이언트의 요청 path에 해당하는 Controller를 검색하기 위해 HandlerMapping 객체의 getController 메소드를 호출한다.
+그리고 나서 검색된 controller의 handleRequest 메소드를 호출하여 요청에 해당하는 로직을 처리하고 나면 이동할 화면정보가 리턴된다.
+마지막으로 Controller가 리턴한 View이름을 이용하여 실행될 view를 찾아 해당 화면으로 이동한다.</p>
+
+![15](https://user-images.githubusercontent.com/65153512/118104747-7b8c3b00-b416-11eb-9553-f67fd5bf84f2.jpg)
+
 <H3></H3>
 <p></p>
 <p></p>
