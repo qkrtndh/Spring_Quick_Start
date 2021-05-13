@@ -281,9 +281,17 @@ INFO : org.springframework.web.servlet.DispatcherServlet - FrameworkServlet 'act
 ~~~
 <p>login.do 요청을 서버에 전달하면 서블릿 컨테이너는 web.xml파일에 action이라는 이름으로 등록된 DispatcherSelvet클래스의 객체를 생성한다.</p>
 
-<H3>5.2.2</H3>
-<p></p>
-<p></p>
+<H3>5.2.2 스프링 컨테이너 구동</H3>
+<p>클라이언트의 요청으로 DispatcherServlet 객체가 생성되면 해당 클래스의 init메소드가 수행되어 XmlWebApplicationContext라는 스프링 컨테이너가 구동된다. ApplicationContext를 구현한 클래스 중 하나로 우리가 직접생성 한 것이 아닌 DispatcherServlet이 생성한 것이다.</p>
+<p>우리가 직접 DispatcherServlet클래스를 구현했을 때 init메소드에서 HandlerMapping, Controller, ViewResolver 객체들을 생성했다. 다만 스프링에서 제공하는 DispatcherServlet은 스프링 컨테이너를 통해 이 객체들을 생성하는 것이 다를 뿐이다.</p>
+
+![18](https://user-images.githubusercontent.com/65153512/118120396-c7e17600-b42a-11eb-8a81-635141f5953e.jpg)
+
+<p>결국 DispatcherServlet은 클라이언트 요청 처리에 필요한 객체들을 생성하기 위해 스프링 컨테이너를 구동한다. 이 과정은 위 그림과 같다.</p>
+
+<br />
+<p>서블릿 컨테이너가 dispacherservlet객체를 생성하고나면 재정의된 init 메소드가 자동으로 실행되고, 스프링설정 파일이 로딩되어 XmlWebApplicationContext를 생성한다. 즉 스프링 컨테이너가 구동된다.
+결국 스프링 설정 파일(action-servlet.xml)에 DispatcherServlet이 사용할 세 클래스를 bean등록 하면 스프링 컨테이너가 해당 객체들을 생성해준다.</p>
 
 <H3></H3>
 <p></p>
