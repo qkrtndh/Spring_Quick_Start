@@ -293,6 +293,6 @@ INFO : org.springframework.web.servlet.DispatcherServlet - FrameworkServlet 'act
 <p>서블릿 컨테이너가 dispacherservlet객체를 생성하고나면 재정의된 init 메소드가 자동으로 실행되고, 스프링설정 파일이 로딩되어 XmlWebApplicationContext를 생성한다. 즉 스프링 컨테이너가 구동된다.
 결국 스프링 설정 파일(action-servlet.xml)에 DispatcherServlet이 사용할 세 클래스를 bean등록 하면 스프링 컨테이너가 해당 객체들을 생성해준다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H3>5.2.3 스프링 설정파일등록</H3>
+<p>현재 상태에서는 dispatcher가 스프링 컨테이너를 구동할 때 무조건 /WEB-INF/action-servlet.xml 파일을 찾아 로딩한다. 해당 위치에 파일이 없어 FileNotFoundException이 발생한다. DispatcherServlet은 스프링 컨테이너를 구동할 때 web.xml파일에 등록된 DispatcherServlet이름이 dispatcher엿다면 /WEB-INF/dispatcher-servlet.xml 파일을 찾았을 것이다.</p>
+<p>이제 DispatcherServlet 이 스프링 컨테이너를 구동할 때 로딩할 스프링 설정 파일을 추가한다.</p>
