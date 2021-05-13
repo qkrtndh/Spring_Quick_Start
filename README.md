@@ -137,6 +137,15 @@ controller 구조가 복잡하고 어렵다. 이번 실습은 controller 적용�
 <p>로그인 기능을 MVC로 변환하려면 login.jsp 파일의 form엘리먼트의 action속성값을 login.do로 수정한다. *.do 형태의 요청에 대해서만 DispatcherServlet이 동작하기 때문이다.</p>
 <p>그리고 login_proc.jsp 파일에 있는 모든 자바 로직을 복사하여 DispatcherServlet에 추가한다.</p>
 
+<H2>3.4 글 목록 검색 기능 구현하기</H2>
+<p>기존에 글 목록 화면을 처리했던 getBoardList.jsp 파일에서 Controller 로직에 해당하는 자바 코드를 DispatcherServlet으로 복사한다.</p>
+<p>(코드) 이 소스는 리다이렉트 되는 getBoardList.jsp 화면에서 검색결과를 출력하기 위해 세션 객체를 사용했다. 사실 검색 결과를 JSP에 공유하기 위해 세션에 저장하는 것은 문제가 있다.
+세션은 브라우저당 서버 메모리에 하나씩 유지되는 객체이므로 사용자가 많을수록 세션이 많아지고, 세션에 정보가 많을 수록 서버에 부담이 된다.</p>
+<p>따라서 검색 결과는 세션이 아닌 HttpSerlvetRequest 객체에 저장하여 공유해야 한다. 클라이언트가 서버에 요청을 전송할 때 마다 새롭게 생성되며, 응답메세지가 브라우저에 전송되면 삭제되는 1회성 객체 이므로 공유할 데이터를 HttpServletRequest에 저장하면 
+서버는 부담이 되지 않는다. 한동안은 간결함을 유지하기 위해 세션을 사용하며 후에 Spring MVC 로 전환하면서 HttpSession을 HttpServletRequest로 수정한다.</p>
+<p>이제 getBoardList.jsp파일은 글 목록을 검색하는 코드 대신 세션에 세선에 저장된 글 목록을 꺼내서 출력하도록 수정한다.</p>
+<p>getBoardList.jsp파일은 직접 db연동을 처리하지 않고 자바코드는 Controller인 DispatcherServlet 클래스로 이동했다. 단지 세션에 저장된 글 목록을 불러와 출력하는 기능만을한다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
