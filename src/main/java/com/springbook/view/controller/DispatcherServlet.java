@@ -56,6 +56,12 @@ public class DispatcherServlet extends HttpServlet {
 			}
 		} else if(path.equals("/logout.do")) {
 			System.out.println("로그아웃 처리");
+			//1. 브라우저와 연결된 세션 객체를 강제종료
+			HttpSession session = request.getSession();
+			session.invalidate();
+
+			//2. 세션 종료후 메인화면 이동
+			response.sendRedirect("login.jsp");
 		} else if(path.equals("/insertBoard.do")) {
 			System.out.println("글 등록 처리");
 			//1. 사용자 입력 정보 추출

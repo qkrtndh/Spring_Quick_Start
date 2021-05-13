@@ -161,11 +161,13 @@ getBoard.jsp에 있던 코드를 DispatcherServlet 클래스에 /getBoard.do 분
 
 <H2>3.8 글 삭제 기능 구현하기</H2>
 <p>getBoard.jsp 에서 글 삭제 관련 링크를 deleteBoard.do로 수정한다.</p>
-<p></p>
+<p>이전과 마찬가지로 코드를 복사한뒤 리다이렉션코드를 수정한다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H2>3.9 로그아웃 기능 구현하기</H2>
+<p>모든 페이지의 logout_proc.jsp링크를 logout.do로 수정한다. 그 후 기존의 코드를 복사하여 옮긴다.</p>
+<p>이제 모든 기능이 MVC구조로 수정되었다. 먼저 Model 기능의 VO,DAO클래스는 재사용되었고, DispatcherServlet이라는 Controller기능의 서블릿 클래스가 추가되었다.
+가장 큰변화는 view기능의 jsp파일로 controller기능의 자바로직을 DispatcherServlet으로 이동했다. 따라서 proc파일들은 삭제해도 된다.</p>
+<p>Controller로직은 사용지 입력 정보 추출, Model을 이용한  DB연동 처리, 화면 내비게이션에 해당하는 자바코드를 의미한다.</p>
 
 <H3></H3>
 <p></p>
