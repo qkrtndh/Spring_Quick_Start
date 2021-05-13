@@ -146,7 +146,19 @@ controller 구조가 복잡하고 어렵다. 이번 실습은 controller 적용�
 <p>이제 getBoardList.jsp파일은 글 목록을 검색하는 코드 대신 세션에 세선에 저장된 글 목록을 꺼내서 출력하도록 수정한다.</p>
 <p>getBoardList.jsp파일은 직접 db연동을 처리하지 않고 자바코드는 Controller인 DispatcherServlet 클래스로 이동했다. 단지 세션에 저장된 글 목록을 불러와 출력하는 기능만을한다.</p>
 
-<H3>3.5 글 상세 보기 기능 구현하기</H3>
+<H2>3.5 글 상세 보기 기능 구현하기</H2>
 <p>getBoardList.jsp의 하이퍼링크를 수정한다. 기존에는 getBoard.jsp로 바로 깅크를 걸었다면 이제는 게시글의 상세 정보를 검색할 수 있도록 getBoard.do 로 링크를 수정해야 한다.
 getBoard.jsp에 있던 코드를 DispatcherServlet 클래스에 /getBoard.do 분기처리에 복사한다.</p>
 <p>글 상세 조회는 글 목록 검색 기능과비슷하다. 검색결과를 공유하기 위해 세션에저장하고, getBoard.jsp파일을 리다이렉트한다.</p>
+
+<H2>3.6 글 등록 기능 구현하기</H2>
+<p>insertBoard.jsp 파일을 수정한다. form태그의 액션값을 insertBoard.do로 수정한다.그 후 insertBoard_proc.jsp 파일의 자바코드를 DispatcherServlet으로 복사한다.</p>
+<p>이때 주의할점은 리다이렉션을 getBoardList.do 로해야 등록 된 내용이 세션에 저장되어 정상적으로 출력된다. 이는 삭제, 수정에도 마찬가지이다.</p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
