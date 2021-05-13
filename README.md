@@ -281,6 +281,10 @@ INFO : org.springframework.web.servlet.DispatcherServlet - FrameworkServlet 'act
 ~~~
 <p>login.do 요청을 서버에 전달하면 서블릿 컨테이너는 web.xml파일에 action이라는 이름으로 등록된 DispatcherSelvet클래스의 객체를 생성한다.</p>
 
+<H3>5.2.2</H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
