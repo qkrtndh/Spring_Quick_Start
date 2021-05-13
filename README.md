@@ -155,9 +155,9 @@ getBoard.jsp에 있던 코드를 DispatcherServlet 클래스에 /getBoard.do 분
 <p>insertBoard.jsp 파일을 수정한다. form태그의 액션값을 insertBoard.do로 수정한다.그 후 insertBoard_proc.jsp 파일의 자바코드를 DispatcherServlet으로 복사한다.</p>
 <p>이때 주의할점은 리다이렉션을 getBoardList.do 로해야 등록 된 내용이 세션에 저장되어 정상적으로 출력된다. 이는 삭제, 수정에도 마찬가지이다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H2>3.7 글 수정 기능 구현하기</H2>
+<p>getBoard.jsp에서 form 태그의 action을 updateBoard.do 로 수정한다.</p>
+<p>이전과 마찬가지로 코드를 복사한뒤 리다이렉션코드를 수정한다.</p>
 
 <H3></H3>
 <p></p>
