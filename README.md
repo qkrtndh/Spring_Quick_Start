@@ -220,6 +220,31 @@ ViewResolver도 HandlerMapping과 마찬가지로 DispatcherServlet의 init()메
 
 ![15](https://user-images.githubusercontent.com/65153512/118104747-7b8c3b00-b416-11eb-9553-f67fd5bf84f2.jpg)
 
+<H2>4.3 MVC 프레임워크 적용</H2>
+<H3>4.3.1 글 목록 검색 구현</H3>
+<p>Controller 인터페이스를 구현한 GetBoardListController 클래스를 작성한다.</p>
+<p>GETBoardListController 객체를 HandlerMapping에 등록한다.</p>
+
+<H3>4.3.2 글 상세 보기 구현</H3>
+<p>Controller 인터페이스를 구현한 GetBoardController 클래스를 작성한다.</p>
+<p>GetBoardController객체도 HandlerMApping클래스에 추가한다.</p>
+
+<H3>4.3.3 글 등록 구현</H3>
+<p>InsertBoardController클래스를 작성한다.</p>
+<p>getBoardList.do 문자열을 리턴할때 글 등록에 성공하면 등록된 글이 포함된 글 목록을 다시 검색해야 한다. 따라서 getBoardList.do 문자열을 리턴하여 리다이렉트 처리한다.</p>
+<p>InsertBoardController객체도 HandlerMApping클래스에 추가한다.</p>
+
+<H3>4.3.4 글 수정 구현</H3>
+<p>UpdateBoardController클래스를 작성한다.</p>
+<p>수정 성공 후 글 목록 갱신을 위해 getBoardList.do 를 리턴한다.</p>
+<p>UpdateBoardController객체도 HandlerMApping클래스에 추가한다.</p>
+
+<H3>4.3.5,6 글삭제, 로그아웃 구현</H3>
+<p>앞의 과정과 동일하다</p>
+<p>Controller를 구성하는 클래스를 모두 개발하고나면 너무나 복잡한 구조와 수많은 클래스때문에 더 혼란스러울 수 있는데에도 불구하고 Controller를 사용하는 이유는 Controller에서 가장 중요한 DispatchServlet 클래스는 유지보수 과정에서 기존의 기능을 수정하거나 새로운 기능을 추가하더라도 절대 수정되지 않는다.</p>
+<p>예를들어 게시판에 회원가입 기능을 추가한다고 할 때 insertUserConroller 클래스를 작성하고 HandlerMapping에 등록하면 된다. 이 과정에서 dispatcherServlet은 수정할 필요가 없다. 이렇게 기능 추가나 수정에 대해 DispatcherServlet을 수정하지 않도록 해야 프레임 워크에서 DispatcherServlet을 제공할 수 있다.</p>
+<p>지금은 직접 클래스를 만들었지만 최종적으로는 스프링 프레임워크에서 제공하는 클래스를 사용해야 한다. 그런데 만약 새로운 기능이 추가될 때 마다 클래스를 수정해야 한다면 스프링 프레임워크에서 클래스를 제공할 수 없다. 결국 스프링 프레임워크에서 제공하는 DispatcherServlet을 사용하려면 새기능이 추가되더라도 DispatcherServlet 클래스의 소스는 변경할 필요가 없도록 개발해야 한다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
