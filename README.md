@@ -245,9 +245,22 @@ ViewResolver도 HandlerMapping과 마찬가지로 DispatcherServlet의 init()메
 <p>예를들어 게시판에 회원가입 기능을 추가한다고 할 때 insertUserConroller 클래스를 작성하고 HandlerMapping에 등록하면 된다. 이 과정에서 dispatcherServlet은 수정할 필요가 없다. 이렇게 기능 추가나 수정에 대해 DispatcherServlet을 수정하지 않도록 해야 프레임 워크에서 DispatcherServlet을 제공할 수 있다.</p>
 <p>지금은 직접 클래스를 만들었지만 최종적으로는 스프링 프레임워크에서 제공하는 클래스를 사용해야 한다. 그런데 만약 새로운 기능이 추가될 때 마다 클래스를 수정해야 한다면 스프링 프레임워크에서 클래스를 제공할 수 없다. 결국 스프링 프레임워크에서 제공하는 DispatcherServlet을 사용하려면 새기능이 추가되더라도 DispatcherServlet 클래스의 소스는 변경할 필요가 없도록 개발해야 한다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H2>4.4 EL/JSTL 이용한 JSP 화면 처리</H2>
+<p>우리가 Model 1아키텍처를 Model2 즉 MVC로 변환했던 이유는 JSP 파일에서 Controller 로직에 해당하는 자바 코드를 제거하기 위함이다. MVC 아키텍처가 적용된
+BoardWeb 프로젝트에서 상세 화면과 목록 화면에 해당하는 getBoard.jsp와 getBoardList.jsp파일에 여전히 자바 코드가 남아있다.</p>
+<p>사실 Controller 로직은 사용지 입력 정보 추출,DB연동, 화면 내비게이션 같은 자바 코드를 의미하기에 JSP에 남아있는 코드는 Cotroller로직은 아니다. 이 코드조차 제거하고 싶다면 JSP에서 제공하는 EL과 JSTL를 이용하면 된다.</p>
+
+![16](https://user-images.githubusercontent.com/65153512/118114341-6917fe80-b422-11eb-935d-28536bfe8c0d.jpg)
+
+<H3>4.4.1 상세 화면 수정</H3>
+<p>가장먼저 게시글의 상세 정보를 출력하는 getBoard.jsp파일에 EL을 적용하여 자바 코드를 제거한다.</p>
+<p>가장 눈에 띄는 것은 BoardVO 와 BoardDAO 클래스에 대한 import 선언이 사라진 것이다. 그리고 세션에 저장된 BoardVO객체를 거내는 자바코드도 삭제되었다.
+EL 표션식을 이용해 세션에 board라는 이름으로 저장된 BoardVO 객체의 값들을 ${} 구문을 이용하여 출력하고 있다.</p>
+
+<H3>4.4.2 글 목록 화면 수정</H3>
+<p>getBoardList.jsp 파일은 EL과 함께 for 루프를 처리하기 위한 JSTL도 같이 사용한다.</p>
+<p>getBoard.jsp 파일과 동일하게 import 선언은 모두 삭제되었다. 그리고 JSTL 사용을 위한 taglib 지시문이 추가되었으며
+글 목록을 반복해서 출력하기 위해 사용되었던 for 루프는 JSTL에서 제공하는 c:forEach태그로 대체되었다.</p>
 
 <H3></H3>
 <p></p>
