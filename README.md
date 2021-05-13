@@ -159,6 +159,14 @@ getBoard.jsp에 있던 코드를 DispatcherServlet 클래스에 /getBoard.do 분
 <p>getBoard.jsp에서 form 태그의 action을 updateBoard.do 로 수정한다.</p>
 <p>이전과 마찬가지로 코드를 복사한뒤 리다이렉션코드를 수정한다.</p>
 
+<H2>3.8 글 삭제 기능 구현하기</H2>
+<p>getBoard.jsp 에서 글 삭제 관련 링크를 deleteBoard.do로 수정한다.</p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
