@@ -3,17 +3,10 @@
 <%@ page import="com.springbook.biz.board.impl.BoardDAO"%>
 <%@ page import="com.springbook.biz.board.BoardVO"%>
 <%
-	//1. 검색할 게시글 번호 추출
-	String seq = request.getParameter("seq");
 
-	//2. DB연동 처리
-	BoardVO vo = new BoardVO();
-	vo.setSeq(Integer.parseInt(seq));
 	
-	BoardDAO boardDAO = new BoardDAO();
-	BoardVO board = boardDAO.getBoard(vo);
+	BoardVO board = (BoardVO)session.getAttribute("board");
 	
-	//3. 응답 화면 구성
 %>
 <!DOCTYPE html>
 <html>
