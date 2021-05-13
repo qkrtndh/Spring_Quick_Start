@@ -133,9 +133,9 @@ controller 구조가 복잡하고 어렵다. 이번 실습은 controller 적용�
 <p>DispatcherServlet 에서 가장 중요한 process메소드에서는 가장 먼저 클라이언트의 요청 uri로부터 path정보를 추출하고 있는데, 추출된 path는 uri문자열에서 마지막 /xxx.do 문자열이다. 그리고 추출된 path문자열에 따라 복잡한 분기 처리 로직이 실행된다.</p>
 <p>기존의 JSP파일에서 각 분기처리 로직을 추출하여 DispatcherServlet에 추가하고 기능을 하나씩 구현하면 된다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H2>3.3 로그인 기능 구현하기</H2>
+<p>로그인 기능을 MVC로 변환하려면 login.jsp 파일의 form엘리먼트의 action속성값을 login.do로 수정한다. *.do 형태의 요청에 대해서만 DispatcherServlet이 동작하기 때문이다.</p>
+<p>그리고 login_proc.jsp 파일에 있는 모든 자바 로직을 복사하여 DispatcherServlet에 추가한다.</p>
 
 <H3></H3>
 <p></p>
