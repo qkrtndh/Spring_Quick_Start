@@ -126,6 +126,17 @@ controller 구조가 복잡하고 어렵다. 이번 실습은 controller 적용�
 <p>DispatcherServlet 클래스가 만들어지는 순간 WEB-INF/web.xml 파일에 서블릿 관련 설정이 자동으로 추가된다. 이 설정에서 description과 display-name은 의미 없는 설정이므로 삭제한다.</p>
 <p>(책 참조p.266) 현 설정은 클라이언트의 모든 *.do요청을 DispatcherServlet 클래스의 객체가 처리한다는 설정이다. 확장자 do는 언제든지 다른 이름으로 변경할 수 있다.</p>
 
+<H3>3.2.2 Controller 서블릿 구현</H3>
+<p>서블릿 클래스가 만들어질 때 자동으로 추가되는 주석들은 모두 제거하고DispatcherServlet 클래스가 Controller 기능을 수행하도록 구현한다.</p>
+<p>DispatcherServlet 에는 GET방식을 처리하는 doGet메소드와 POST방식을 처리하는 doPost 메소드가 재정의 되어있다. 하지만 어떤 방식으로 요청하든 process 메소드를 통해 클라이언트의 요청을 처리한다.</p>
+<p>POST 방식의 요청에 대해서 doPost 메소드가 호출되는데 이때 한글이 깨지지 않도록 인코딩처리를 추가한다. 이제 글 등록, 수정 작업에서 한글 데이터가 깨지는 일은 발생하지 않는다. 인코딩작업을 DispatcherServlet 에서 처리하므로 인코딩을 변경시 해당 파일만 수정하면 된다.</p>
+<p>DispatcherServlet 에서 가장 중요한 process메소드에서는 가장 먼저 클라이언트의 요청 uri로부터 path정보를 추출하고 있는데, 추출된 path는 uri문자열에서 마지막 /xxx.do 문자열이다. 그리고 추출된 path문자열에 따라 복잡한 분기 처리 로직이 실행된다.</p>
+<p>기존의 JSP파일에서 각 분기처리 로직을 추출하여 DispatcherServlet에 추가하고 기능을 하나씩 구현하면 된다.</p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
