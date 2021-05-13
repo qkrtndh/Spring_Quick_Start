@@ -302,9 +302,11 @@ INFO : org.springframework.web.servlet.DispatcherServlet - FrameworkServlet 'act
 하지만 필요에 따라 설정파일의 이름을 바꾸거나 위치를 변경할 수 있다. 이때 서블릿 초기화 파라미터를 사용한다.</p>
 <p>(책 참조)</p>
 
-<H2>5.4</H2>
-<p></p>
-<p></p>
+<H2>5.4 인코딩 설정</H2>
+<p>web.xml 파일에 DIspatcherServlet 클래스를 등록했으면 마지막으로 인코딩 설정과 관련된 필터 클래스를 추가해보자. 현 상태에서 Spring MVC를 적용하여 글 등록이나 수정기능을 구현하면 한글을 처리하지 못하고 깨진다. 이는 web.xml에 등록된 DIspatcherServlet클래스를 우리가 만든것이 아니기 때문이다.</p>
+<p>스프링에서는 인코딩 처리를 위해 CharacterEncodingFilter 클래스를 제공하며 web.xml파일에 필터를 등록하면 모든 클라이언트 요청에 대해 일괄적으로 인코딩 처리를 할 수 있다.</p>
+<p>필터는 엘리먼트 이름만 다를 뿐 서블릿과 거이 같은 형태로 등록한다. 따라서 필터이름으로 등록한 필터객체가 생성되거 나면 init-param으로 설정한 인코딩 파라미터 정보를 읽어 인코딩 방식을 설정한다
+그리고 필터 매핑에서 url-pattern설정ㅇ  *.do로 했으므로 모든 크라이언트의 .do요청에 대해 필터객체가 한글을 처리한다.</p>
 
 <H3></H3>
 <p></p>
