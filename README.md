@@ -262,6 +262,25 @@ EL 표션식을 이용해 세션에 board라는 이름으로 저장된 BoardVO �
 <p>getBoard.jsp 파일과 동일하게 import 선언은 모두 삭제되었다. 그리고 JSTL 사용을 위한 taglib 지시문이 추가되었으며
 글 목록을 반복해서 출력하기 위해 사용되었던 for 루프는 JSTL에서 제공하는 c:forEach태그로 대체되었다.</p>
 
+<H2>5. Spring MVC 구조</H2>
+<H3>5.1 Spring MVC 수행 흐름</H3>
+
+![17](https://user-images.githubusercontent.com/65153512/118118231-9ca95780-b427-11eb-8dfc-8cf0ccc3ab93.jpg)
+
+<p>위 그림은 클라이언트의 요청을 싲가으로 Spring MVC를 구성하는 각요소가 어떻게 동작하는지를 표현하였다.</p>
+<p>대부분의 기능이 같으나, Controller의 리턴타입이 String이 아니라 ModelAndView로 바뀐것인데 이는 차차 알보도록 한다.</p>
+
+<H2>5.2 DispatcherServlet 등록 및 스프링 컨테이너 등록</H2>
+<H3>5.2.1DispatcherServlet 등록</H3>
+<p>Spring MVC 적용에서 가장 먼저 해야할 일은 WEB-INF/web.xml 파일에 등록된 DispatcherServlet클래스를 스프링 프레임워크에서 제공하는 것으로 변경하는 것이다.</p>
+<p>크게 달라진 것은 없지만 login.jsp를 실행하고 do요청을 위해 로그인을 하면</p>
+
+~~~
+정보: Initializing Spring FrameworkServlet 'action'
+INFO : org.springframework.web.servlet.DispatcherServlet - FrameworkServlet 'action': initialization started
+~~~
+<p>login.do 요청을 서버에 전달하면 서블릿 컨테이너는 web.xml파일에 action이라는 이름으로 등록된 DispatcherSelvet클래스의 객체를 생성한다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
