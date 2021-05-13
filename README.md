@@ -296,3 +296,20 @@ INFO : org.springframework.web.servlet.DispatcherServlet - FrameworkServlet 'act
 <H3>5.2.3 스프링 설정파일등록</H3>
 <p>현재 상태에서는 dispatcher가 스프링 컨테이너를 구동할 때 무조건 /WEB-INF/action-servlet.xml 파일을 찾아 로딩한다. 해당 위치에 파일이 없어 FileNotFoundException이 발생한다. DispatcherServlet은 스프링 컨테이너를 구동할 때 web.xml파일에 등록된 DispatcherServlet이름이 dispatcher엿다면 /WEB-INF/dispatcher-servlet.xml 파일을 찾았을 것이다.</p>
 <p>이제 DispatcherServlet 이 스프링 컨테이너를 구동할 때 로딩할 스프링 설정 파일을 추가한다.</p>
+
+<H2>5.3 스프링 설정 파일 변경</H2>
+<p>DispatcherServlet은 자신이 사용할 객체를 생성하기 위해 스프링 컨테이너를 구동한다. 이때 스프링 컨테이너를 위한 설정 파일의 이름과 위치는 서블릿 이름을 기준으로 자동으로 결정된다
+하지만 필요에 따라 설정파일의 이름을 바꾸거나 위치를 변경할 수 있다. 이때 서블릿 초기화 파라미터를 사용한다.</p>
+<p>(책 참조)</p>
+
+<H2>5.4</H2>
+<p></p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
