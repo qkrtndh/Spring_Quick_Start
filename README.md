@@ -27,6 +27,28 @@
 <p>스프링에서는 @RequestMapping을 이용하여 HanderMapping 설정을 대체한다.
 이 설정은 클라이언트로부터 /insertBoard.do 라는 요청이 있을 때, insertBoard 메소드를 매핑하겠다는 설정이다. 여기서 @RequestMapping의 value 속성은 생략할 수 있으며, 특별한 경우가 아니면 대부분 생략한다.</p>
 
+<H2>1.4 클라이언트 요청 처리</H2>
+<p>대부분 Controller는 사용자의 입력 정보를 추출하여 VO 객체에 젖아한다. 그리고 비즈니스 컴포넌트의 메소드를 호출할때 VO객체를 인자로 전달한다.
+사용자 입력 정보는 HttpServletRequest 의 getParameter메소드를 사용하여 추출한다. 따라서 InsertBoardController를 위와 같이 작성하고 실행해도 글 등록 작업은 정상처리된다.</p>
+<p>문제는 사용자가 입력하는 정보가 많거나 변경되는 상황으로,사용자입력 정보가 많으면 그만큼의 자바 코드가 필요하고 Controller클래스가 수정되어야 한다.</p>
+<p>하지만 Command 객체를 이용하면 이런 문제를 모두 해결할 수 있다. Command객체는 Controller 메소드 매개변수로 받은 vo객체라고 보면 된다. InsertBoardController클래스의 insertBoard메소드르 Command객체를 이용하여 구현한다.</p>
+
+<br />
+<p>insertBoard메소드의 매개변수로 사용자가 입력한 값을 매핑할 BoardVO 클래스 선언하면, 스프링 컨테이너가 insertBoard메소드를 실행할 때 Command 객체를 생성하여 넘겨준다. 이때 사용자가 입력한 값들을 Command 객체에 세팅까지 해서 넘겨준다. 결과적으로 사용자 입력 정보 추출과 VO객체 생성, 값 설정을 모두 컨테이너가 자동으로 처리한다.</p>
+<p>스프링 컨테이너가 사용자 입력값을 Command 객체에 자동으로 설정하는 과정을 이해하기 위해 서블릿 컨테이너의 동작 방식을 살펴본다.</p>
+
+![20](https://user-images.githubusercontent.com/65153512/118351526-81f5f080-b597-11eb-9531-782841eacaf0.jpg)
+
+<p>서블릿 객체는 서블릿 컨테이너가 생성한다. 그리고 service,doGet,doPost메소드도 서블릿 컨테이너가 호출한다, 이때 메소드가 정상 호출되려면 HttpServletRequest와 HttpServletResponse 객체가 필요한데, 이 객체들도 서블릿 컨테이너가 생성해서 넘겨준다.
+결국 serviece 메소드는 매개변수로 받은 HttpServletRequest 객체를 통해 다양한 요청 처리를 구현할 수 있다.</p>
+<p>아래 그림은 서버에 insertBoard.do 요청을 전달할때 스프링 컨테이너가 @Controller가 붙은 모든 컨트롤러 객체르 ㄹ생성하고 insertboardcontroller가 가진 insertVBoard메소드를 실행하고 BoardVO객체를 스프링 컨테이너가 생성하여 전달하는 과정이다.</p>
+
+![21](https://user-images.githubusercontent.com/65153512/118351614-ef098600-b597-11eb-81e6-864b633703ea.jpg)
+
+<p>Form 태그안의 파라미터 이름과 Command 객체의 setter 메소드 이름이 반드시 일치해야 한다. 즉 각 파라미터 이름에 해당하는 메소드들이 있어야 setter 인젝션에 의해 자동으로 사용자 입력값이 저장된다.</p>
+
+![22](https://user-images.githubusercontent.com/65153512/118351612-edd85900-b597-11eb-9e20-6b2adcf4732c.jpg)
+
 <H3></H3>
 <p></p>
 <p></p>
