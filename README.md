@@ -358,6 +358,30 @@ JSP파일에서는 세션이 아닌 HttpServletRequest로부터 꺼낼 수 있�
 <H2>6.6~8 글 수정,삭제,로그아웃 기능 구현하기</H2>
 <p>기존 Controller를 수정하고, 설정파일에 매핑정보를 추가한다.</p>
 
+<H2>6.9 ViewResolver 활용하기</H2>
+<p>우리는 스프링 설정 파일인 presentation-layer.xml에 HandlerMapping, Controller 클래스를 bean등록하여 Spring 컨테이너가 객체 생성하도록 하였다. 아직 ViewResolver를 적용하지 않았는데 이를 이용하면 클라이언트로부터의 직접적인 JSP호출을 찯나할 수 있어서 대부분의 웹 프롲게트에서 거의 필수적으로 사용한다
+여러가지 종류가 있지만 JSP를 View로 사용하는 경우 InternalRewourceViewResolver를 사용한다.</p>
+<p>클라이언트 브라우저에서 JSP파일을 직접 호출할때의 문제를 살펴본다.
+게시글 목록을 화면을 제공하는 getBoardList.jsp 파일을 브라우저에 직접 호출하면 오류는 발생하지 않지만 아무 데이터도 출력되지 않는다.</p>
+
+<br />
+<p>getBoardList.jsp 파일이 생성되기 전에 게시글 목록을 검색하는 GetBoardListController가 실행되지 않았기 때문이다. 따라서 사용자가 직접호출하면 에러가 발생하고 GetBoardListController부터 실행하도록 제어해야 하는데 이때 ViewResolver를 사용한다.</p>
+<p></p>
+
+<H3>6.9.1 ViewResolver 적용</H3>
+<p>먼저 /WEB-INF/board/폴더를 생성하고 기존의 목록 화면과 상세화면에 해당하는 getBoardList.jsp와 getBoard.jsp 파일을 이동시킨다. WEB-INF 폴더는 절대 브라우저에서 접근할 수 없다. 하디만 InternalResourceViewResolver를 다음과같이 설정하면 View화면으로 사용할 수 있다. 결과적으로 직접적인 JSP호출을 차단하게 된다.</p>
+<p>로그인 기능을 실행하면 잘 실행되던 프로그램이 실행되지 않는다. 로그인 실패시 /WEB-INF/board/login.jsp.jsp 파일을 실행하고, 성공하면 /WEB-INF/board/getBoardList.do.jsp 라는 파일을 실행하기 때문이다.</p>
+
+<H3>6.9.2 Controller 수정</H3>
+<p>ViewResolver를 적용했을 때 ModelAndView 객체에 저장되는 View이름은 ViewResovler설정을 고려하여 등록해야 한다. 따라서 앞에서 작성한 LoginController 클래스의 화면 내비게이션 코드를 수정한다.</p>
+<p>로그인에 성공하거나 실패했을 때 View이름 앞에 redirect: 를 붙여서 지정해야 한다. 이렇게 하면 ViewResolver가 설정되어 있더라도 이를 무시하고 리다이렉트 한다. 로그인에 성공했을때 실행되는 GetBoardListContoller에서 확장자 .jsp는 제거한다.</p>
+<p>InternalResouveViewResolver를 등록했을 때는 모든 View이름에서 확장자 .jsp를 제거해야한다. 그리고 확장자가 .do인 요청은 앞에 redirect: 를 붙여 ViewResolver가 동작하지 않도록 해야 한다.
+마지막으로 로그아웃 후 로그인 화면으로 이동하도록 redirect:login.jsp 로 처리한다.</p>
+
+
+<H3></H3>
+<p></p>
+<p></p>
 
 <H3></H3>
 <p></p>

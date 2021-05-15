@@ -17,7 +17,7 @@ public class LogoutController implements org.springframework.web.servlet.mvc.Con
 
 		//2. 세션 종료후 메인화면 이동
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("login.jsp");
+		mav.setViewName("redirect:login.jsp");
 		return mav;
 	}
 

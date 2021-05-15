@@ -24,11 +24,12 @@ public class InsertBoardController implements org.springframework.web.servlet.mv
 		vo.setWriter(writer);
 		vo.setContent(content);
 		
-		
+		BoardDAO boardDAO = new BoardDAO();
+		boardDAO.insertBoard(vo);
 		
 		//3. 화면 네비게이션
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getBoardList.do");
+		mav.setViewName("redirect:getBoardList.do");
 		return mav;
 	}
 

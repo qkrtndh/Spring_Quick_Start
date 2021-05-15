@@ -17,7 +17,11 @@
 			</props>
 		</property>
 	</bean>
-	
+	<!-- ViewResolver등록 -->
+	<bean id = "viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/board/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
 	<!-- Controller 등록 -->
 	<bean id="login" class="com.springbook.view.user.LoginController"></bean>
 	<bean id="getBoardList" class="com.springbook.view.board.GetBoardListController"></bean>
