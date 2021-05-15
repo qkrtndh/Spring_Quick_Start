@@ -1,4 +1,4 @@
-package com.springbook.view.board;
+package com.springbook.view.user;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
