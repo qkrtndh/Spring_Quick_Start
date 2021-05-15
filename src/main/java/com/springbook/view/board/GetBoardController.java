@@ -26,7 +26,7 @@ public class GetBoardController implements org.springframework.web.servlet.mvc.C
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("board", board);
-		mav.setViewName("getBoard");
+		mav.setViewName("getBoard.jsp");
 		return mav;
 	}
 	

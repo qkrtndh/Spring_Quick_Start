@@ -49,6 +49,17 @@
 
 ![22](https://user-images.githubusercontent.com/65153512/118351612-edd85900-b597-11eb-9e20-6b2adcf4732c.jpg)
 
+<H1>2. 어노테이션으로 게시판프로그램 구현하기</H1>
+<H2>2.1 글 등록 기능 구현하기</H2>
+<p>InsertBoardController 클래스에서 리턴타입과 매개변수를 수정한다.</p>
+<p>글 등록 처리가 성공한 후에는 글 목록읓 출력해야 한다. 따라서 GetBoardListController를 실행시키기 위해 리턴값을 String으로 수정하고 getBoardList.do를 리턴한다.
+그리고 사용자 입력값을 Command객체로 받기 위해 BoardVO클래스를 매개변수로 선언했고, DB연동 처리를 위해 BoardDAO도 매개변수로 선언했따. DAO 객체 역시 Command객체와 마찬가ㅣㅈ로 매개변수로 선언하면 스프링 컨테이너가 객체를 생성하여 전달해준다.</p>
+
+<H2>2.2 글 목록 검색 구현하기</H2>
+<p>GetBoardListController 역시 @Controller, @RequestMapping 을 이용하여 구현한다.
+getBoardList 메소드는 세 개의 매개변수를 선언했는데, 첫 번째가 사용자 입력값을 받기 위한 BoardVO 클래스이고, 두 번째가 DB연동 처리를 위한 BoardDAO 클래스이다. 그리고 마지막으로 검색결과와 화면 정보를 저장하여 리턴하기 위한 ModelAndView를 매개변수로 선언하여 컨테이너가 생성하도록 처리했다.</p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
