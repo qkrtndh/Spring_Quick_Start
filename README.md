@@ -308,9 +308,27 @@ INFO : org.springframework.web.servlet.DispatcherServlet - FrameworkServlet 'act
 <p>필터는 엘리먼트 이름만 다를 뿐 서블릿과 거이 같은 형태로 등록한다. 따라서 필터이름으로 등록한 필터객체가 생성되거 나면 init-param으로 설정한 인코딩 파라미터 정보를 읽어 인코딩 방식을 설정한다
 그리고 필터 매핑에서 url-pattern설정ㅇ  *.do로 했으므로 모든 크라이언트의 .do요청에 대해 필터객체가 한글을 처리한다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H1>6. Spring MVC 적용</H1>
+<H2>6.1 Spring MVC 적용 준비</H2>
+<p>본격적으로 Spring MVC를 적용하기에 앞서 직접 개발했던 Controller 관련 파일들을 모두 삭제한다.
+삭제된 클래스들을 스프링에서 제공하는 클래스로 제공하면서 SpringMVC의 흐름과 문법을 정리한다.
+가장먼저 com,springbook.view.controller 패키지를 삭제한다.</p>
+<p>com,springbook.view.controller 패키지를 삭제하면 com,springbook.view의 하위 패키지들의 Controller 클래스들이 컴파일 되지 않는다.
+기존의 모든 Controller 클래스들은 스프링에서 제공하는 인터페이스로 구현해야 한다.</p>
+<p>스프링이 제공하는 Controller 인터페이스도 우리가 만든것과 크게 다르지 않지만, handlerRequest 의 리턴 타입이 String이 아닌 ModelAndView 라는 점이 다르다.
+우리가 작성한 Controller의 리턴 타입을 바꿔주기만 하면 된다.</p>
+
+<H2>6.2 로그인 기능 구현</H2>
+<H3>6.2.1 LoginController rngus</H3>
+<p>로그인 기능은 기존에 작성한 LoginController 클래스를 수정한다.</p>
+<p>기존의 LoginController 클래스에서 handleRequest 메소드의 리턴타입을 수정하고, 로그인 성공과 실패시의 화면 정보를 ModelAndView 객체에 저장하여 리턴한다.</p>
+
+<H3>6.2.2 HandlerMapping 등록</H3>
+<p>작성된 LoginController가 클라이언트의 /login.do 요청에 대해 동작하려면 스프링설정파일인 presentation-layer.xml에 HandlerMapping과 LoginController를 bean 등록 해야 한다.</p>
+<p>SimplerUrlHandlerMapping 객체는 Setter 인젝션을 통해 Properties 타입의 컬렉션 객체를 의존성 주입 하고 있다. 의존성 주입된 properties 컬렉션에는 /login.do 경로 요청에 대해 아이디가 login인 객체가 매핑되어 있다.
+그리고 LoginController 클래스를 bean 등록하는데, 반드시 SimpleurlHandlerMapping 에서 /login.do 키값으로 매핑한 값과 같은 아이디로 등록한다.</p>
+<p>SimpleUrlHandlerMapping의 기능은 우리가 직접 구현한 HandlerMapping과 Properties대신 HashMap을 사용한것을 제외하면 같다.
+서버를 구동하면 로그인 실패가 가능하지만 성공시 getBoardList.do요청에 대한 매핑정보가 없어 404에러가 출력된다.</p>
 
 <H3></H3>
 <p></p>
