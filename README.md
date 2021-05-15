@@ -330,6 +330,35 @@ INFO : org.springframework.web.servlet.DispatcherServlet - FrameworkServlet 'act
 <p>SimpleUrlHandlerMapping의 기능은 우리가 직접 구현한 HandlerMapping과 Properties대신 HashMap을 사용한것을 제외하면 같다.
 서버를 구동하면 로그인 실패가 가능하지만 성공시 getBoardList.do요청에 대한 매핑정보가 없어 404에러가 출력된다.</p>
 
+<H2>6.3 글 목록 검색 기능 구현</H2>
+<H3>6.3.1 GetBoardListController 구현</H3>
+<p>글 목록출력을 위해 기존의 GetBoardListController 클래스를 수정한다.</p>
+<p>주목할 부분은 검색 결과를 세션이 아닌 ModelAndView 객체에 저장하고 있다는 것이다.
+세션은 클라이언트 브라우저 하나당 하나씩 서버 메모리에 생성되어 클라이언트의 상태 정보를 저장하기 위해 사용된다.
+따라서 세션에 많은 정보가 저장되면 서버에 부담이 된다.</p>
+<p>그러므로 검색결과는 세션이 아닌HttpServletRequest 객체에 저장하는것이 맞다. HttpServletRequest는 클라이언트의 요청으로 생성되었다가 응답 메세지가 클라이언트로 전송되면
+자동으로 삭제되는 일회성객체이므로 HttpServletRequest 객체에 저장하여 공유하면 서버에 부담없이 데이터를 공유할 수 있다.</p>
+<p>하지만 GetBoardListController는 검색결과를 ModelAndView에 저장하고있다. ModelAndView는 Model과 View를 모두 저장하여 리턴할 때 사용한다.</p>
+<p>DispatcherSerlvet은 Controller가 리턴한 ModelAndView객체에서 Model정보를 추출한 다음 HttpServletRequest 객체에 검색 결과에 해당하는 Model 정보를 저장하여 JSP로 포워딩한다.
+JSP파일에서는 세션이 아닌 HttpServletRequest로부터 꺼낼 수 있다.</p>
+
+<H3>6.3.2 HandlerMapping 등록</H3>
+<p>GetBoardListController 객체가 /getBoardList.do 요청에 동작할 수 있도록, SimpleUrlHandlerMapping에 정보를 추가하면 된다.</p>
+
+![19](https://user-images.githubusercontent.com/65153512/118348132-1efa5e80-b583-11eb-8dc4-64130dec8160.jpg)
+
+<H2>6.4 글 상세 조회 기능 구현</H2>
+<H3>6.4.1 GetBoardController 구현</H3>
+<p>GetBoardController를 수정하고, 스프링 설정파일에 매핑정보를 추가한다..</p>
+
+<H2>6.5 글 등록기능 구현하기</H2>
+<H3>6.5.1 InsertBoardController 구현</H3>
+<p>InsertBoardController클래스를 수정한다. 이후 설정파일에 매핑 정보를 추가한다.</p>
+
+<H2>6.6~8 글 수정,삭제,로그아웃 기능 구현하기</H2>
+<p>기존 Controller를 수정하고, 설정파일에 매핑정보를 추가한다.</p>
+
+
 <H3></H3>
 <p></p>
 <p></p>

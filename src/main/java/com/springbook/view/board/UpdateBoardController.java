@@ -3,14 +3,15 @@ package com.springbook.view.board;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.impl.BoardDAO;
-import com.springbook.view.controller.Controller;
 
-public class UpdateBoardController implements Controller{
+public class UpdateBoardController implements org.springframework.web.servlet.mvc.Controller{
 
 	@Override
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("글 수정 처리");
 		//1. 사용자 입력 정보 추출
 		
@@ -28,7 +29,9 @@ public class UpdateBoardController implements Controller{
 		boardDAO.updateBoard(vo);
 		
 		//3. 화면 네비게이션
-		return "getBoardList.do";
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getBoardList.do");
+		return mav;
 	}
 
 }
