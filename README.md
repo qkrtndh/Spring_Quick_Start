@@ -106,15 +106,23 @@ logoinview 메소드가 실행된다. login,jsp화면이 브라우저에 출력�
 
 ![23](https://user-images.githubusercontent.com/65153512/118357264-2dad3980-b5b4-11eb-9532-1e2e0c9ca038.jpg)
 
-<H3>2.10 Servlet API 사용</H3>
+<H2>2.10 Servlet API 사용</H2>
 <p>Controlle 메소드에서 사용자가 입력한 정보를 추출하기 위해 HttpServletRequest 대신 Command객체를 사용했다. 하지만 HttpServletRequest객체가 사용자 입력값을 추출할 때만 사용되는 것은 아니다.
 HttpServletRequest가 객체가 제공하는 다양한 메소드를 이용하여 Controller를 구현해야 할 때는 HttpServletRequest객체를 매개변수로 받아야 한다.
 스프링 MVC에서는 Controller 메소드 매개변수로 다양한 Servlet API를 사용할 수 있도록 지원한다.</p>
 <p>HttpSession 객체를 매개변수로 받아서 로그인 성공 시에 사용자 이름을 세션에 저장하고, 글 목록 화면에서 출력해보기 위해 LoginController를 수정한다. 이후 getBoardList.jsp에서 출력해본다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H2>2.11 Controller의 리턴타입</H2>
+<p>Controller에 메소드를 정의할 떄, 리턴타입은 개발자 마음대로 결정할 수 있다. String은 완벽한 View이름을 문자열로 리턴한다는 뜻이고, ModelAndView로 설정하면 검색된 Model데이터와 View이름을 모두 저장하여 리턴하겠다는 의미이다.</p>
+
+<p>다음은 ModelAndView와 String을 리턴타입으로 사용한 경우를 비교한 것이다.</p>
+
+![24](https://user-images.githubusercontent.com/65153512/118357575-c8f2de80-b5b5-11eb-8361-a7b5d5aa3c90.jpg)
+
+<p>실행 결과는 같지만 대부분 프로젝트는 일관성있는 코드를 중요하게 생각하므로 리턴타입을 하나로 통일하여 사용하며, String을 사용하는 것이 더 간결하기 때문에 대부분 String으로 통일한다.</p>
+<p>BoardController의 getBoard와 getBoardList 메소드를 수정한다.</p>
+<p>String으로 리턴타입을 변경했으므로 ModelAndView객체를 사용할 필요가 없다. 그리고 View정보를 ModelAndView에 저장하지 않고 리턴하고 있는데, 이렇게 View이름이 문자열로 리턴되면 스프링 컨테이너는 리턴된 JSP 파일을 찾아 실행한다.</p>
+<p>매개변수가 Model로 변경되었는데, MAV에 저장했던 결과는 이제 Model에 저장한다. MAV는 Model과 View정보를 모두 저장하여 리턴할때 사용하지만, JSP화면에서 검색결과를 출력하려면 Model을 사용해야한다. 저장된 정보는 MAV와 동일하게 JSP화면에서 사용할 수 있다.</p>
 
 <H3></H3>
 <p></p>

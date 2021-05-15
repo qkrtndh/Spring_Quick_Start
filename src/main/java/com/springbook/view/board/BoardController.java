@@ -1,6 +1,7 @@
 package com.springbook.view.board;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,18 +34,17 @@ public class BoardController {
 
 	//글 상세 조회
 	@RequestMapping("/getBoard.do")
-	public ModelAndView getBoard(BoardVO vo, BoardDAO boardDAO, ModelAndView mav) {
-		mav.addObject("board", boardDAO.getBoard(vo));
-		mav.setViewName("getBoard.jsp");
-		return mav;
+	public String getBoard(BoardVO vo, BoardDAO boardDAO, Model model) {
+		//모델 정보 저장
+		model.addAttribute("board",boardDAO.getBoard(vo));
+		return "getBoard.jsp";
 	}
 	
 	//글 목록
 	@RequestMapping("/getBoardList.do")
-	public ModelAndView getBoardList(BoardVO vo, BoardDAO boardDAO, ModelAndView mav) {
-		
-		mav.addObject("boardList",boardDAO.getBoardList(vo));//Model 정보 저장
-		mav.setViewName("getBoardList.jsp"); //View 정보 저장
-		return mav;
+	public String getBoardList(BoardVO vo, BoardDAO boardDAO, Model model) {
+		//모델 정보 저장
+		model.addAttribute("boardList",boardDAO.getBoardList(vo));
+		return "getBoardList.jsp";
 	}
 }
