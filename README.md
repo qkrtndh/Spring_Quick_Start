@@ -82,6 +82,44 @@ getBoardList 메소드는 세 개의 매개변수를 선언했는데, 첫 번째
 <p>어노테이션을 이용하여 Controller 클래스를 구현하면 대부분 4~5줄 내외로 간단하게 구현된다. 이렇게 간단하게 구현되는 Controller를 하나의 클래스로 묶어서 처리하면 관리가 더 편할것이다. 따라서 BoardController 클래스를 작성하여 게시판 작성Controller를 통합한다.</p>
 <p>이와같이 BoardController클래스를 구현하면 스프링 컨테이너가 BoardController객체를생성한다. 그리고 클라이언트의 요청 패스에 따라 @RequestMapping 설정된 메소드를 실행한다. 나머지 Controller들을 삭제한다.</p>
 
+<H2>2.9 요청방식에 따른 처리</H2>
+<H3>2.9.1 method 속성</H3>
+<p>@RequestMapping을 이용하면 마치 Servlet처럼 클라이언트의 요청 방식(GET/POST)에 따라 수행될 메소드를 다르게 설정할 수 있다.</p>
+<p>클라이언트가 GET방식으로 입력폼을 요청하면 입력 화면을 보여주고, 입력화면에서 submit버튼을 클릭하여 POST 방식으로 요청하면 클라이언트의 요청을 적절히 처리하고자할 때 이 방법을 사용한다. </p>
+<p>LoginController 클래스에 다음과같이 loginView 메소드를 추가하고 설정을 변경한다.</p>
+<br />
+<p>loginView와 login 두개의 메소드가 선언되어 있고, 둘다 /login.do 요청에 실행되도록 설정했다. 같은 요청에 실행될 메소드가 두개 이므로, 에러가 발생할 수 있다.
+하지만 각기 다르게 처리되도록 method속성을 추가한다.</p>
+<p>클라이언트의 /login.do 요청이 GET방식의 요청이라면 스프링 컨테이너는 loginview 메소드를 실행하고 로그인 화면으로 이동한다. POST 방식으로 요청이 들어오면 login메소드를 실행하여 실직적인 로그인 인증 작업을 처리한다.</p>
+<p>loginview메소드는 로그인화면으로 이동할때 실행되는 메소드로, 사용자가 입력할 값이 아무것도 없는 상태인데 매개변수로 UserVO 객체를 받아들이도록 설정했다.
+논리적으로 맞지 않아보이지만 매개변수로 받은 Command객체에 적절한 데이터를 설정하면 ,리턴된 JSP파일에서 이 데이터를 이용할 수 있다.</p>
+
+<H3>2.9.2 JSP에서 Command 객체 사용</H3>
+<p>Command 객체에 저장된 데이터를 JSP에서 사용하려면 ${}구문을 사용한다.</p>
+<p>테스트를 위한 index.jsp파일을 src/main/webapp 에 작성한다.</p>
+<p>클라이언트가 직접 URL을 입력하거나 하이퍼링크를 클릭하여 요청하면 기본이 GET방식이다. 따라서 index.jsp화면에서 로그인 링크를 클릭하면 서버에 login.do 요청이 전달되고, 이때 GET방식의 요청이 전달되므로
+logoinview 메소드가 실행된다. login,jsp화면이 브라우저에 출력될때 userVO 객체에 저장한 id,password가 자동으로 설정된다.</p>
+
+<H3>2.9.3 @ModelAttribute 사용</H3>
+<p>스프링 컨테이너가 생성하는 Command 객체의 이름은 클래스 이름의 첫 글자를 소문자로변경한 이름이 자동으로 설정된다. 따라서 login.jsp 화면에서 UserVO 객체의 변수에 접근할 때 ${userVO.변수명} 을 사용했다. 
+그런데 Command객체의 이름을 변경하려면 아래와같이 @ModelAttribute를 사용해야 한다.</p>
+
+![23](https://user-images.githubusercontent.com/65153512/118357264-2dad3980-b5b4-11eb-9532-1e2e0c9ca038.jpg)
+
+<H3>2.10 Servlet API 사용</H3>
+<p>Controlle 메소드에서 사용자가 입력한 정보를 추출하기 위해 HttpServletRequest 대신 Command객체를 사용했다. 하지만 HttpServletRequest객체가 사용자 입력값을 추출할 때만 사용되는 것은 아니다.
+HttpServletRequest가 객체가 제공하는 다양한 메소드를 이용하여 Controller를 구현해야 할 때는 HttpServletRequest객체를 매개변수로 받아야 한다.
+스프링 MVC에서는 Controller 메소드 매개변수로 다양한 Servlet API를 사용할 수 있도록 지원한다.</p>
+<p>HttpSession 객체를 매개변수로 받아서 로그인 성공 시에 사용자 이름을 세션에 저장하고, 글 목록 화면에서 출력해보기 위해 LoginController를 수정한다. 이후 getBoardList.jsp에서 출력해본다.</p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
