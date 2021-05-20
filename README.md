@@ -146,6 +146,17 @@ required = 파라미터의 생략 여부
 <p>이 설정은 searchCondition이 필수 파라미터는 아니지만, 정보가 전달된다면 해당 값을 추출하여 condition변수에 할당하고, 파라미터 정보가 전달되지 않았다면 기본값으로 문자열 TITLE을 할당하라는 의미이다.
 @RequestParam을 사용하고 싶지 않다면 BoardVO클래스에 searchCondition,searchKeyword 변수를 추가하고 getter/setter 메소드만 생성하면 처리할 수 있다.</p>
 
+<H3>2.12.2 @ModelAttribute 사용하기</H3>
+<p>앞에서 @ModelAttribute를 controller 메소드의 매개변수로 선언된 Command 객체의 이름을 변경할 때 사용했다.(실제사용은 하지 않음)
+이처럼 Command 객체의 이름을 변경할 목적으로 @ModelAtrribute를 사용할 수 있지만, View(jsp)에서 사용할 데이터를 설정하는 용도로 사용할 수 있다.</p>
+<p>@ModelAtrribute가 설정된 메소드는 @RequestMapping 어노테이션이 적용된 메소드보다 먼저호출된다. 그리고 @ModelAttribute 메소드 실행 결과로 리턴된 객체는 자동으로 Model에 저장된다. 따라서 @ModelAttribute 메소드의 실행 결과로 리턴된 객체를 View 페이지에서 사용할 수 있다.</p>
+<p>searchConditionMap()메소드 위에 @ModelAttribute가 선언되었으므로 getBoardList메소드가 살행되기 전에 먼저실행된다. searchConditinoMap()메소드는 다양한 검색 조건이 저장된 conditionMap을 리턴하는데 이 리턴 결과를 다음에 실행된 getBoardList메소드가 리턴한 jsp에서 사용할 수 있다.</p>
+
+![25](https://user-images.githubusercontent.com/65153512/118974261-92e69d80-b9ad-11eb-812b-5653a35fd5ea.jpg)
+
+<p>이제 getBoardList() 메소드가 리턴한 getBoardList.jsp 파일에서는 Model에 저장된 검색 목록과 글 목록을 모두 사용할 수 있다.
+Model에 저장된 검색 조건 목록을 출력하도록 getBoardList.jsp 파일을 수정한다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
