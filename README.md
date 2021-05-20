@@ -124,9 +124,27 @@ HttpServletRequest가 객체가 제공하는 다양한 메소드를 이용하여
 <p>String으로 리턴타입을 변경했으므로 ModelAndView객체를 사용할 필요가 없다. 그리고 View정보를 ModelAndView에 저장하지 않고 리턴하고 있는데, 이렇게 View이름이 문자열로 리턴되면 스프링 컨테이너는 리턴된 JSP 파일을 찾아 실행한다.</p>
 <p>매개변수가 Model로 변경되었는데, MAV에 저장했던 결과는 이제 Model에 저장한다. MAV는 Model과 View정보를 모두 저장하여 리턴할때 사용하지만, JSP화면에서 검색결과를 출력하려면 Model을 사용해야한다. 저장된 정보는 MAV와 동일하게 JSP화면에서 사용할 수 있다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H2>2.12 기타 어노테이션</H2>
+<H3>2.12.1 @RequestParam 사용하기</H3>
+<p>Command 객체를 이용하면 클라이언트에서 넘겨준 요청 파라미터 정보를 받아낼 수있지만 이를 위해선 반드시 요청 파라미터와 매핑될 변수와 setter 메소드가 command 클래스에 선언 되어 있어야 한다.
+그런데 command 객체에는 없는 파라미터를 controller클래스에서 사용하려면 어떻게 해야 할까?</p>
+<p>SPring MVC에서는 HTTP요청 파라미터 정보를 추출하기 위한 @ReauestParam을 제공한다. 이를 이용하면 Command 클래스에는 없는 파라미터 정보를 추출할 수 있다. 간단한 예제를 통해 @RequestPram의 기능을 확인해보자.</p>
+<p>사용자가 글 목록 화면에서 검색 조건과 검색 키워드를 입력하고 검색 버튼을 클릭하면 "/getBoardList.do"와 매핑된 getBoardList()메소드가 실행된다. 하지만 BoardVO라는 Command객체에는
+searchCondition, searchKeyword라는 변수와 Setter 메소드가 없다. 따라서 BoardVO를 Command 객체로 사용할 수는 없다. 이때 @RequestPram을 사용하면 검색과 관련된 파라미터 정보를 추출할 수 있다. @RequestPram은 HttpServletRequest에서 제공하는 getPrameter 메소드와같은 기능의 어노테이션이라 할 수 있다.
+사용자가 입력한 검색조건과 키워드 정보를 추출하는 BoardController의 getBoardList 메소드를 작성한다.</p>
+
+~~~
+@RequestParam에서 속성의 의미
+
+@RequestParam(value="searchCondition",defaultValue="TITLE",required=false) String condition
+
+value = 화면으로부터 전달될 파라미터 이름
+defaultValue = 화면으로부터 전달될 파라미터 정보가 없을 때 설정할 기본값
+required = 파라미터의 생략 여부
+~~~
+
+<p>이 설정은 searchCondition이 필수 파라미터는 아니지만, 정보가 전달된다면 해당 값을 추출하여 condition변수에 할당하고, 파라미터 정보가 전달되지 않았다면 기본값으로 문자열 TITLE을 할당하라는 의미이다.
+@RequestParam을 사용하고 싶지 않다면 BoardVO클래스에 searchCondition,searchKeyword 변수를 추가하고 getter/setter 메소드만 생성하면 처리할 수 있다.</p>
 
 <H3></H3>
 <p></p>
