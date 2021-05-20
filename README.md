@@ -157,6 +157,26 @@ required = 파라미터의 생략 여부
 <p>이제 getBoardList() 메소드가 리턴한 getBoardList.jsp 파일에서는 Model에 저장된 검색 목록과 글 목록을 모두 사용할 수 있다.
 Model에 저장된 검색 조건 목록을 출력하도록 getBoardList.jsp 파일을 수정한다.</p>
 
+<H3>2.12.3 @SessionAttributes 사용하기</H3>
+<H4>(1) null 업데이트</H4>
+<p>@SessionAttrubutes는 수정 작업을 처리할 때, 유용하게 사용할 수 있는 어노테이션이다. 예를들어 상세화면에서 게시글을 수정할때 수정 버튼을 클리갛면 사용자가 입력한 수정제목과 수정 내용 정보를 가지고 "/updateBaord.do" 요청을 전송할 것이고, BoardController의 updateBoard메소드에서는 사용자가 입력한
+정보를 이용하여 글 수정 작업을 처리한다. 문제는 사용자가 입력한 정보가 제목과 내용 뿐이고, 작성자 정보는 전달되지 않았기 때문에 Command객체인 BaordVO에 writer 정보가 저장되지 않는다.</p>
+<p>현재는 BoardDAO에 updateBoard 메소드가 제목과 내용 정보만 수정하도록 되어있지만, 작성자 컬럼까지 수정하도록 돼어있다면 작성자 파라미터 정보가 전달되지 않으므로 wirter컬럼은 null로 수정된다.
+이런 문제를 해결하기 위해 스프링에서는 @SessionAttribute 어노테이션을 제공한다. 우선 @SessionAttribute를 사용하기 전 상황을 살펴본다. BoardController 클래스에 updateBoard 메소드에서 수정할 작성자 이름을 확인하는 코드를 추가한다. 이후 로그인하여 글 수정 요청을 한다. 콘솔에는 writer 정보가 없으므로 null이 출력된다.</p>
+
+
+<H4>(2) null 업데이트 방지</H4>
+<p>@SessionAttrubutes를 이용하여 writer 칼럼 값이 null로 업데이트 되지 않도록 처리한다. BoardController클래스를 수정한다.
+글목록 화면에서 특정 게시글 제목을 클릭하면 BoardController의 getBoard 메소드가 실행된다. 제목과 내용에 수정할 값을 입력하고 수정버튼을 클릭하면 updateBoard 메소드가 실행된다.
+콘솔에 사용자가 입력한 title, Content 정보뿐만 아니라, wirter, regDate, cnt 파라미터 정보도 모두 설정된것을 확인할 수 있다.</p>
+<p>사용자가 상세 화면을 요청하면 getBoard메소드는 검색결과인 BoardVO객체를 board라는 이름으로 Model에 저장한다. 이때 BoardController 클래스에 선언된 @SessionAttributes("board")설정이 매우 중요하다.
+이는 Model에 board라는 이름으로 저장되는 데이터가 있다면 그 데이터를 세션에도 자동으로 저장하라는 설정이다.</p>
+<p>따라서 getBoard메소드가 실행되어 상세 화면이 출력되면 일차적으로 Model에 board라는 일므으로 BaordVO객체가 저장되고, 세션에도 board라는 이름으로 BoardVO객체가 저장된다. 이 BoardVO객체에는 상세화면에 출력된 모든 정보가 저장되어 있다.
+사용자가 수정버튼을 클릭하면 updateBoard 메소드가 실행된다. 중요한것은 매개변수로 선언된BoardVO 앞에 @ModelAttribute가 추가된단 것이다.</p>
+<p>BoardController의 updateBoard 메소드가 호출될 때 스프링 컨테이너는 우선 @ModelAttribute("board")설정을 해석하여 세션에 board라는 이름으로 저장된
+데이터가 있는지 확인하고 있다면 해당객체를 세션에서 꺼내어 매개변수로 선언된 vo 변수에 할당한다. 그리고 사용자가 입력한 파라미터 값을 vo객체에 할당한다.
+사용자가 입력한 수정정보 값만 새롭게 할당되고 나머지는 상세보기 했을 때 세션에 저장된 데이터가 유지된다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
