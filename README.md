@@ -177,6 +177,79 @@ Model에 저장된 검색 조건 목록을 출력하도록 getBoardList.jsp 파�
 데이터가 있는지 확인하고 있다면 해당객체를 세션에서 꺼내어 매개변수로 선언된 vo 변수에 할당한다. 그리고 사용자가 입력한 파라미터 값을 vo객체에 할당한다.
 사용자가 입력한 수정정보 값만 새롭게 할당되고 나머지는 상세보기 했을 때 세션에 저장된 데이터가 유지된다.</p>
 
+<H1>3. 프레젠테이션 레이어와 비즈니스 레이어 통합</H1>
+<p>지금까지 Spring MVC를 기반으로 개발한 게시판 프로그램의 구조는 다음과 같다.</p>
+
+![26](https://user-images.githubusercontent.com/65153512/119129669-2d101980-ba72-11eb-8a13-a06f91ef038f.jpg)
+
+<p>브라우저에서 버튼이나 하이퍼링크를 클릭하여 서버에 요청을 전송하면, 모든 요청을 서블릿 컨테이너가 생성한 DispatcherSerlvet이 받는다. 그리고 DispatcherServlet은 스프링 컨테이너가 생성한 Controller에게 요청을 전달하고, Controller는 매개변수를 통해 전달된 DAO객체를 이용하여 사용자가 요청한 로직을 처리한다.</p>
+<p>지금까지 개발한 게시판 프로그램의 기능은 이런 순서로 동작한다. 여기에서 중요한 것은 Controller의 모든 메소드가 사용자의 요청을 처리할때 DAO객체를 직접 이용하고 있다는 것이다. 이렇게 개발한다고 해도 실행되지 않거나  심각한 문제가 발생하지 않는다.
+하지만 Controller는 DAO 객체를 직접 이용해서는 안되며, 반드시 비즈니스 컴포넌트를 사용해야 한다.</p>
+
+<H2>3.1 비즈니스 컴포넌트 사용</H2>
+<p>1챕터에서 Spring IoC를 학습하면서 만든 비즈니스 컴포넌트는 VO클래스, DAO 클래스, Service 인터페이스, Service 구현 클래스 등 네 개의 파일로 구성되어 있다.
+우리는 지금까지 게시판 프로그램을 작성하면서 BoardVO와 BoardDAO 클래스만 사용하고 BoardService 인터페이스나 BoardServiceImpl클래스를 사용하지 않았다. </p>
+<p>사실 Controller는 비즨스 컴포넌트를 이용하여 사용자의 요청을 처리해야 하며, 이때 컴포넌트가 제공하는 Serivce 인터페이스를 이용해야 한다. 지금까지 처럼 Controller가 직접 DAO객체의 메소드를 호출하도록 하면 안되며, 이는 여러가지 문제를 일으킨다.
+DAO를 직접 사용하는 것이 어떤 문제를 일으키는지, 해결하기 위한 추가적인 작업을 알아보도록 한다.</p>
+
+<H3>3.1.1 DAO클래스 교체하기</H3>
+<p>Controller 메소드에서 DAO의 메소드를 호출하면 첫 번째 이유는 유지보수 과정에서 DAO클래스를 다른 클래스로 쉽게 교체하기 위해서 이다. 지금은 BoardController의 모든 메소드가 BoardDAO 객체를 매개변수로 받아 DB연동을 처리하고 있다. 그런데 DAO클래스를 기존에 만든 BoardDAOSpring이나 추가될 다른 DAO클래스로 변경하고자 하면
+BoardController의 모든 메소드를 수정해야 한다.</p>
+<p>BoardDAO 클래슬르 사용하는 Controller가 BoardController 클래스 하나면 상관 없지만 여러개라면 해당 클래스들을 모두 열어 일일이 매개변수를 수정해야 한다. 이렇게 비즈니스 컴포넌트가 변경되거나, 새로운 요소가 추가될 때마다 이를 사용하는 Controller의 소스를 매번 수정한다면 유지보수는 어려울 수 밖에 없다.</p>
+<p>비즈니스 컴포넌트가 수정되더라도 이를 사용하는 Controller 는 수정하지 않아도 되도록 하려면 어떻게 해야할까?. 비즈니스 컴포넌트 입장에서 자신을 사용해주는 클라이언트는 Controller이다. 클라이언트가 인터페이스를 통해서 비즈니스 컴포넌트를 이용하면 컴포넌트의 구현 클래스를 수정하거나 다른클래스로 대체해도 이를 사용하는 클라이언트는 수정하지 않아도 된다. 이것이 다형성의 장점이자 객체지향 언어의 중요한 특징이다.</p>
+<p>BoardController의 모든 메소드를 BoardSerivce 컴포넌트의 인터페이스를 사용하도록 수정한다.</p>
+<p>우선 boardService 라는 멤버변수를 선언했고, 변수 위에 @Autowired를 설정했으므로 BoardSerice 타입의 BoardServiceImpl 객체가 의존성 주입된다. 그리고 모든 메소드에서 매개변수로 선언된 BoardDAO를 제거했고, 대신 boardService 변수를 이용해서 비즈니스 컴포넌트를 사용하도록 수정했다.</p>
+<p>이제 BoardServiceImpl 클래스의 멤버변수로 선언된 BoardDAO를 다른 DAO클래스로 얼마든지 변경할 수 있다. BoardServiceImpl 클래스를 열어서 기존의 BoardDAOSpring 타입의 멤버변수를 다음과 같이 수정해보자.</p>
+<p>중요한 것은 이렇게 BoardServiceImpl클래스에서 사용하는 DAO 클래스가변경되어도 클라이언트에 해당하는 BoardController는 수정할 필요가 없다는 것이다. 이제 새로운 DAO클래스가 추가되더라도 Controller를 수정하지 않고 쉽게 적용할 수 있게 되었다.</p>
+
+<H3>3.1.2 AOP 설정 적용하기</H3>
+<p>Controller 메소드에서 DAO의 메소드를 호출하면 안되는 두번째 이유는 AOP 적용 때문이다. 두번째 챕터에서 Spring AOP를 학습했고, 모든 비즈니스 컴포넌트의 메소드에서 공통으로 사용할 기능들을 횡단관심, 즉 어드바이스로 구현했다. 그리고 이 어드바이스가 적절한 시점에서 동작할 수 있도록 AOP 관련 설정을 XML이나 어노테이션으로 처리했다. 하지만 지금까지 게시판 프로그램을 개발하고 동작하면서 어드바이스가 동작하지 않았다.</p>
+<p>횡단 관심에 해당하는 어드바이스가 동작하려면 반드시 Service 구현 클래스의 비즈니스 메소드가 실행되어야 한다. 스프링 설정파일에서 포인트컷 설정 부분을 다시한번 확인하면.</p>
+
+~~~
+XML 설정
+<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz.. *Impl.*(..))"/>
+
+어노테이션 설정
+@Aspect
+public class PointcutCommon{
+	@Pointcut("execution(* com.springbook.biz.. *Impl.*(..))")
+	public void allPointcut(){}
+}
+
+~~~
+
+<p>중요한 것은 포인트컷을 설정할 때 DAO 클래스의 메소드를 지정한 것이 아니라 Service 구현 클래스의 메소드에 설정했다는 것이다. 따라서 우리가 구현한 모든 어드바이스는 반드시 비즈니스 클래스의 메소드가 호출될 때 동작한다. 
+결국 Controller가 매개변수로 DAO 객체를 받아서 DAO의 메소드를 직접 호출하는 현재 상황에서는 AOP로 설정한 어떤 어드바이스도 동작할 수 없다.</p>
+<p>그러면 어떻게 해야 AOP설정이 처리되어 어드바이스들이 동작할 수 있을까? 대부분 비즈니스 컴포넌트는 인터페이스를 가지고 있으며 이 인터페이스만 컴포넌트를 사용하는 클라이언트에 노출한다.
+따라서 비즈니스 컴포넌트를 사요하는 클라이언트는 인터페이스의 추상 메소드를 호출하여 인터페이스를 구현한 Service 구현 객체의 메소드를 실행할 수 있다.
+사실 Spring MVC를 적용하기 이전까지는 모든실습에서 비즈니스 컴포넌트의 기능을 태스트할 때, 다음처럼 처리했기 때문에 어드바이스들이 동작할 수 있었다.</p>
+
+~~~
+
+BoardServiceClient에
+
+//1. spring 컨테이너 구동
+AbstractApplicationContext container = new GenericXmlApplicationContext("applicationContext.xml");
+		
+//2. Spring컨테이너로부터 BopardServiceImpl객체를 Look up한다.
+BoardService boardService = (BoardService) container.getBean("boardService");
+
+~~~
+
+<p>따라서 Controller 클래스는 비즈니스 컴포넌트의 인터페이스 타입의 멤버변수를 가지고 있어야 하며 이 변수에 비즈니스 객체를 의존성 주입해야 한다.
+그러면 Controller 메소드에서는 인터페이스를 통해서 비즈니스 객체의 메소드를 호출할 수 있고 결국 AOP로 설정한 어드바이스들이 동작한다.</p>
+<p></p>
+
+<H3>3.1.3 비즈니스 컴포넌트 의존성 주입하기.</H3>
+<p>지금 상태에서 실행하면 에러가 발생하고 실행되지 않는다. BoardController가 @Autowired로 의존성 주입을 처리하려 하는데, BoardService 타입의 객체가 메모리에 없어서 의존성 주입을 할 수 없다는 에러이다.
+@Autowired어노테이션을 사용하려면 의존성 주입 대상이 되는 객체가 반드시 메모리에 올라가야 한다.</p>
+
+![27](https://user-images.githubusercontent.com/65153512/119135936-00600000-ba7a-11eb-8d70-37bb8f39e0dd.jpg)
+
+<p>BoardController보다 의존서 ㅇ주입될 BoardServiceImpl 객체가 먼저 생성되어 있어야 한다. 하지만 presentation-layer.xml 파일에는 다음과 같이 Controller 객체들만 컴포넌트 스캔하도록 설정되어있기 때문에 BoardServiceImpl객체가 생성되지 않는다.</p>
+<p>결국 Controller 보다 의존성 주입 대상이 되는 비즈니스 컴포넌트를 먼저 생성하려면 비즈니스 컴포넌트를 먼저 생성하는 또 다른 스프링 컨테이너가 필요하다. 그리고 이 컨테이너를 Controller를 메모리에 생성하는 컨테이너보다 먼저 구동하면 된다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
