@@ -290,8 +290,18 @@ src/main/resources/applicationContext.xml
 ![30](https://user-images.githubusercontent.com/65153512/119219287-ab76c500-bb1f-11eb-9ba8-955a08afeb1e.jpg)
 
 
-<H1></H1>
-<p></p>
+<H1>4. 검색기능 추가 구현</H1>
+<p>지금까지 Spring MVC로 게시판 프로그램을 XML 방식과 어노테이션 방식으로 각각 구현해봤다. 이번에는 지금까지 학습한 내용을 토대로 게시글 검색 기능을 구현해본다.</p>
+
+<H2>4.1 검색 정보 추출</H2>
+<H3>4.1.1 검색화면 구성</H3>
+<p>검색기능을 구현하기 위한 화면은 이미 getBoardList.jsp 파일에 구현되어 있다. 검색 조건을 선택하고 검색 키워드를 입력한 후에 검색 버튼을 클릭하면 검색결과가 출력되는 형태이다.</p>
+<p>검색 화면에서 검색 조건과 검색 키워드에 해당하는 파라미터 이름은 searchCondition과 searchKeyword이다. searchCondition 파라미터 값은 사용자가 검색 조건을 제목으로 선택했으면 TITLE이, 내용으로 선택했으면 CONTENT가 설정된다.
+그리고 검색 키워드는 텍스트 필드이므로 사용자가 입력한 값이 직접 파라미터값으로 설정된다. 사용자가 이 두 정보를 적절하게 설정하고 검색 버튼을 클릭하면, 사용자 입력값을 가지고 /getBoardList.do 요청을 서버에 전달한다</p>
+
+<H3>4.1.2 Command 객체 수정</H3>
+<p>getBoardList.do 경로 요청이 서버에 전달되면 스프링 컨테이너는 BoardController에 getBoardList 메소드를 실행한다. 이때, 사용자가 입력한 파라미터 값들을 BoardVO 라는 Command 객체에 자동으로 채운다
+따라서command 객체로 사용할 BoardVO 클래스에 파라미터에 해당하는 멤버변수와 Getter/Setter 메소드를 추가한다.(이전과정에 이미 추가되어 있다.)</p>
 <p></p>
 
 <H3></H3>
