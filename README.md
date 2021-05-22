@@ -247,8 +247,34 @@ BoardService boardService = (BoardService) container.getBean("boardService");
 
 ![27](https://user-images.githubusercontent.com/65153512/119135936-00600000-ba7a-11eb-8d70-37bb8f39e0dd.jpg)
 
-<p>BoardController보다 의존서 ㅇ주입될 BoardServiceImpl 객체가 먼저 생성되어 있어야 한다. 하지만 presentation-layer.xml 파일에는 다음과 같이 Controller 객체들만 컴포넌트 스캔하도록 설정되어있기 때문에 BoardServiceImpl객체가 생성되지 않는다.</p>
+<p>BoardController보다 의존성 주입될 BoardServiceImpl 객체가 먼저 생성되어 있어야 한다. 하지만 presentation-layer.xml 파일에는 다음과 같이 Controller 객체들만 컴포넌트 스캔하도록 설정되어있기 때문에 BoardServiceImpl객체가 생성되지 않는다.</p>
 <p>결국 Controller 보다 의존성 주입 대상이 되는 비즈니스 컴포넌트를 먼저 생성하려면 비즈니스 컴포넌트를 먼저 생성하는 또 다른 스프링 컨테이너가 필요하다. 그리고 이 컨테이너를 Controller를 메모리에 생성하는 컨테이너보다 먼저 구동하면 된다.</p>
+
+<H2>3.2 비즈니스 컴포넌트 로딩</H2>
+<H3>3.2.1 2-Layerd 아키텍처</H3>
+<p>일반적으로 프레임워크 기반의 웹 프로젝트를 보면 두개의 레이어로 나누어 시스템을 개발하는데, 이를 2-Layered 아키텍처 스타일이라고 한다.</p>
+
+![28](https://user-images.githubusercontent.com/65153512/119217520-b3316c00-bb15-11eb-81a6-5402fd84107e.jpg)
+
+<p>이미 이런 구조로 게시판 프로그램으 개발했다. src/main/resources 소스 폴더에는 비즈니스 레이어에 해당하는 설정파일인 applicationContext.xml이 있으며, /WEB-INF/config 폴더에는 프레젠테이션 레이어에 해당하는 설정 파일인 presentation-layer.xml이 있다.</p>
+<p>DispatcherServlet이 생성되어 presentation-layer.xml 파일을 읽고 스프링 컨테이너를 구동하면 Controller 객체들이 메모리에 생성된다 하지만 Controller 객체들이 생성되기전 누군가 먼저 src/main/resources 소스폴더에 applicationContext.xml 파일을 읽어 비즈니스 컴포넌트들을 메모리에 생성해야 한다. 이때 사용하는 클래스가 스프링에서 제공하는 ContextLoaderListener다.</p>
+
+<H3>3.2.2 ContextLoaderListener 등록</H3>
+<p>Listener는 Servlet이나 Filter 클래스와 마찬가지로 web.xml파일에 등록한다. listener 태그하위에 listener-class 태그를 이용하여 스프링에서 제공하는 ContextLoaderListener 클래스를 등록하면 된다.
+중요한 것은 ContextLoaderListener 클래스는 서블릿 컨테이너가 web.xml 파일을 읽어서 구동될 대, 자동으로 메모리에 생성된다. 즉, ContextLoaderListener는 클라이언트의 요청이 없어도 컨테이너가 구동될 때 Pre-Loading 되는 객체이다. web.xml 파일에 ContextLoaderListener 클래스를 등록한다.</p>
+<p>서버를 재구동하여 서블릿 컨테이너가 ContextLoaderListener 객체를 생성하는지 확인해보면 된다. 서버를 재구동하면 FileNotFoundException이 발생하는데, 이는 ContextLoaderListener가  기본적으로 WEB-INF/applicationContext.xml 파일을 읽어 스프링 컨테이너를 구동하기 때문이다.
+따라서 src/main/resources 소스 폴더에 있는 applicationContext.xml 파일을 WEB-INF 폴더에 복사하면 ContextLoaderListener는 해당 XML파일을 읽어 스프링 컨테이너를 정상적으로 구동할 수 있다.
+그런데 이렇게 하면 비즈니스 레이어에 해당하는 스프링 설정 파일이 두곳에 있어서 나중에 관리상 문제가 발생할 수 있다.</p>
+
+~~~
+src/main/resources/applicationContext.xml
+/WEB-INF/applicationContext.xml
+~~~
+
+<p>두곳에 있는 XML 설정 파일중 어떤 파일을 사용해야 할까? 일단은 유지보수 과정에서 비즈니스 컴포넌트를 수정하고 테스트를 진행하기 위해서라도 src/main/resources 소스폴더에 xml파일을 위치시키는 것이 맞을 것이다. 그래야만 src/test/java 소스 폴더에 테스트 클라이언트 프로그램도 실행할 수 있기 때문이다.</p>
+<p>그렇다면 src/main/resources 소스 폴더에 있는 스프링 설정 파일을 어떻게 ContextLoaderListener가 읽어들일 수 있을까?. 다음과 같이 web.xml 파일에 context-param 설정을 추가해야 한다.</p>
+<p>ContextLoaderListener 객체는 context-param으로 등록된 contextConfigLocation파라미터 정보를 읽어 스프링 컨테이너를 구동하도록 프로그램 되어 있다. 서버를 재구동해보면 ContextLoaderListener 객체가 Pre-Loading 되어 스프링 컨테이너를 먼저 구동하고 이때, 비즈니스 컴포넌트 객체들이 생성되는 것을 확인할 수 있다.</p>
+<p>아직 DispatcherServlet은 생성되지 않은 상태로, 아이디와 비밀번호를 입력하고 로그인 버튼을 클릭하면 최초의 .do 요청에 대해서 DispatcherServlet 객체가 생성된다. 실행 확인 후 WEB-INF 폴더의 applicationContext.xml 파일은 삭제한다.</p>
 
 <H3></H3>
 <p></p>
