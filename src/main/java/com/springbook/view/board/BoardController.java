@@ -60,6 +60,9 @@ public class BoardController {
 	//글 상세 조회
 	@RequestMapping("/getBoard.do")
 	public String getBoard(BoardVO vo, Model model) {
+		//NULL check
+		if(vo.getSearchCondition()==null)vo.setSearchCondition("TITLE");
+		if(vo.getSearchKeyword()==null)vo.setSearchKeyword("");
 		//모델 정보 저장
 		model.addAttribute("board",boardService.getBoard(vo));
 		return "getBoard.jsp";

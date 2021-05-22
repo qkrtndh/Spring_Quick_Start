@@ -304,9 +304,11 @@ src/main/resources/applicationContext.xml
 따라서command 객체로 사용할 BoardVO 클래스에 파라미터에 해당하는 멤버변수와 Getter/Setter 메소드를 추가한다.(이전과정에 이미 추가되어 있다.)</p>
 <p></p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H2>4.2 Controller 구현</H2>
+<p>Command 객체로 사용할 BoardVO 클래스를 수정했으면 이제 비즈니스 컴포넌트를 호출하는 BoardController 클래스를 수정해야 한다. 
+클라이언트가 입력한 검색 조건과 검색 키워드 정보는 BoardVO 객체에 자동으로 설정되어 전달된다. 문제는 전달되지 않았을 때이다. </p>
+<p>로그인 후 getBoardList.do 요청이 전달되거나 글목록 링크를 클리갛여 getBoardList.do 요청을 서버에 전달하면 검색 조건과 키워드 정보는 전달되지않아 BoardVO 객체의 searchCondition과 searchKeyword 변수에는 null이 설정된다.
+따라서 이때는 기본값을 적절하게 설정하여 비즈니스 컴포넌트에 전달해야 하므로 null에대한 체크로직을 추가한다.</p>
 
 <H3></H3>
 <p></p>
