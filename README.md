@@ -310,6 +310,20 @@ src/main/resources/applicationContext.xml
 <p>로그인 후 getBoardList.do 요청이 전달되거나 글목록 링크를 클리갛여 getBoardList.do 요청을 서버에 전달하면 검색 조건과 키워드 정보는 전달되지않아 BoardVO 객체의 searchCondition과 searchKeyword 변수에는 null이 설정된다.
 따라서 이때는 기본값을 적절하게 설정하여 비즈니스 컴포넌트에 전달해야 하므로 null에대한 체크로직을 추가한다.</p>
 
+<H2>4.3 DAO 클래스 수정</H2>
+<p>BoardController 클래스를 수정했으면 이제 실질적으로 데이터베이스 연동 처리를 담당하는 DAO 클래스를 수정하면 된다. 현재 두개의 DAO 클래스가 있으므로 둘 다 수정한다.</p>
+<p></p>
+
+<H3>4.3.1 BoardDAO 클래스 수정</H3>
+<p>JDBC 기반의 BoardDAO클래스를 수정한다.</p>
+<p>BoardDAO 클래스에서 가장 먼저 수정해야할 코드는 SQL 명령어이다. 기존의 글 목록을 조회하는 쿼리는 Board테이블의 모든 게시글을 조회하는 단일 쿼리였다. 따라서 검색 조건 파라미터 값이 TITLE이냐 CONTENT이냐에 따라 다른 쿼리가 동작할 수 있도록 두 개로 나눠야 한다.
+제목이나 내용에 검색 키워드가 포함된게시글 목록만 조회할 수 있도록 LIKE 연산자를 이용하여 조건절을 추가해야 한다</p>
+<p>두번째는 getBoardList 메소드에 대한 수정이다. 매개변수로 받은 BoardVO 객체에 searchCondition 변수값이 TITLE이냐 CONTENT이냐에 따라 적절한 쿼리문이 실행되도록 분기 처리 로직을 추가해야 한다. 그리고 어떤 쿼리가 실행되든 검색 키워드에 해당하는 ?가 추가되기 때문에 serachKeyword 변숫값을 반드시 해당 물음표에 설정해야 한다.</p>
+
+<H3>4.3.2 BoardDAOSpring 클래스 수정</H3>
+<p>Spring JDBC를 이용하여 DB연동을 처리한 BoardDAOSpring 클래스를 수정한다.</p>
+<p>기본적인 구성은 BoardDAO 클래스와 같다. 다만 키워드 설정을 위해 Object 배열을 사용하는것이 차이점이 있다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
