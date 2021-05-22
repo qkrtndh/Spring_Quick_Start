@@ -324,6 +324,52 @@ src/main/resources/applicationContext.xml
 <p>Spring JDBC를 이용하여 DB연동을 처리한 BoardDAOSpring 클래스를 수정한다.</p>
 <p>기본적인 구성은 BoardDAO 클래스와 같다. 다만 키워드 설정을 위해 Object 배열을 사용하는것이 차이점이 있다.</p>
 
+<H1>5. 파일 업로드</H1>
+<H2>5.1 파일 업로드 처리</H2>
+<H3>5.1.1 파일 업로드 입력 화면</H3>
+<p>게시판 프로그램에 파일 업로드 기능을 추가히기 위해서 글 등록 화면을 수정한다</p>
+<p>글 등록 화면에서 파일을 업로드할 수 있게 만들기 위해서 form 태그에 enctype 속성을 추가하고, 속성값을 멀티파트 형식인 multipart/form-data로 지정해야 한다
+그리고 file 타입의 input 태그를 추가하여 업로드할 파일을 선택할 수 있도록 화면을 수정한다.</p>
+<p>이렇게 insertBoard.jsp 파일을 수정하고 나서 브라우저에서 글 등록 화면을 요청하면 다음 처럼 파일을 업로드할 수 있는 화면이 제공된다. 글 등록 화면에서 찾아보기 버튼을 클릭하면 서버에 업로드할 파일을 선택할 수 있다.</p>
+
+<H3>5.1.2 Command 객체 수정</H3>
+<p>파일 업로드를 추가하기 전에는 사용자가 입력한 데이터는 제목, 작성자, 내용뿐이었다. 하지만 이제 업로드할 파일 정보가 추가되었으므로 Command 객체로 사용하는 BoardVO에 파일 업로드와 관련된 변수를 추가해야 한다.</p>
+<p>BoardVO 클래스 파일을 열어 org.springframework.web.multipart.MultipartFile 타입의 uploadFile 변수를 추가하고 Getter/Setter 메소드를 적절한 위치에 생성해야 한다.</p>
+
+<H3>5.1.3 FileUpload 라이브러리 추가</H3>
+<p>Apache에서 제공하는 Common FileUpload 라이브러리를 사용하여 파일 업로드를 처리하려면 먼저 FileUpload 라이브러리를 내려받기 위한 pom.xml 파일을 수정한다.</p>
+<p>이후 메이븐이 두개의 라이브러리를 추가했는지 반드시 확인한다.</p>
+
+<H3>5.1.4 MultipartResolver 설정</H3>
+<p>스프링 설정 파일에 CommonsMultipartResover를 bean 등록한다.</p>
+<p>이 설정에서 매우 중요한 것은 CommonsMultipartResolver 클래스의 아이디와 이름 값이다.
+지금까지 특정 클래스를 스프링 설정 파일에 bean 등록 할때 참조할 bean의 이름을 자유롭게 등록했다. 다만 등록된 이름이 유일하다면 상관없었다
+CommonsMultipartResolver클래스는 그 이름이 정해져있다. DispatcherServlet이 특정 이름으로 등록된 CommonsMultipartResolver 객체만 인식하도록 프로그램 되어있다. 
+</p>
+<p>따라서 반드시 CommonsMultipartResolver 의 아이디 값은 multipartResolver를 사용해야 한다. 이후에 스프링 설정 파일에 등록되는 클래스 중 이름이 Resolver로 끝나는 클래스들은 대부분 아이디가 정해져있다.</p>
+
+<br />
+<p>CommonsMultipartResolver 등록에서 maxUploadSize에 대한 settter 인젝션은 업로드할 수 있는 파일의 크기를 제한하기 위한 설정이다.
+maxUploadSize를 지정하지 않으면 기본으로 -1이 설정되는 데 무제한이라는 뜻이다</p>
+<p>스프링을 이용한 파일 업로드 처리에서 CommonsMultipartResolver의 역할은 굉장히 중요하다. 클라이언트가 글 등록 화면에서 제목, 작성자, 내용, 파일 업로드 정보를 입력하고 글 등록 요청을 서버에 전송하면, CommonsMultipartResolver가 어떤 역할을 하는지 아래 그림에서 확인할 수 있다.</p>
+
+![31](https://user-images.githubusercontent.com/65153512/119224771-04a02200-bb3b-11eb-9cb7-aa6a91d47a5a.jpg)
+
+<p>여기서 중요한 것이 setUploadFile 메소드다. 다른 Setter 메소드들은 문자열이나 기본형 데이터를 매개변수로 받아 값을 할당하는데 setUploadFile 메소드가 호출되려면 MultipartFile타입의 객체가 먼저 생성되어 있어야 한다. 스프링 컨테이너가 이 객체를 생성해준다.</p>
+<p>스프링 컨테이너가 insertBoard.do 요청에 대해서 insertBoard 메소드도 호출해주며, BoardVO 객체도 생성하여 전달한다. 이때 MultipartFile 객체를 생성하고 할당하는 일 역시 스프링 컨테이너의 역할이다. 그런데 multipartResolver라는 이름으로 등록된 CommonsMultipartResolver 객체가 없으면 스프링 컨테이너는 MultipartFile 객체를 생성할 수 없다.</p>
+
+<p>그러면 MultipartFile 객체는 어떤 객체이며 어떻게 사용하는 것일까? MultipartFile 객체에는 클라이언트가 업로드한 파일에 대한 모든 정보가 저장된다고 보면 된다. 따라서 해당 객체만 가지고 있다면 원하는 위치에 해당 파일을 업로드할 수 있다.</p>
+
+메소드|설명
+----|----
+String getOriginalFilename()|업로드한 파일명을 문자열로 리턴
+void transferTo(File destFile)|업로드한 파일을 destFile에 저장
+boolean isEmpty()|업로드한 파일 존재 여부 리턴(없으면 true 리턴)
+
+<H3>5.1.5 파일 업로드 처리</H3>
+<p>마지막으로 BoardController 클래스의 insertBoard메소드에 파일 업로드와 관련된 코드를 추가한다.
+MultipartFile 객체가 제공하는 세개의 메소드만 이용하면 간단히 처리할 수 있다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
