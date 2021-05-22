@@ -276,6 +276,28 @@ src/main/resources/applicationContext.xml
 <p>ContextLoaderListener 객체는 context-param으로 등록된 contextConfigLocation파라미터 정보를 읽어 스프링 컨테이너를 구동하도록 프로그램 되어 있다. 서버를 재구동해보면 ContextLoaderListener 객체가 Pre-Loading 되어 스프링 컨테이너를 먼저 구동하고 이때, 비즈니스 컴포넌트 객체들이 생성되는 것을 확인할 수 있다.</p>
 <p>아직 DispatcherServlet은 생성되지 않은 상태로, 아이디와 비밀번호를 입력하고 로그인 버튼을 클릭하면 최초의 .do 요청에 대해서 DispatcherServlet 객체가 생성된다. 실행 확인 후 WEB-INF 폴더의 applicationContext.xml 파일은 삭제한다.</p>
 
+<H3>3.2.3 스프링 컨테이너의 관계</H3>
+<p>총 세개의 컨테이너가 구동되는 것을 확인할 수 있다.</p>
+
+![29](https://user-images.githubusercontent.com/65153512/119218655-72892100-bb1c-11eb-9c11-5a1dee536334.jpg)
+
+<p>톰캣 서버를 처음 구동하면 ①web.xml 파일을 로딩하여 서블릿 컨테이너가 구동된다. 그리고 ②서블릿 컨테이너는 web.xml파일에 등록된 ContextLoaderListener 객체를 생성(Pre-Loading)한다. 이때 ContextLoaderListener 객체는 src/main/resources 소스 폴더에 있는 applicationContext.xml 파일을 로딩하여 스프링 컨테이너를 구동하는데 이를 <u>Root 컨테이너</u> 라고 한다</p>
+<p>이때 Service 구현 클래스나 DAO 객체들이 메모리에 생성된다. 그리고 사용자가 로그인 버튼을 클릭하여 .do 요청을 서버에 전달하면 서블릿 컨테이너는 DispatcherServlet 객체를 생성하고 ③ DispatcherServlet 객체는 WEB-INF/config 폴더에 있는 presentation-layer.xml 파일을 로딩하여 두 번째 스프링 컨테이너를 구동한다. 이 두번째 스프링 컨테이너가 Controller 객체를 메모리에 생성한다.</p>
+<p>분명히 스프링 컨테이너는 두 개가 구동된다. 즉, ContextLoaderListener와 DispatcherServlet이 각각 XmlWebApplicationContext를 생성하는데, 이때 두 스프링의 컨테이너의 역할과 기능이 다르다.
+우선 ContextLoaderListener가 생성하는 스프링 컨테이너를 Root 컨테이너라고 하며 부모 컨테이너로 생각할 수 있다.</p>
+<p>그리고 DispatcherServlet이 생성한 컨테이너는 Root 컨테이너가 생성한 객체를 이용하는 자식 컨테이너가 된다. 따라서 부모 컨테이너가 생성한 비즈니스 객체를 자식 컨테이너가 Controller에서 참조하여 사용할 수 있다.</p>
+
+![30](https://user-images.githubusercontent.com/65153512/119219287-ab76c500-bb1f-11eb-9ba8-955a08afeb1e.jpg)
+
+
+<H1></H1>
+<p></p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
