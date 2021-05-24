@@ -385,6 +385,16 @@ MultipartFile 객체가 제공하는 세개의 메소드만 이용하면 간단�
 마지막으로 사용자에게 전송할 예외 관련 화면을 만든다. 모든 예외에대해 무조건 실행되는 기본 예외화면을 만든다. 이후 파일을 복사하여 2개의 에러 파일을 추가한다.</p>
 <p>로그인 화면에서 아이디 없이 로그인 요청을 서버에 전달하면, IllegalArgumentException에 대응하는 기본 에러 화면이 브라우저에 출력된다.</p>
 
+<H3>5.2.2 XML 기반의 예외 처리</H3>
+<p>스프링은 예외 처리를 어노테이션이 아닌 XML 설정 방식으로도 지원하는데 이 방법이 조금 더 쉬운 방법이라고 볼 수 있다.
+앞에서 처리한 어노테이션 기반의 설정과 개념은 같지만 CommonExceptionHandler 처럼 예외 처리 클래스를 별도로 구현하지 않아도 되며, 단지 XML 설정만 처리하면 된다.</p>
+<p>presentation-layer.xml 파일에 SimpleMappingExceptionResolver 클래스를 bean 등록 하기만 하면 된다. 그리고 이전에 어노테이션 기반의 에외 처리에 추가했던 설정은 모두 제거한다.</p>
+<p>위 설정은 ArithmeticException이 발생하면 arithmeticError.jsp 화면이 사용자 브라우저에 전송되고, NullPointerException이 발생하면 nullPointerError.jsp 화면이, 등록되지 않은 IllegalArgumentException이 발생하면 defaultErrorView로 설정한 error.jsp 화면이 저송된다. </p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
