@@ -391,6 +391,21 @@ MultipartFile 객체가 제공하는 세개의 메소드만 이용하면 간단�
 <p>presentation-layer.xml 파일에 SimpleMappingExceptionResolver 클래스를 bean 등록 하기만 하면 된다. 그리고 이전에 어노테이션 기반의 에외 처리에 추가했던 설정은 모두 제거한다.</p>
 <p>위 설정은 ArithmeticException이 발생하면 arithmeticError.jsp 화면이 사용자 브라우저에 전송되고, NullPointerException이 발생하면 nullPointerError.jsp 화면이, 등록되지 않은 IllegalArgumentException이 발생하면 defaultErrorView로 설정한 error.jsp 화면이 저송된다. </p>
 
+<H1>6. 다국어 처리</H1>
+<p>다국어 지원은 국제화라고도 하며 하나의 JSP 페이지를 다양한 언어로 서비스 하는 것을 의미한다. 프레임워크에서 다국어를 지원하기 전에는 언어별로 JSP 파일을 만들어야 했기 때문에 매우 불편했다.
+프레임워크의 다국어 기능을 이용하면 JSP 화면에 출력되는 메시지 외에도 예외나 로그 메시지 까지 다국어로 처리할 수 있어서 매우 편하다.</p>
+
+<H2>6.1 메시지 파일 작성하기</H2>
+<p>사용자가 원하는 언어로 메시지를 출력하려면 각 언어에 따른 메시지 파일을 작성해야 한다. 기본적으로 메시지 파일의 확장자는 .properties이며 파일명은 언어에 해당하는 Locale 정보를 결합하여 작성한다</p>
+<p>영어와 한글 두개의 언어를 지원하기 위해 두 개의 메시지 파일을 생성한다.</p>
+
+<p>Properties 파일을 만들 때는 일반 File로 만든다.message 패키지에 만들어진 messageSource_en.properties 파일에 영어 메시지를 프로퍼티로 등록한다.</p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
