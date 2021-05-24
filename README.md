@@ -435,3 +435,18 @@ FixedLocaleResolver|웹 요청과 무관하게 특정 Locale로 고정한다.
 
 <p>스프링에서는 다양한 LocaleResolver를 지원하지만 세션으로부터 Locale 정보를 추출하고 유지하는 SessionLocaleResolver를 가장 많이 사용한다.따라서 스프링 설정 파일에 SessionLocaleResolver를 등록한다.</p>
 <p>가장 주요한 점은 다른 Resolver 클래스와 마찬가지로 LocaleResolver 역시 고정된 아이디를 등록해야 한다는 것이다. 만일 localeResolver가 아닌 다른 이름으로 등록하면 동작하지 않는다.</p>
+
+<H2>6.4 Locale 변경하기</H2>
+<p>특정언어로 화면을 보다가 해당 화면의 언어를 변경하고 싶을 수 있다. 이를 위해 스프링에서 제공하는 것이 LocaleChangeInterceptor 클래스이다. 이는 HandlerInterceptor인터페이스를 구현한 클래스로서 스프링 설정 파일에 인터셉터로 등록해야 한다. LocaleChangeInterceptor를 등록한다.</p>
+<p>중요한 점은 먼저 beans 루트 엘리먼트에 mvc 네임스페이스를 추가해야 mvc:interceptors 엘리먼트를 사용할 수 있다는 것이다. 그래야 mvc:interceptors를 이용해 LocaleChangeInterceptor 객체를 인터셉터로 등록할 수 있다. 그리고 LocaleChangeInterceptor를 등록할 때 Setter 주입으로 paramName 값을 lang으로 지정했는데, 이는 클라이언트로부터 lang이라는 파라미터를 특정  Locale이 전송되면 해당 Locale로 변경하겠다는 설정이다.</p>
+
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
