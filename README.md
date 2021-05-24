@@ -441,10 +441,21 @@ FixedLocaleResolver|웹 요청과 무관하게 특정 Locale로 고정한다.
 <p>중요한 점은 먼저 beans 루트 엘리먼트에 mvc 네임스페이스를 추가해야 mvc:interceptors 엘리먼트를 사용할 수 있다는 것이다. 그래야 mvc:interceptors를 이용해 LocaleChangeInterceptor 객체를 인터셉터로 등록할 수 있다. 그리고 LocaleChangeInterceptor를 등록할 때 Setter 주입으로 paramName 값을 lang으로 지정했는데, 이는 클라이언트로부터 lang이라는 파라미터를 특정  Locale이 전송되면 해당 Locale로 변경하겠다는 설정이다.</p>
 
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H2>6.5 JSP 파일 작성</H2>
+<H3>6.5.1 로그인 화면 처리</H3>
+<p>JSP 파일에서 메시지 파일에 등록한 메시지로 화면을 구성하려면 스프링에서 제공하는 라이브러리를 이용해야 한다. 따라서 JSP 파일에 다음처럼 taglib 지시자를 반드시 선언해야 한다.</p>
+
+~~~
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+~~~
+
+<p>그러고 나서 다음처럼 spring:message/ 태그의 code 속성값으로 메시지 파일에 등록된 메시지 키를 등록하면 Locale에 해당하는 메시지를 출력할 수 있다. 이를 이용하여 login.jsp 파일을 수정한다.</p>
+
+~~~
+<spring:message code="메시지 키값"/>
+~~~
+
+<p>직접 실행하면 정상적으로 동작하는 것을 확인할 수 있으며 Locale을 변경하기 위해 영어 링크를 클릭하면 메시지가 영어로 변경된다.</p>
 
 <H2></H2>
 <p></p>
