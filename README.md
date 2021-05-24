@@ -370,6 +370,21 @@ boolean isEmpty()|업로드한 파일 존재 여부 리턴(없으면 true 리턴
 <p>마지막으로 BoardController 클래스의 insertBoard메소드에 파일 업로드와 관련된 코드를 추가한다.
 MultipartFile 객체가 제공하는 세개의 메소드만 이용하면 간단히 처리할 수 있다.</p>
 
+<H2>5.2 예외 처리</H2>
+<p>클라이언트의 요청에 따라 Controller의 메소드가 실행되다 보면 예기치 못한 예외가 발생할 수 있다. 예외가 발생했을 때 적절한 메시지가 담긴 화면을 보여줘야지 500에러 화면을 전송하는 것은 문제가 있다.</p>
+<p>예를 들어 클라이언트가 로그인 요청을 전송할 때 아이디를 입력하지 않으면, IllegalArgumentException이 발생한다고 가정하고 LoginController를 수정한다. 로그인 화면에서 아이디 입력 없이 요청을 서버에 전송하면 예외화면이 클라이언트에 제공된다.</p>
+<p>하지만 일반 사용자에게 이런 메시지의 의미는 이해되기 어려우며 예외를 내버려 두어서는 안된다. 스프링에서는 이런 예외를 처리하기 위해 XML 설정과 어노테이션 설정 두 가지 방법을 제공한다.</p>
+
+<H3>5.2.1 어노테이션 기반의 예외 처리</H3>
+<p>스프링에서는 @ControllerAdvice와 @ExceptionHandler 어노테이션을 이용하여 컨트롤의 메소드 수행 중 발생하는 예외를 총괄적으로 처리할 수 있다.
+먼저 presentation-layer.xml 파일에 예외 처리 관련 어노테이션 사용을 위한 설정을 추가한다.</p>
+<p>스프링 설정 파일에 mvc네임 스페이스를 추가하고 mvc:annotation-driven 엘리먼트를 설정해야한다. 그래야 다음에 작성할 예외 처리 클래스에서 예외 처리 메소드 위에 @ExceptionHandler 어노테이션을 사용할 수 있다.
+이제 발생하는 예외의 종류에 따라 적절한 예외 화면이 서비스되도록 예외 처리 클래스를 작성한다.</p>
+<p>클래스 위에 선언된 @ControllerAdivce("com.springbook.view") 어노테이션에 의해 CommonExceptionHandler 객체는 자동으로 생성된다. 그리고 "com.springbook.view" 패키지로 시작하는 컨트롤러에서 예외가 발생하는 순간 @ExceptionHandler 어노테이션으로 지정한 메소드가 실행된다. 이때, 어떤 예외가 발생했느냐에 따라 다른 메소드가 수행된다.</p>
+<p>만약 ArithmeticException이 발생하면 handleArithmeticException() 메소드가 실행되고, NullPointerException이 발생하면 handleNullPointerExcetpion 메소드가, 그리고 전혀 다른 예외가 발생하면 handleException 메소드가 기본으로 실행된다.
+마지막으로 사용자에게 전송할 예외 관련 화면을 만든다. 모든 예외에대해 무조건 실행되는 기본 예외화면을 만든다. 이후 파일을 복사하여 2개의 에러 파일을 추가한다.</p>
+<p>로그인 화면에서 아이디 없이 로그인 요청을 서버에 전달하면, IllegalArgumentException에 대응하는 기본 에러 화면이 브라우저에 출력된다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
