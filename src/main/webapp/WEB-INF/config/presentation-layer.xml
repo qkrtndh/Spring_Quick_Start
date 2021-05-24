@@ -34,4 +34,6 @@
 			</list>
 		</property>
 	</bean>
+	<!-- LocaleResolver 등록 -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
 </beans>

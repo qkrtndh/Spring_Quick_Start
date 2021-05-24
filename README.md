@@ -422,6 +422,16 @@ messageSource_ko.txt파일을 만들어 한글 메시지를 등록한다.</p>
 다만 어떤 메시지 파일이 적용되는 지는 기본 언어 설정과 Locale의 변화에 따라 해당 언어의 메시지가 자동으로 선택된다.</p>
 
 
-<H3></H3>
-<p></p>
-<p></p>
+<H2>6.3 LocaleResolver 등록</H2>
+<p>웹 브라우저가 서버에 요청하면 브라우저의 Locale 정보가 HTTP 요청 메시지 헤더에 자동으로 설정되어 전송된다. 이때, 스프링은 LocaleResolver를 통해서 클라이언트의 Locale정보를 추출하고, 이 Locale 정보에 해당하는 언어의 메시지를 적용한다.</p>
+<p>스프링에서는 네개의 LocaleResolver를 지원하는데 만약 스프링 설정 파일에 LocaleResolver가 등록되어 있지 않으면 기본으로 AcceptHeaderLocaleResolver가 적용된다.</p>
+
+LocaleResolver종류|기능설명
+----|----
+AcceptHeaderLocaleResolver|브라우저에서 전송된 HTTP요청 헤더에서 Accept-Language에 설정된 Locale로 메시지를 적용한다.
+CookieLocaleResolver|Cookie에 저장된 Locale 정보를 추출하여 메시지를 적용한다.
+SessionLocaleResolver|HttpSession에 저장된 Locale 정보를 추출하여 메시지를 적용한다.
+FixedLocaleResolver|웹 요청과 무관하게 특정 Locale로 고정한다.
+
+<p>스프링에서는 다양한 LocaleResolver를 지원하지만 세션으로부터 Locale 정보를 추출하고 유지하는 SessionLocaleResolver를 가장 많이 사용한다.따라서 스프링 설정 파일에 SessionLocaleResolver를 등록한다.</p>
+<p>가장 주요한 점은 다른 Resolver 클래스와 마찬가지로 LocaleResolver 역시 고정된 아이디를 등록해야 한다는 것이다. 만일 localeResolver가 아닌 다른 이름으로 등록하면 동작하지 않는다.</p>
