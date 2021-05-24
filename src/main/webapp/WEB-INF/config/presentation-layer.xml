@@ -25,4 +25,13 @@
 		</property>
 		<property name="defaultErrorView" value="common/error.jsp"></property>
 	</bean>
+	<!-- 다국어 설정 -->
+	<!-- MessageSource 등록 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>message.messageSource</value>
+			</list>
+		</property>
+	</bean>
 </beans>
