@@ -508,15 +508,12 @@ FixedLocaleResolver|웹 요청과 무관하게 특정 Locale로 고정한다.
 <p>이 객체가 루트 엘리먼트에 해당하는 객체이며 루트 엘리먼트 이름을 boardList로 설정하겠다는 의미로 @XmlRootElement(name="boardList")설정을 추가했다. boardList 변수 위에도 @XmlElement(name="board") 설정을 추가했는데 이 설정이 없다면 변수 이름인 boardList가 엘리먼트 이름으로 사용된다.</p>
 <p></p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H3>7.2.2 Controller 수정</H3>
+<p>마지막으로 BoardController 클래스에 dataTransform 메소드를 수정한다.</p>
+<p>글 목록을 List 컬렉션으로 리턴햇던것을 @XmlRootElement 가 선언된 BoardListVO로 수정한다. 그리고 검색 결과인 글 목록을 BoardListVO 객체에 저장하여 리턴하면 된다.</p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H3>7.2.3 실행 결과 확인</H3>
+<p>앞에서 검색 결과를 JSON 형태로 변환하여 처리했었다. 이때 자바 객체를 Json 응답 보디로 변환해주는 MappingJason2HttpMessageConverter 를 스프링 설정 파일에 추가해야 하는데, mvc:annotation-driven으로 처리했다. 이 설정은 xml 응답 보디로 변환할때 사용하는 Jaxb2RootElementHttpMessageConverter 클래스도 같이 등록하므로 추가설정을 하지 않아도 된다.</p>
 
 <H2></H2>
 <p></p>
