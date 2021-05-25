@@ -76,12 +76,12 @@ public class BoardController {
 	
 	//글 목록
 	@RequestMapping("/getBoardList.do")
-	public String getBoardList(BoardVO vo,  Model model) {
-		//NULL check
-		if(vo.getSearchCondition()==null)vo.setSearchCondition("TITLE");
-		if(vo.getSearchKeyword()==null)vo.setSearchKeyword("");
-		//모델 정보 저장
-		model.addAttribute("boardList",boardService.getBoardList(vo));
-		return "getBoardList.jsp";
+	public String getBoardList(BoardVO vo, Model model) {
+		// Null Check
+		if(vo.getSearchCondition() == null) vo.setSearchCondition("TITLE");
+		if(vo.getSearchKeyword() == null) vo.setSearchKeyword("");
+		// Model 정보 저장
+		model.addAttribute("boardList", boardService.getBoardList(vo));																
+		return "getBoardList.jsp"; // View 이름 리턴
 	}
 }
