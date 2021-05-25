@@ -470,7 +470,32 @@ FixedLocaleResolver|웹 요청과 무관하게 특정 Locale로 고정한다.
 <p>검색결과가 하나가 아닌 여러개인 경우 배열로 처리된다.</p>
 
 <H3>7.1.1 Jackson2 라이브러리 내려받기</H3>
-<p>검색결과를 JSON 데이터로 변환하려면 가장먼저 jackson2 라이브러리를 받아야한다.</p>
+<p>검색결과를 JSON 데이터로 변환하려면 가장먼저 jackson2 라이브러리를 받아야한다. BoardWeb 프로젝트의 pom.xml 파일을 열어서 jackson2 라이브러리 depedency를 추가한다.</p>
+<p>Maven Dependecises를 확인하면 jackson-databind 뿐만아니라 annotations, core 파일도 추가돼어있다.</p>
+
+<H3>7.1.2 HttpMessageConvertor 등록</H3>
+<p>일반적으로 브라우저에서 서블릿이나 JSP 파일을 요청하면, 서버는 클라이언트가 요청한 서블릿이나 JSP를 찾아서 실행한다. 그리고 그 실행 결과를 Http응답 프로토콜 메시지 보디에 저장하여 브라우저에 전송한다. 그래서 항상 브라우저는 결과만을 표시했다. </p>
+
+![32](https://user-images.githubusercontent.com/65153512/119488470-8ee3c280-bd95-11eb-83e2-d92da30f7e4c.jpg)
+
+<p>그런데 이 응답 결과를 HTML이 아닌 JSON이나 XML로 변환하여 메시지 보디에 저장하려면 스프링에서 제공하는 변환기를 사용해야 한다.
+스프링은 HttpMessageConverter를 구현한 다양한 변환기를 제공하는데, 이 변환기를 이용하면 자바 객체를 다양한 타입으로 변환하여 HTTP 응답 보디에 설정할 수 있다.</p>
+<p>HttpMessageConverter를 구현한 클래스는 여러 가지가 있으며 이 중에서 자바 객체를 JSON 응답 보디로 변환할 때는 MappingJackson2HttpMessageConverter를 사용한다. 따라서 이를 스프링 설정 파일에 등록하면 되는데, 우리는 이후에 XML 변환도 처리 할 것이므로 mvc:annotation-driven을 설정한다.</p>
+<p>스프링 설정 파일에 mvc:annotation-driven을 설정하면 HttpMessageConverter를 구현한 모든 변환기가 생성된다. 따라서 이후의 XML변환에 필요한 변환기도 자동으로 등록된다.</p>
+
+<H3>7.1.3 링크 추가 및 Controller 수정</H3>
+<p>사용자가 JSON 형태로 글 목록을 요청할 수 있도록 index.jsp 파일에 링크를 추가한다. 그 후 BoardController 클래스에 글 목록 변환 처리 요청을 처리할 메소드를 추가한다.</p>
+<p>dataTransform 메소드는 글 목록을 검색하여 리턴하는 getBoardList 메소드와 같다. 다만 메소드 위에 @ResponseBody 라는 어노테이션을 추가했는데,  자바 객체를 Http응답 프로토콜의 몸체로 변환하기 위해 사용된다.</p>
+<p>앞에서 스프링 컨테이너가 MappingJackson2HttpMessageConverter 변환기를 생성하도록 스프링 설정 파일에 mvc:annotation-driven을 추가했다. 따라서 @ResponseBody가 적용된 dataTransforn 메소드의 실행 결과는 JSON으로 변환되어 HTTP 응답 보디에 설정될 것이다.</p>
+
+<H3>7.1.4 실행 결과 확인</H3>
+<p>이제 수정된 모든 파일을 저장하고 실행 결과를 확인해보면 된다.</p>
+<p>실행 결과에 검색 조건, 검색 키워드 파일 업로드 정보 등이 포함되어있는데 이 정보들은 결과에서 제외하는 것이 맞으므로 BoardVO 클래스에 이 세 변수에 해당하는 Getter를 수정한다.</p>
+<p>Getter 메소드 세개에 @JsonIgnore 를 추가로 설정했다 이는 자바 객체를 JSON 변환할 때 특정 변수를 변환에서 제외한다. 중요한것은 @JsonIgnore은 일반적인 어노테이션과 다르게
+변수위에 설정하지 않고 Getter 메소드 위에 설정해야 한다.</p>
+
+<H2></H2>
+<p></p>
 <p></p>
 <p></p>
 
