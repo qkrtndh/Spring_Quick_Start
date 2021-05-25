@@ -494,6 +494,25 @@ FixedLocaleResolver|웹 요청과 무관하게 특정 Locale로 고정한다.
 <p>Getter 메소드 세개에 @JsonIgnore 를 추가로 설정했다 이는 자바 객체를 JSON 변환할 때 특정 변수를 변환에서 제외한다. 중요한것은 @JsonIgnore은 일반적인 어노테이션과 다르게
 변수위에 설정하지 않고 Getter 메소드 위에 설정해야 한다.</p>
 
+<H2>7.2 XML로 변환하기</H2>
+<H3>7.2.1 JAXB 2 설정 추가</H3>
+<H4>7.2.1.1 BoardVO 클래스 수정</H4>
+<p>다른 시스템과 정보를 주고 받을때 XML도 사용된다. 자바 객체를 XML 형태로 변환하려면 JAXB2 API에서 제공하는 어노테이션들을 사용해야 한다. 그런데 이 JAXB2 API는 자바 6 이후 버전에 기본으로 포함되어 있다.
+따라서 별도의 라이브러리 추가 없이 BoardVO에 JAXB2 어노테이션을 추가한다.</p>
+<p>BoardVO 클래스에 선언된 @XmlAccessorType은 BoardVO 객체를 XML로 변환할 수 있다는 의미이다. .FIELD 때문에 이 객체가 가진 필드, 즉 변수들은 자동으로 자식 엘리먼트들로 표현된다. 하지만 seq 변수에만 @XMLAttribute가 붙었는데 이는 seq를 속성으로 표현하라는 의미이다.</p>
+<p>그리고 serchCondition,searchKeyword, uploadFile 변수 위에 @XmlTransient가 설정되어 있는데, 이 세 개의 변수는 XML 변환에서 제외하라는 의미이다. 마치 JSON 변환에서 @JsonIgnore와 같은 개념의 어노테이션이라고 보면 된다.</p>
+<p>등록 날짜를 저장하는 regDate는 이전까지 java.sql.Date 클래스였다. 하지만 java.sql.Date 클래스에는 기본생성자가 없다. 특정 자바 객체르 XML로 변환하려면 반드시 기본 생성자가 있어야 하므로 regDate 변술르 java.util.Date 타입의 변수로 변경하였다.</p>
+
+<H4>7.2.1.2 BoardListVO 추가</H4>
+<p>XML 문서는 반드시 단 하나의 루트 엘리먼트를 가져야 한다. BoardVO는 하나의 게시글 정보를 저장하려고 사용하는 객체이다. 하지만 우리는 여러 게시글 목록을 xml로 표현해야 하므로 BoardVO 객체 여러 개를 포함하면서 루트 엘리먼트로 사용할 또 다른 자바 클래스가 필요하다. 루트 엘리먼트로 사용할 BoardListVO 클래스를 정의한다.</p>
+<p>이 객체가 루트 엘리먼트에 해당하는 객체이며 루트 엘리먼트 이름을 boardList로 설정하겠다는 의미로 @XmlRootElement(name="boardList")설정을 추가했다. boardList 변수 위에도 @XmlElement(name="board") 설정을 추가했는데 이 설정이 없다면 변수 이름인 boardList가 엘리먼트 이름으로 사용된다.</p>
+<p></p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
 <H2></H2>
 <p></p>
 <p></p>
