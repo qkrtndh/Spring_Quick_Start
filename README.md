@@ -62,10 +62,11 @@ sessionFactory = new SqlSessionFactoryBuilder().build(reader);
 
 <p>getSqlSessinInstance 메소드는 SqlSessionFactory 객체로부터 SqlSession 객체를 얻어내어 리턴하는 메소드다. 이 메소드를 이용하여 SqlSession객체가 필요한 DAO 클래스를 구현하면 된다.</p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H2>1.8 DAO 클래스 작성</H2>
+<p>Mybatis를 이용하여 데이터 베이스 연동을 처리하는 BoardDAO 클래스를 작성한다.</p>
+<p>BoardDAO 클래스는 생성자에서 SqSessionFactoryBean 을 이용하여 SqlSession 객체를 얻어내고 있다. 그리고 이 SqlSession 객체의 메소드를 이용하여 CRUD 기능의 메소드를 모두 구현하고 있다.</p>
+<p>구현된 각 메소드를 보면 두 개의 정보가 인자로 전달되고 있는데, 첫 번째 인자는 실행될 SQL의 id 정보이다. 이때 SQL Mapper에 선언된 네임스페이스와 아이디를 조합하여 아이디를 지정해야 한다.
+그리고 두 번째 인자는 parameterType 속성으로 지정된 파라미터 객체이다. 등록, 수정, 삭제는 각각 insert(), update(), delete() 메소드로 처리하며, 단 건 조회, 목록 조회는 selectOne(), selectList()메소드로 처리한다.</p>
 
 <H2></H2>
 <p></p>
