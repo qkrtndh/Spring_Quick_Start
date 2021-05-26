@@ -50,10 +50,17 @@ typeAliases 엘리먼트는 typeAlias를 여러개 가질 수 있으며, typeAli
 <p>Mybatis 는 특정 DBMS로부터 커넥션을 획득하고 DB 연동을 처리하기 위해서 반드시 DataSource 정보가 필요하다. environments 엘리먼트에는 다양한 설정을 추가할 수 있지만, 현재는 가장 중요한 DataSource 정보가 필요하다. environments 엘리먼트에는 다양한 설정을 추가할 수 있지만, 현재는 가장 중요한 DataSource 설정만 작성하였고, H2 데이터베이스 연동을 위한 설정으로 수정했다. </p>
 <p>mappers 엘리먼트는 여러 mapper를 가질 수 있으며, 이 mapper를 이용하여 sql명령어들이 저장된 sql 파일들을 등록할 수 있다.</p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H2>1.7 SqlSession 객체 생성하기</H2>
+<p>지금까지는 Mybatis 관련 설정 파일을 작성하기만 했다. 지금부터 이 Mybatis 관련 설정을 기반으로 DAO 클래스를 구현한다.
+Mybatis를 이용하여 DAO를 구현하려면 sqlSession 객체가 필요하다. 그런데 이 객체를 얻으려면 sqlSessionFactory 객체가 필요하다. 따라서 DAO 클래스를 구현하기 앞서 SqlSessionFactory 객체를 생성하는 유틸리티 클래스를 작성해야 한다.</p>
+<p>이 코드에서 가장 핵심적인 두 줄이 있다. Mybatis 메인 설정 파일인 sql-map-config.xml 파일로부터 설정 정보를 읽어 들이기 위한 입력 스트림을 생성해야 한다. 그리고 나서 입력 스트림을 통해 sql-map-config.xml 파일으 읽어 sqlSessionFactory객체를 생성한다.</p>
+
+~~~
+Reader reader = Resouces.getResourceAsReader("sql-map-config.xml");
+sessionFactory = new SqlSessionFactoryBuilder().build(reader);
+~~~
+
+<p>getSqlSessinInstance 메소드는 SqlSessionFactory 객체로부터 SqlSession 객체를 얻어내어 리턴하는 메소드다. 이 메소드를 이용하여 SqlSession객체가 필요한 DAO 클래스를 구현하면 된다.</p>
 
 <H2></H2>
 <p></p>
