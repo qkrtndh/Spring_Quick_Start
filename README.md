@@ -81,10 +81,16 @@ sessionFactory = new SqlSessionFactoryBuilder().build(reader);
 <p>SqlMapConfig.xml 파일은 Mybatis 메인 환경설정 파일이다. Mybatis는 이 파일을 읽어들여 어떤 DBMS와 커넥션을 맺을지, SQL Mapper XML 파일들이 등록되어 있는지 알 수 있다.</p>
 <p>Mybatis는 SqlMap.xml 파일에 등록된 각 SQL 명령어들을 Map 구조로 저장하여 관리한다. 각 SQL 명령어는 고유한 아이디 값을 가지고 있으므로 특정 아이디로 등록된 SQL을 실행할 수 있다. 그리고 SQL이 실행될 때 필요한 값들은 input 형태의 데이터로 할당하고, 실행된 SQL이 SELECT 구문일 때는 output 형태의 데이터로 리턴한다.</p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H3>2.1.2 Mapper XML 파일 구조</H3>
+<p>Mybatis 프레임 워크에서 가장 중요한 파일은 SQL 명령어들이 저장되는 SQL Mapper XML(이후부터는 Mapper로 통칭) 파일이다. Mapper는 mapper를 루트 엘리먼트로 가지는 XML파일이며 다음과 같은 구조를 가진다.</p>
+
+![34](https://user-images.githubusercontent.com/65153512/119661568-6201df00-be6b-11eb-83d9-b197604403a6.jpg)
+
+<p>Mapper 파일의 구조를 보면 먼저 DTD선언이 등장하고 그 밑에 mapper 루트 엘리먼트가 선언된다. mapper 엘리먼트는 namespace 속성을 가지는데, 이 네임 스페이스를 사용하여 더 쉽게 유일한 SQL 아이디를 만들 수 있다. 네임스페이스가 지정된  mapper의 sql을 dao클래스에서 참조할 때는 다음과 같이 네임스페이스와 sql의 아이디를 결합하여 참조해야 한다.</p>
+
+![35](https://user-images.githubusercontent.com/65153512/119662912-dab56b00-be6c-11eb-8f5f-e437f98c1314.jpg)
+
+<p>mapper 파일에 sql 명령어들을 등록할 때는 sql 구문의 종류에 따라 적절한 엘리먼트를 사용한다. INSERT 구문은 insert엘리먼트를, select 구문은 select 엘리먼트를 사용하는 식이다. 이때, 각 엘리먼트에서 사용할 수 있는 속성들이 다르므로 그 의미와 용도를 이해해야 한다.</p>
 
 <H2></H2>
 <p></p>
