@@ -68,10 +68,8 @@ sessionFactory = new SqlSessionFactoryBuilder().build(reader);
 <p>구현된 각 메소드를 보면 두 개의 정보가 인자로 전달되고 있는데, 첫 번째 인자는 실행될 SQL의 id 정보이다. 이때 SQL Mapper에 선언된 네임스페이스와 아이디를 조합하여 아이디를 지정해야 한다.
 그리고 두 번째 인자는 parameterType 속성으로 지정된 파라미터 객체이다. 등록, 수정, 삭제는 각각 insert(), update(), delete() 메소드로 처리하며, 단 건 조회, 목록 조회는 selectOne(), selectList()메소드로 처리한다.</p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H2>1.9 테스트 클라이언트 작성 및 실행</H2>
+<p>다음은 BoardDAO 클래스의 메소드를 테스트하는 클라이언트 프로그램이다. src/test/java 소스폴더에 클라이언트 프로그램을 작성하고 실행해본다.</p>
 
 <H2></H2>
 <p></p>
