@@ -71,6 +71,21 @@ sessionFactory = new SqlSessionFactoryBuilder().build(reader);
 <H2>1.9 테스트 클라이언트 작성 및 실행</H2>
 <p>다음은 BoardDAO 클래스의 메소드를 테스트하는 클라이언트 프로그램이다. src/test/java 소스폴더에 클라이언트 프로그램을 작성하고 실행해본다.</p>
 
+<H1>2. Mapper XML 파일 설정</H1>
+<H2>2.1 SQL Mapper XML 기본설정</H2>
+<H3>2.1.1 Mybatis 구조</H3>
+<p>My batis의 구조는 다음 그림과 같다.</p>
+
+![33](https://user-images.githubusercontent.com/65153512/119659625-4dbce280-be69-11eb-974a-eece946d944b.jpg)
+
+<p>SqlMapConfig.xml 파일은 Mybatis 메인 환경설정 파일이다. Mybatis는 이 파일을 읽어들여 어떤 DBMS와 커넥션을 맺을지, SQL Mapper XML 파일들이 등록되어 있는지 알 수 있다.</p>
+<p>Mybatis는 SqlMap.xml 파일에 등록된 각 SQL 명령어들을 Map 구조로 저장하여 관리한다. 각 SQL 명령어는 고유한 아이디 값을 가지고 있으므로 특정 아이디로 등록된 SQL을 실행할 수 있다. 그리고 SQL이 실행될 때 필요한 값들은 input 형태의 데이터로 할당하고, 실행된 SQL이 SELECT 구문일 때는 output 형태의 데이터로 리턴한다.</p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
 <H2></H2>
 <p></p>
 <p></p>
