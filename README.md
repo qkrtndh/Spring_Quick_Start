@@ -92,6 +92,43 @@ sessionFactory = new SqlSessionFactoryBuilder().build(reader);
 
 <p>mapper 파일에 sql 명령어들을 등록할 때는 sql 구문의 종류에 따라 적절한 엘리먼트를 사용한다. INSERT 구문은 insert엘리먼트를, select 구문은 select 엘리먼트를 사용하는 식이다. 이때, 각 엘리먼트에서 사용할 수 있는 속성들이 다르므로 그 의미와 용도를 이해해야 한다.</p>
 
+<H3>2.1.3 select 엘리먼트</H3>
+<p>select 엘리먼트는 데이터를 조회하는 SELECT 구문을 작성할 때 사용한다. select 엘리먼트에는 다음과 같이 parameterType과 resultType 속성을 사용할 수 있다.</p>
+
+![36](https://user-images.githubusercontent.com/65153512/119676828-21a95d80-be79-11eb-8111-d5deb5b34990.jpg)
+
+<H4>2.1.3.1 id 속성</H4>
+<p>select 엘리먼트에 선언된 id 속성은 필수 속성으로, 반드시 전체 Mapper 파일들 내에서 유일한 아이디를 등록해야 한다. 그래야 나중에 DAO 클래스에서 특정 아이디로 등록된 SQL을 실행할 수 있다. 이 id속성과 관련하여 살펴볼 것이 루트 엘리먼트인 mapper이다.
+mapper 엘리먼트에 설정된 네임스페이스는 mapper 엘리먼트 안에서 선언된 여러 아이디를 하나의 네임스페이스로 묶을 수 있다. 예를들어 getTotalCount라는 아이디는 네임스페이스가 다르므로 다른 아이디로 처리될 수 있다.</p>
+
+![37](https://user-images.githubusercontent.com/65153512/119682578-f5441000-be7d-11eb-8443-9bbde1f3b2dd.jpg)
+
+<H4>2.1.3.2 parameterType 속성</H4>
+<p>Mapper 파일에 등록된 SQL을 실행하려면 SQL 실행에 필요한 데이터를 외부로부터 받아야 한다. 이때 사용하는 속성이 parameterType이다.parameterType 속성값으로는 일반적으로 기본형이나 VO 형태의 클래스를 지정한다.</p>
+<p>이때 Mybatis 메인 설정 파일 sql-map-confix.xml에 등록된 typeAlias의 Alias를 사용하면 설정을 더 간결하게 처리할 수 있다. parameterType으로 지정된 클래스에는
+사용자가 입력한 값들을 저장할 여러 변수가 있다. 변수들을 이용하여 SQL 구문에 사용자 입력값들을 설정하는데, 이때 #{변수명} 표현을 사용한다. 중요한건 parameterType 속성은 생략할 수 있으며 대부분 생략한다.</p>
+
+<H3>2.1.3.3 resultType 속성</H3>
+<p>검색 관련 SQL 구문이 실행되면 ResultSet이 리턴되며, ResultSet에 저장된 검색 결과를 어떤 자바 객체에 매핑할지 지정해야 하는데, 이때 사용하는 것이 resultType 속성이다.</p>
+<p>resultType 속성값으로도 Alias를 사용할 수 있는데, 만약 resultType 속성값으로 board를 설정했다면 SELECT 실행 결과를 BoardVO 객체에 매핑하여 리턴하라는 의미이다.
+resultType 속성은 당연히 쿼리 명령어가 등록되는 select 엘리먼트에서만 사용할 수 있으며 parameterType 속성과 달리 select 엘리먼트에서 절대 생략할 수 없는 속성이다. 다만 resultType 속성대신 resultMap속성을 사용할 수는 있다.</p>
+<p></p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
 <H2></H2>
 <p></p>
 <p></p>
