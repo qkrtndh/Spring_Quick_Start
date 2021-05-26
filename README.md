@@ -39,6 +39,32 @@ Mybatis 프레임워크를 이용하여 DB연동을 처리하면 대부분 한�
 <p>src/main/resources 폴더에 mappings 패키지를 생성하여 이동시키고, 내용을 수정한다.</p>
 <p>SQL Mapper 파일은 mapper를 루트 엘리먼트로 사용한다. 그리고 insert,update,delete,select 엘리먼트를 이용하여 필요한 sql 구문을 등록한다. 기존의 BoardDAO 클래스에서 사용했던 SQL 구문을 그대로 등록하여 재사용한다.</p>
 
+<H2>1.6 Mybatis 환경 설정 파일</H2>
+<p>My batis환경 설정 파일도 앞에서 설치한 Java ORM 플러그인을 사용하면 자동으로 생성할 수 있다. 일반적으로 이름은 sql-map-config.xml 을 사용한다.</p>
+<p>생성하면 scr 폴더에 sql-map-config.xml 파일과 db.properties 파일이 생성되며 이를 src/main/resource 폴더로 이동시킨다. 이동시킨 후 데이터베이스 커녁션 관련 프로퍼티 정보가 등록된 db.properties파일을 수정한다.
+이 파일에는 MySQL데이터베이스 연동을 위한 프로퍼티 정보가 설정되어있으므로 H2데이터 베이스 관련 정보로 수정한다.</p>
+<p>Mybatis 메인 환경설정 파일인 sql-map-config.xml 역시 기본적인 내용이 설정되어 있다. 이는 정확한 설정을 제공하는것이 아닌 전체적인 설정의 기본 틀만 제공한다. 따라서 관련정보를 정확하게 수정한다.</p>
+<p>properties엘리먼트는 xml 설정에서 사용할 프로퍼티를 선언하거나 외부 프로퍼티 파일을 참조할 때 사용한다. 이렇게 선언도니 프로퍼티는 ${프로퍼티 이름}으로 참조하여 사용할 수 있다.
+typeAliases 엘리먼트는 typeAlias를 여러개 가질 수 있으며, typeAlias 엘리먼트를 이용하여 특정 클래스의 별칭을 선언할 수 있다. 이 Alias는 SQL 명령어들이 저장되는 sql mapper 에서사용할 수 있으며, 이를 통해 sql mapping 파일의 크기를 줄여주기도 하고 설정을 간단히 처리할 수 있다.
+현재설정은 BoardVO 클래스에 대한 Alias만 board로 설정했다.</p>
+<p>Mybatis 는 특정 DBMS로부터 커넥션을 획득하고 DB 연동을 처리하기 위해서 반드시 DataSource 정보가 필요하다. environments 엘리먼트에는 다양한 설정을 추가할 수 있지만, 현재는 가장 중요한 DataSource 정보가 필요하다. environments 엘리먼트에는 다양한 설정을 추가할 수 있지만, 현재는 가장 중요한 DataSource 설정만 작성하였고, H2 데이터베이스 연동을 위한 설정으로 수정했다. </p>
+<p>mappers 엘리먼트는 여러 mapper를 가질 수 있으며, 이 mapper를 이용하여 sql명령어들이 저장된 sql 파일들을 등록할 수 있다.</p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
 <H2></H2>
 <p></p>
 <p></p>
