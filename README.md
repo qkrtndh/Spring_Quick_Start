@@ -235,6 +235,17 @@ org.mybatis.spring.SqlSessionTemplate
 <p>이후 sql-map-config.xml 파일의 데이터 소스 관련 설정을 삭제한다.</p>
 <p>데이터 소스는 스프링 프레임워크에서 이미 등록하여 사용하고 있다. 그리고 이 데이터 소스는 DB연동 뿐만 아니라 트랜젝션 처리 등 여러  곳에서 사용할 수 있으므로 Mybatis설정이 아닌 스프링 설정 파일에서 제공하는 것이 맞다. 그리고 SQL 명령어가 저장된 Mapper XML 파일은 수정없이 사용한다.</p>
 
+<H2>3.3 스프링 연동 설정</H2>
+<p>스프링과 Mybatis를 연동하려면 우선 스프링 설정 파일에 SqlSessionFactoryBean 클래스를 Bean 등록해야 한다. 그래야 SqlSessionFactoryBean 객체로부터 DB 연동 구현에 사용할 SqlSession 객체를 얻을 수 있다.</p>
+<p>MybatisProject 에서는 SqlSession 객체를 얻기 위해 SqlSessionFactoryBean 클래스를 유틸리티 클래스로 직접 구현했다. 하지만 이 클래스를 Mybatis 에서 제공하므로 굳이 작성할 필요 없이 bean 등록 하면 된다.</p>
+<p>SqlSessionFactoryBean 객체가 SqlSession 객체를 생산하려면 반드시 DataSource와 SQL Mapper 정보가 필요하다. 따라서 앞에 등록된 DataSource를 Setter 인젝션으로 참조하고, SQL Mapper가 드록된 sql-mapper-config.xml 파일도 Setter 인젝션으로 설정해야 한다.
+그래야 bean등록된 SqlSessionFactoryBean이 SqlSessionFactory 객체를 생성할 수 있다.</p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
 <H2></H2>
 <p></p>
 <p></p>
