@@ -230,10 +230,10 @@ org.mybatis.spring.SqlSessionTemplate
 <p>스프링과 MyBatis 연동에 필요한 라이브러리들을 받으려면 pom.xml 파일에 depedency를 추가한다.</p>
 <p>maven depedencies에 라이브러리들이 추가되었는지 확인한다. mybatis-3.3.1.jar은 순수 Mybatis 라이브러리고, mybatis-spring-1.2.4.jar 파일은 Mybatis와 스프링을 연동하기 위해 사용하는 라이브러리다.</p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H2>3.2 Mybatis 설정 파일 복사 및 수정</H2>
+<p>스프링과 Mybatis를 연동하려면 Mybatis 메인 환경설정 파일인 sql-map-config.xml 파일과 SQL 명령어들이 저장되어있는 Mapper 파일이 필요하다. 따라서 MybatisProject에서 작성했던 XML 설정 파일들을 복사하여 BoardWeb 프로젝트의 src/main/resources 폴더에 추가한다.</p>
+<p>이후 sql-map-config.xml 파일의 데이터 소스 관련 설정을 삭제한다.</p>
+<p>데이터 소스는 스프링 프레임워크에서 이미 등록하여 사용하고 있다. 그리고 이 데이터 소스는 DB연동 뿐만 아니라 트랜젝션 처리 등 여러  곳에서 사용할 수 있으므로 Mybatis설정이 아닌 스프링 설정 파일에서 제공하는 것이 맞다. 그리고 SQL 명령어가 저장된 Mapper XML 파일은 수정없이 사용한다.</p>
 
 <H2></H2>
 <p></p>
