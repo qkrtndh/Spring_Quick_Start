@@ -241,10 +241,11 @@ org.mybatis.spring.SqlSessionTemplate
 <p>SqlSessionFactoryBean 객체가 SqlSession 객체를 생산하려면 반드시 DataSource와 SQL Mapper 정보가 필요하다. 따라서 앞에 등록된 DataSource를 Setter 인젝션으로 참조하고, SQL Mapper가 드록된 sql-mapper-config.xml 파일도 Setter 인젝션으로 설정해야 한다.
 그래야 bean등록된 SqlSessionFactoryBean이 SqlSessionFactory 객체를 생성할 수 있다.</p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H2>3.4 DAO 클래스 구현 - 방법1</H2>
+<p>Mybatis를 이용하여 DAO 클래스를 구현하는 방법은 두 가지이다. 첫째는 SqlSessionDaoSupport 클래스를 상속하여 구현하는 것이다.</p>
+<p>SqlSessionDaoSupport 클래스를 상속한 후에 가장 먼저 한 작업은 setSqlSessionFactory 메소드를 재정의 한 것이다. 재정의한 setSqlSessionFactory  메소드 위에 @AutoWired를 붙였는데 이렇게 하면 스프링 컨테이너가 setSqlSessionFactory 메소드를 자동으로 호출한다. 이때, 스프링 설정 파일에
+bean등록된 SqlSessionFactoryBean 객체를 인자로 받아 부모인 SqlSessionDaoSupport에 setSqlSessionFactory 메소드로 설정해준다. </p>
+<p>이렇게 해야 SqlSessionDaoSupport 클래스로부터 상속된 getSqlSession 메소드를 호출하여 SqlSession 객체를 리턴받을 수 있다. 이제 SqlSession 객체의 CRUD 관련 메소드를 이용하여 DB 연동을 처리하면 된다.</p>
 
 <H2></H2>
 <p></p>
