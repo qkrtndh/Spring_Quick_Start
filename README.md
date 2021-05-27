@@ -216,6 +216,24 @@ public int update(String statement, Object parameter) throws SQLException
 public int delete(String statement, Object parameter) throws SQLException
 ~~~
 
+<H3>3. 스프링과 MyBatis 연동</H3>
+<p>Mybatis 와 스프링을 연동하는 실습은 기존의 BoardWeb 프로젝트에서 진행한다.</p>
+
+<H2>3.1 라이브러리 받기</H2>
+<p>스프링에서 Mybatis 연동에 대한 API를 제공하지 않으며 오히려 Mybatis 에서 스프링 연동에대한 API를 제공한다. 따라서 스프링과 Mybatis 를 연동하려면 Mybatis에서 제공하는 클래스들을 이용해야한다.</p>
+
+~~~
+org.mybatis.spring.SqlSessionFactoryBean
+org.mybatis.spring.SqlSessionTemplate
+~~~
+
+<p>스프링과 MyBatis 연동에 필요한 라이브러리들을 받으려면 pom.xml 파일에 depedency를 추가한다.</p>
+<p>maven depedencies에 라이브러리들이 추가되었는지 확인한다. mybatis-3.3.1.jar은 순수 Mybatis 라이브러리고, mybatis-spring-1.2.4.jar 파일은 Mybatis와 스프링을 연동하기 위해 사용하는 라이브러리다.</p>
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
 
 <H2></H2>
 <p></p>
