@@ -114,20 +114,54 @@ mapper 엘리먼트에 설정된 네임스페이스는 mapper 엘리먼트 안�
 resultType 속성은 당연히 쿼리 명령어가 등록되는 select 엘리먼트에서만 사용할 수 있으며 parameterType 속성과 달리 select 엘리먼트에서 절대 생략할 수 없는 속성이다. 다만 resultType 속성대신 resultMap속성을 사용할 수는 있다.</p>
 <p></p>
 
-<H2></H2>
-<p></p>
-<p></p>
+<H3>2.1.4 insert 엘리먼트</H3>
+<p>insert 엘리먼트는 데이터베이스에 데이터를 삽입하는 insert 구문을 작성하는 요소이다.</p>
+
+![image](https://user-images.githubusercontent.com/65153512/119779662-ea33c300-bf03-11eb-9b27-710b6607bd71.png)
+
+<p>insert 구문은 자식 요소로 selectKey 엘리먼트를 가질 수 있다. 대부분 관계형 데이터베이스에서는 기본 키 필드의 자동 생성을 지원하는데, Mybatis 에서는 insert요소의 자식요소인 selectKey 요소를 이용하여 생성된 키를 쉽게 가져올 수 있는 방법을 제공한다</p>
+
+~~~
+<selectKey keyProperty="seq" resultType="int">
+	select board_seq.nextval as seq from dual
+</selectKey>
+~~~
+
+<p>이 설정은 Board_SEQ 라는 시퀀스로부터 유일한 킷값을 얻어내어 글 등록에서 일련번호(seq) 값으로 사용하라는 설정이다.</p>
+
+<H3>2.1.5 update 엘리먼트</H3>
+<p>update 엘리먼트는 데이터를 수정할 때 사용되는 update 구문을 작성하는 요소이다.</p>
+
+![image](https://user-images.githubusercontent.com/65153512/119780246-8c53ab00-bf04-11eb-8ebd-24c67cac4ff5.png)
+
+<H3>2.1.6 delete 엘리먼트</H3>
+<p>delete 엘리먼트는 데이터를 삭제할 때 사용되는 delete 구문을 작성하는 요소이다.</p>
+
+![image](https://user-images.githubusercontent.com/65153512/119780451-cc1a9280-bf04-11eb-8a60-2dfba6dce899.png)
+
+<H2>2.2 SQL Mapper XML 추가설정</H2>
+<H3>2.2.1 resultMap 속성 사용</H3>
+<p>검색결과를 특정 자바 객체에 매핑하여 리턴하기 위해 parameterType 속성을 사용한다. 그러나 검색 결과를 parameterType 속성으로 매핑할 수 없는 몇몇 사례가 있다.
+예를들어, 검색 쿼리가 단순 테이블 조회가 아닌 JOIN 구문을 포함할 때는 검색 결과를 정확하게 하나의 자바 객체로 매핑할 수 없다. 또는 검색된 테이블의 칼럼 이름과 매핑에 사용될 자바 객체의 변수이름이 다를 때 검색 결과가 정확하게 자바 객체로 매핑되지 않는다. 이럴 때 resultMap속성을 사용하여 처리한다.</p>
+<p> resultMap 속성을 사용하려면 먼저 resultMap 엘리먼트를 사용하여 매핑 규칙을 지정해야 한다. (코드)이 설정에서는 boardResult라는 아이디로 resultMap을 설정했다. reseultMap 설정ㅇ느 PK(primary key)에 해당하는 seq만 id엘리먼트를 사용했고 나머지를 result 엘리먼트를 이용하여 검색결과로 얻어낸 칼럼의 값과 BoardVO객체의 변수를 매핑하고 있다. 이렇게 설정된 resultMap을 getBoardList로 드록된 쿼리에서 resultMap 속성으로 참조하고 있다.</p>
+
+<H3>2.2.2 CDATA Section 사용</H3>
+<p>만약 SQL 구문 내에 꺽쇄 기호를 사용한다면 에러가 발생한다. 이는 XML 파서가 XML 파일을 처리할때 꺽쇄를 연산자가 아닌 또 다른 태그의 시작으로 처리하기 때문이다. 결국 Mapper 파일에 등록된 SQL 구문에는 꺽쇄 기호를 사용하면 에러가 발생한다.
+하지만 CDATA Section으로 SQL구문을 감싸주면 에러는 사라진다.</p>
+
+~~~
+<select id="getBoard" resultType="board" parameterType="board">
+	<![CDATA[select * from board where seq <=#{seq} ]]>
+</select>
+~~~
+
+<p>CDATA Section은 Mybatis와는 상관없는 XML고유의 문법으로서, CDATA 영역에 작성된 데이터는 단순한 문자 데이터이므로 XML파서가 해석하지 않도록 한다.
+결국 CDATA Section 안에 작성된 데이터는 XML 파서가 처리하지 않고 데이터베이스에 그대로 전달하므로 문제가 발생하지 않는다.</p>
 <p></p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
-
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H3>SQL 대문자로 설정하기</H3>
+<p>Mapper 파일에 등록되는 SQL 구문은 일반적으로 대문자로 작성한다. 사실 SQL 구문은 대소문자를 구분하지 않는다. 하지만 파라미터들을 바인딩할 때 대부분 칼럼명과 변수명이 같으므로 SQL 구문이 조금이라도 복잡해지면 이 둘을 구분하기 쉽지 않다. 따라서 SQL은 모두 대문자로 표현하여 식별성을 높인다.</p>
+<p>지금까지의 내용을 board-mapping.xml에 적용한다.</p>
 
 <H2></H2>
 <p></p>
