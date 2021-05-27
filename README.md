@@ -163,6 +163,65 @@ resultType 속성은 당연히 쿼리 명령어가 등록되는 select 엘리먼
 <p>Mapper 파일에 등록되는 SQL 구문은 일반적으로 대문자로 작성한다. 사실 SQL 구문은 대소문자를 구분하지 않는다. 하지만 파라미터들을 바인딩할 때 대부분 칼럼명과 변수명이 같으므로 SQL 구문이 조금이라도 복잡해지면 이 둘을 구분하기 쉽지 않다. 따라서 SQL은 모두 대문자로 표현하여 식별성을 높인다.</p>
 <p>지금까지의 내용을 board-mapping.xml에 적용한다.</p>
 
+<H2>2.3 Mybatis JAVA API</H2>
+<H3>2.3.1 SqlSessionFactoryBuilder 클래스</H3>
+<p>MyBatis Mapper 설정이 끝났으면 이제 남은 작업은 MyBatis 프레임워크에서 제공하는 API를 이용해서 DAO 클래스를 구현하는 것이다. MyBatis로 DAO 클래스의 CRUD 메소드를 구현하려면 MyBatis에서 제공하는 SqlSession 객체를 사용해야 한다. 그런데 SqlSession 객체는 SqlSessionFactory로부터 얻어야 하므로 SqlSessionFactory 객체를 생성한다.</p>
+<p>이 객체를 생성하려면 SqlSessionFactoryBuilder의 build 메소드를 이용하는데 build 메소드는 Mybatis 설정 파일을 로딩하여 SqlSessionFactory 객체를 생성한다. 그리고 sql-map-config 파일을 로딩하려면 입력 스트림인 Reader 객체가 필요하다. reader 객체는 resources 클래스의 getResourceAsReader 메소드를 사용하여 얻어낼 수 있다. 다음은 SqlSessionFactory 객체를 생성하는 코드이다.</p>
+
+~~~
+Reader reader = Resources.getResourceAsReader("sql-map-config.xml");
+SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
+~~~
+
+<H3>2.3.2 SqlSessionFactory 클래스</H3>
+<p>SqlSessionFactory는  이름에서 알수 있듯 SqlSession 객체에 대한 공장 역할을 수행한다. SqlSessionFactory 객체는 openSession이라는 메소드를 제공하며, 이 메소드를 통해서 SqlSession객체를 얻을 수 있다. 이렇게 얻어낸 SqlSession객체를 통해  다음과 같이 글 등록 기능을 처리할 수 있다.</p>
+
+~~~
+SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader);
+SqlSession session = sessionFactory.openSession();
+session.insert("BoardDAO.insertBoard",vo);
+~~~
+
+<H3>2.3.3 유틸리티 클래스 작성</H3>
+<p>Mybatis를 사용하여 DB 연동을 간단하게 처리하려면 최종적으로 Mybatis가 제공하는 SqlSession 객체를 사용해야 한다. 따라서 모든 DAO 클래스에서 좀더 쉽게 SqlSession 객체를 획득할 수 있도록 공통으로 제공할 유틸리티 클래스(sqlsessionfactorybean 클래스)를 만든다.</p>
+<p>지금은 유틸리티 클래스를 직접 만들었지만 후에 Mybatis와 스프링을 연동하여 프레임워크에서 제공하는 클래스를 사용한다.</p>
+
+<H3>2.3.4 SqlSession 객체</H3>
+<p>SqlSession 객체는 Mapper XML에 등록된 SQL을 실행하기 위한 다양한 API를 제공한다.</p>
+<H4>2.3.4.1 selectOne() 메소드</H4>
+<p>selectOne 메소드는 오직 하나의 데이터를 검색하는 SQL 구문을 실행할 때 사용한다. 따라서 getBoard 같은 단 건 조회용 메소드를 구현할 때 사용할 수 있다. 쿼리가 한 개의 레코드만 리턴되는지를 검사하므로 만약 쿼리의 수행 결과로 두 개 이상의 레코드가 리턴될 때는 예외가 발생한다.</p>
+
+~~~
+public Object selectOne(String statement)
+public Object selectOne(String statement, Object parameter)
+~~~
+
+<p>selectOne 메소드의 statement 매개변수는 Mapper XML 파일에 등록된 SQL의 아이디이다.
+이때 SQL의 아이디를 네임스페이스와 결합하여 지정해야 한다. 그리고 실행될 SQL 구문에서 사용할 파라미터 정보를 두번째 인자로 지정하면 된다.</p>
+
+<H4>2.3.4.2 selectList 메소드</H4>
+<p>selectList 메소드는 여러 개의 데이터가 검색되는 SQL 구문을 실행할 때 사용한다. 매개변수의 의미는 selectOne 메소드와 같다. </p>
+
+~~~
+public List selectList(String statement)
+public List selectList(String statement, Object parameter)
+~~~
+
+<H4>2.3.4.3 insert,update,delete 메소드</H4>
+<p>각 메소드는 INSERT,UPDATE<DELETE SQL 구문을 실행할 때 사용한다. 각 메소드는 실행된 SQL 구문으로 인해 몇 건의 데이터가 처리되었는지를 리턴한다. </p>
+
+~~~
+public int insert(String statement, Object parameter)
+public int update(String statement, Object parameter) throws SQLException
+public int delete(String statement, Object parameter) throws SQLException
+~~~
+
+
+<H2></H2>
+<p></p>
+<p></p>
+<p></p>
+
 <H2></H2>
 <p></p>
 <p></p>
