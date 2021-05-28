@@ -337,6 +337,16 @@ board-mapping.xml
 
 <p>매핑 정보가 없는 나머지 필드들은 자동으로 BOARD 테이블의 동일한 칼럼과 매핑된다.</p>
 
+<H3>4.4.2 persistence.xml 파일 작성</H3>
+<p>JPA는 persistence.xml 파일을 사용하여 설정 정보를 관리한다. 이 설정 파일이 META-INF 폴더 아래에 있으면 별도의 설정없이 자동으로 JPA가 인식한다.</p>
+<p>persistence.xml 파일은 JPA에서 메인 환경 설정 파일이다.  persistence를 루트 엘리먼트로 사용하며 영속성 유닛 (persistence-unit) 을 연동할 데이터베이스 하나당 하나의 영속성 유닛을 사용한다.</p>
+<p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
+<p></p>
+
 <H3></H3>
 <p></p>
 <p></p>
