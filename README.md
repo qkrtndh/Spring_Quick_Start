@@ -253,7 +253,52 @@ bean등록된 SqlSessionFactoryBean 객체를 인자로 받아 부모인 SqlSess
 그리고 나서 DAO 클래스를 구현할 때, SqlSessionTemplate 객체를 @AutoWried를 이용하여 의존성 주입 처리하면 SqlSessionTemplate 객체로 DB연동 로직을 처리할 수 있다.</p>
 <p></p>
 
-<H2></H2>
+<H2>3.6 MyBatis 연동 테스트</H2>
+<p>BoardDAOMybatis 객체를 의존성 주입할 수 있도록 BoardServiceImpl 클래스를 수정하고 테스트 클라이언트 프로그램을 실행한다.</p>
+
+<H2>3.7 Dynamic SQL으로 검색 처리</H2>
+<p>Mybatis SQL의  재사용성과 유연성을 향상하고자 Dynamic SQL을 지원한다. Dynamic SQL을 사용하면 조건에 따라 다양한 쿼리를 데이터베이스에 전송할 수 있다.</p>
+
+<H3>3.7.1 Dynamic SQL 적용 전</H3>
+<p>Dynamic SQL의 필요성을 확인해본다. 만약 현재 상태에서 검색기능을 추가한다고 하면 두가지 검색 관련 쿼리가 필요할 것이다.</p>
+
+~~~
+board-mapping.xml
+
+<select id="getBoardList_T" resultType="board" resultMap="boardResult">
+	<![CDATA[
+		SELECT * FROM BOARD
+		WHERE TITLE LIKE '%'||#{searchKeyword}||'%'
+		ORDER BY SEQ DESC
+	]]>
+</select>
+
+<select id="getBoardList_C" resultType="board" resultMap="boardResult">
+	<![CDATA[
+		SELECT * FROM BOARD
+		WHERE CONTENT LIKE '%'||#{searchKeyword}||'%'
+		ORDER BY SEQ DESC
+	]]>
+</select>
+~~~
+
+<p>제목 검색과 내용 검색을 처리하기 위한 두 개의 쿼리를 등록했으면, 이제 DAO 클래스 getBoardList 메소드에 검색 조건에 따른 분기 처리 로직을 추가한다.
+이런 방식으로 검색기능을 구현하면 이후에 추가되는 검색조건에 대해 비슷한 SQL 구문들을 반복해서 작성해야 하고, 이는 유지보수의 어려움을 의미한다.
+그리고 DAO 클래스의 메소드 역시 검색 관련 SQL 구문의 개수만큼 분기 처리 로직을 추가해야 하므로 SQL이 추가될때마다 DAO 클래스도 수정해야 한다.</p>
+
+<H3>3.7.2 Dynamic SQL 적용 후</H3>
+<p>이런 SQL의 중복 문제를 해결하기 위해 Mybatis에서는 Dynamic SQL을 지원한다. Dynamic SQL을 이용하여 이런 문제가 해결하는 방법을 알아본다.</p>
+<p>수정된 SQL 구문을 보면 if 라는 동적 요소를 사용하여 조건에 따른 분기 처리를 하고 있다. 만약 searchContion 변숫값이 TITLE를 가지고 있으면 제목검색에 해당하는 조건이 추가되고, CONTENT 라는 값을 가지고 있으면
+내용 검색에 해당하는 조건이 추가되어 실행된다. 이렇게 동적 엘리먼트를 이용하여 SQL을 처리할 수 있으므로 검색과 관련된 쿼리는 하나만 있으면 된다.</p>
+<p>이 SQL을 이용하면 DB연동 로직을 처리하는 BoardDAOMybatis클래스의 메소드 역시 원래의 코드를 유지할 수 있다. 이 코드는 새로운 검색 조건이 추가되더라도 수정할 필요가 없어 유지보수가 편해진다.</p>
+
+<H3></H3>
 <p></p>
 <p></p>
 <p></p>
+
+<H3></H3>
+<p></p>
+<p></p>
+<p></p>
+
