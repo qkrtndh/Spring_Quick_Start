@@ -313,7 +313,16 @@ board-mapping.xml
 
 ![3](https://user-images.githubusercontent.com/65153512/119996849-16396c00-c00a-11eb-8115-4285dc452d3e.jpg)
 
-<H2></H2>
+<H2>4.2 JPA 프로젝트 생성</H2>
+<p>JPA 프로젝트는 이클립스의 JPA Project 마법사를 이용해도 되지만, JPA Project는 추가로 설정해야 하는 것이 있으므로 Maven 기반으로 프로젝트를 생성한다.
+책을 참조하여 설치하되 properties 설정부분은 현재 버전에서 진행이 안되므로 install new software에서 이클립스 버전에 맞는 persistence 를 설치 후 진행한다(?).</p>
+
+<H2>4.3 JPA 라이브러리 내려받기</H2>
+<p>프로젝트에 JPA관련 라이브러리를 추가하기 위해 pom.xml파일을 수정한다.</p>
+<p></p>
+<p></p>
+
+<H3></H3>
 <p></p>
 <p></p>
 <p></p>
@@ -322,4 +331,5 @@ board-mapping.xml
 <p></p>
 <p></p>
 <p></p>
+
 
