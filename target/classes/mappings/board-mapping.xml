@@ -33,7 +33,7 @@
 	
 	<select id="getBoard" resultType="board" parameterType="board">
 		<![CDATA[
-			SELECT * FROM BAOARD WHERE SEQ=#{seq}
+			SELECT * FROM BOARD WHERE SEQ=#{seq}
 		]]>
 	</select>
 	

@@ -2,8 +2,6 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<!-- Properties 파일 설정 -->
-	<properties resource="db.properties" />
 	<!-- Alias 설정 -->
 	<typeAliases>
 		<typeAlias alias="board" type="com.springbook.biz.board.BoardVO" />
