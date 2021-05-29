@@ -504,6 +504,16 @@ EntityManager의 persist 메소드로 엔티티 객체를 영속화해야만 INS
 
 <H2>6.2 엔티티 매핑 설정</H2>
 <p>기존에 사용하던 BoardVO 클래스를 열어서 JPA가 제공하는 어노테이션으로 엔티티 매핑을 설정한다. 그리고 이전에 SpringMVC 학습에서 XML 변환처리에 사용했던 JAXB2 어노테이션은 모두 삭제한다.</p>
+
+<H2>6.3 스프링과 JPA 연동 설정</H2>
+<p>스프링과 JPA를 연동하려면 다음과 같이 두 개의 클래스를 스프링 설정 파일에 bean 등록해야 한다.</p>
+<p>스프링과 JPA 연동을 위해 가장 먼저 등록할 클래스는 JpaVendorAdapter이다. JpaVendorAdapter클래스는 실제로 db 연동에 사용할 JPA 밴더를 지정할 때 사용하는데, 우리는 하이버네이트를 JPA 구현체로 사용하고 있으므로 JpaVendorAdapter 클래스로 HibernateJpaVendorAdapter를 bean 등록하면 된다.</p>
+<p>두번째는 EntityManagerFactoryBean 이다. JPA를 이용하여 DAO 클래스를 구현하려면 최종적으로 EntityManager 객체가 필요하며 이 객체를 생성하려면 공장 기능의 클래스인 LocalContainerEntityManagerFactoryBean 클래스를 bean 등록해야 한다. 이때 앞에서 설정한 DataSource와 JpaVendorAdapter를 의존성 주입한다.</p>
+<p>LocalContainerEntityManagerFactoryBean 클래스를 bean 등록할 때 다음과 같이 용속성 유닛 관련 설정을 같이 처리할 수 있다. 이렇게 설정한다면 앞에서 추가한 persistence.xml 파일은 제거해도 된다.(책 참조)</p>
+
+
+<H2></H2>
+<p></p>
 <p></p>
 <p></p>
 
