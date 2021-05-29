@@ -465,6 +465,30 @@ AUTO|Hibernate가 사용중인 데이터베이스에 맞게 자동으로 PK값�
 <p></p>
 <p></p>
 
+<H2>5.3 JPA API</H2>
+<H3>JPA API 구조</H3>
+<p>엔티티 클래스에 기본적인 매핑을 설정했으면 이제 JPA에서 지원하는 API를 이용하여 데이터베이스 연동을 처리할 수 있다. 애플리케이션에서 JPA를 이용하여 CRUD 기능을 처리하려면 엔티티 관리자 객체를 사용해야 한다. 그런데 이 EntityManager 객체는  EntityManagerFactory로부터 얻어낸다. 따라서 JPA 를 이용한 애플리케이션의 시작은 EntityManager 객채의 생성이라고 할 수 있다.</p>
+
+![1](https://user-images.githubusercontent.com/65153512/120061403-0a948680-c098-11eb-9216-7fd62b664aa8.jpg)
+
+<p>EntityManagerFactory 객체를 생성할 때는 영속성 유닛이 필요하므로 persistence.xml 파일에서 설정한 영속성 유닛 이름을 지정하여 EntityManagerFactory 객체를 생성한다. 위 그림에서는 Persistence가  persistence.xml 파일을 직접 읽어들이는 것으로 표현했지만 실제로는 JPA가 자동으로 META-INF 폴더에 있는 persistence.xml 파일을 로딩한다. 따라서 XML 파일을 로딩하는 과정은 코드에서 표현되지 않고, 다만 영속성 유닛 이름을 지정하여 해당 설정을 인지할 수 있다.</p>
+<p>EntityManagerFactory 객체로부터 EntityManager 객체를 얻었으면, EntityManager를 통해서 EntityTransaction 객체를 얻을 수 있다. 이 EntityTransaction을 통해 트랜잭션을 제어할 수 있다.</p>
+<p>EntityManager 객체가 제공하는 CRUD 메소드</p>
+메소드|기능설명
+----|----
+persist(Object entity)|엔티티를 영속화한다(INSERT)
+merge(Object entity)|준영속 상태의 엔티티를 영속화한다 (UPDATE)
+remove(Object entity)|영속 상태의 엔티티를 제거한다. (DELETE)
+find(Class<T> entityClass, Object primaryKey)|하나의 엔티티를 검색한다 (SELECT ONE)
+createQuery(String qlString, Class<T> resultClass)|JPQL에 해당하는 엔티티 목록을 검색한다. (SELECT LIST)
+
+<H3>5.3.2 JPA API 사용</H3>
+<p>이제는 JPA에서 제공하는 API를 실제로 사용해본다. BoardServiceClient 클래스를 살펴본다.</p>
+<p>먼저 트랙잭션 시작하고 엔티티 클래스로 등록된 Board 객체를 생성한 다음, 글 등록에 필요한 값들을 저장한다. 여기서 중요한 것은 단순히 엔티티 객체를 생성하고 여기에 값을 저장했다고 해서 이 객체가 BOARD 테이블과 자동으로 매핑되지는 않는다. 반드시 
+EntityManager의 persist 메소드로 엔티티 객체를 영속화해야만 INSERT 작업이 처리된다. 게시글이 등록되었으면 글 목록을 조회하는데, 이때는 JPQL이 라는 JPA고유의 쿼리 구문을 사용해야 한다.</p>
+<p>JPQL은 기존에 사용하던 SQL과 거의 유사한 문법을 제공하므로 해석하는 데는 별 어려움이 없다. 하지만 검색 대상이 테이블이 아닌 엔티티 객체라서 작성하는데 주의가 필요하다. 어쨋든 JPQL을 작성하고 실행하면 하이버네이트 같은 JPA 구현체가, JPQL을 연동되는 DBMS에 맞게 적절한 SELECT 명령어로 변환한다.</p>
+<p>데이터 베이스 연동 처리 중 예외가 발생한다면 catch 블록에서 트랜잭션을 롤백처리하면 되고, fianlly 블록에서 반드시 EntityManager를 close 메소드를 이용하여 닫아야 한다. 그리고 프로그램이 종료되기 전에 EntityManagerFactory 객체도 close 메소드로 닫아야 한다.</p>
+
 <H3></H3>
 <p></p>
 <p></p>
