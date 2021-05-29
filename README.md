@@ -387,6 +387,7 @@ javax.persistence.jdbc.url|JDBC URL 정보
 <p>마지막으로 하이버네이트 관련 속성 설정이 등장하는데, 이는 우리가 사용할 JPA 구현체가 하이버네이트 프레임워크이기 때문이다.</p>
 
 속성|의미
+----|----
 hibernate.show_sql|생성된 SQL을 콘솔에 출력한다
 hibernate.format_sql|SQL을 출력할 때, 일정한 포맷으로 보기 좋게 출력한다.
 hibernate.use_sql_comments|SQL에 포함된 주석도 같이 출력한다.
@@ -396,6 +397,7 @@ hibernate.hbm2ddl.auto|테이블 생성이나 수정, 삭제 같은 DDL 구문�
 <p>이중에서 DDL 명령어와 관련된 hibernate.hbm2ddl.auto 설정이 중요한데, 속성값으로는 다음과 같은 것들이 있다.</p>
 
 속성값|의미
+----|----
 create|애플리케이션을 실행할 때, 기존 테이블을 삭제하고 엔티티 클래스에 설정된 매핑 설정을 참조하여 새로운 테이블을 생성한다.(DROP -> CREATE)
 create-drop|create 와 같지만 애플리케이션이 종료되기 직전에 생성된 테이블을 삭제한다
 update|기존 사용중인 테이블이 있으면 새 테이블을 생성하지 않고 재사용한다. 만약 엔티티 클래스의 매핑 설정이 변경되면 변경된 내용만 반영한다.(ALTER)
@@ -416,30 +418,50 @@ update|기존 사용중인 테이블이 있으면 새 테이블을 생성하지 
 <p>@Table은 다양한 속성을 가질 수 있으며 몇가지 중요한 속성은 다음과 같다.</p>
 
 속성|설명
+----|----
 name|매핑될 테이블 이름을 지정한다
 catalog|데이터베이스 카탈로그를 지정한다
 schema|데이터베이스 스키마를 지정한다
 uniqueConstraints|결합 unique 제약조건을 지정하며, 여러 개의 칼럼이 결합되어 유일성을 보장해야 하는 경우 사용한다.
 
-<p></p>
+<H3>5.2.3  @Column</H3>
+<p>@Column은 엔티티 클래스의 변수와 테이블의 칼럼을 매핑할 때 사용한다. 일반적으로 엔티티 클래스의 변수 이름과 칼럼 이름이 다를 때 사용하며, 생략하면 기보 ㄴ으로 변수 이름과 칼럼 이름을 동일하게 매핑한다.</p>
+<p>@Column이 지원하는 속성은 매우 다양하지만, 일반적으로 칼럼 이름 지정에 사용하는 name과 Null 데이터 입력을 방지하는 nullable만 사용한다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
-<p></p>
+속성|설명
+----|----
+name|칼럼 이름을 지정한다. 생략시 프로퍼티명과 동일
+unique|unique 조건을 추가 (기본false)
+nullable|null 상태 허용 여부 (기본false)
+insertable|입력 sql 명령어를 자동으로 생성할 때 이 칼럼을 포함할 것인지 지정 (기본 ture)
+updatable|수정 sql 명령어를 자동으로 생성할 때 이 칼럼을 포함할 것인지 지정 (기본 ture)
+columnDefinition|이 칼럼에 대한 DDL문을 직접 설정
+length|문자열 타입의 칼럼 길이 지정(기본 255)
+precision|숫자 타입의전체 자릿수 지정(기본 0)
+scale|숫자 타입의 소숫점 자릿수 지정 (기본 0)
 
-<H3></H3>
-<p></p>
-<p></p>
-<p></p>
+<H3>5.2.4 @GeneratedValue</H3>
+<p>@GeneratedValue는 @Id 로 지정된 실별자 필드에 Primary Key 값을 생성하여 저장할때 사용한다.</p>
 
-<H3></H3>
-<p></p>
-<p></p>
-<p></p>
+속성|설명
+----|----
+strategy|자동 생성 유형을 지정한다. (GenerationType지정)
+generator|이미 생성된 Generator 이름을 지정
 
-<H3></H3>
-<p></p>
+<p>이 중에서 strategy는 PK값 생성 전략을 지정하는 속성으로 매우 중요하다. PK값 생성 전략은 TABLE, SEQUENCE,IDENTITY,AUTO 네가지가 있다.</p>
+
+종류|의미
+----|----
+TABLE|Hibernate 가 데이터베이스 테이블을 사용하여 PK 값을 생성한다. 따라서 PK 값 생성을 위한 별도의 테이블 설정이 필요하다.
+SEQUENCE|Sequence Object를 이용하여 PK값을 생성한다. 이 전략은 오라클과 같은 Sequenece를 지원하는 데이터베이스에서만 사용할 수 있다.
+IDENTITY|auto_increment나 IDENTITY를 이용하여 PK 값을 생성한다. 일반적으로 MySQL같은 데이터 베이스를 이용할 때 사용한다.
+AUTO|Hibernate가 사용중인 데이터베이스에 맞게 자동으로 PK값을 생성한다. 아무런 설정을 하지 않으면 기본값으로 사용된다.
+
+<H3>5.2.5 @Transient</H3>
+<p>엔티티 클래스의 변수들은 대부분 테이블의 칼럼과 매핑된다. 그러나 몇몇 변수는 매핑되는 칼럼이 없거나 아예 매핑에서 제외해야 하는 경우도 있다. @Transient는 엔티티 클래스 내의 특정 변수를 영속 필드에서 제외할 때 사용한다.</p>
+
+<H3>5.2.6 @Temporal</H3>
+<p>@Temporal은 java.util.Date 타입의 날짜 데이터를 매핑할 때 사용한다. 이때 TemporalType을 이용하면 출력되는 날짜의 형식을 지정할 수 있다. TemporalType.DATE는 날짜 정보만 출력하고 .TIME은 시간정보만 출력한다. .TIMESTAMP는 날짜와 시간정보를 모두 출력한다.</p>
 <p></p>
 <p></p>
 
