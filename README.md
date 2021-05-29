@@ -342,9 +342,9 @@ board-mapping.xml
 <p>persistence.xml 파일은 JPA에서 메인 환경 설정 파일이다.  persistence를 루트 엘리먼트로 사용하며 영속성 유닛 (persistence-unit) 을 연동할 데이터베이스 하나당 하나의 영속성 유닛을 사용한다.</p>
 <p></p>
 
-<H3></H3>
-<p></p>
-<p></p>
+<H3>4.4.3 클라이언트 프로그램 작성</H3>
+<p>JPA 설정에 기초한 클라이언트 프로그램을 구현한다.</p>
+<p>작성된 클라이언트 프로그램의 구조를 보면 가장 먼저 영속성 유닛을 이용하여 EntityManagerFactory 객체를 생성하고 있다. JPA를 이용하여 CRUD기능을 구현하려면 EntityManager 객체를 사용해야 한다. 그런데 이 객체는 EntityManagerFactory 객체로부터 얻을 수 있다.</p>
 <p></p>
 
 <H3></H3>
