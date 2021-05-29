@@ -511,6 +511,10 @@ EntityManager의 persist 메소드로 엔티티 객체를 영속화해야만 INS
 <p>두번째는 EntityManagerFactoryBean 이다. JPA를 이용하여 DAO 클래스를 구현하려면 최종적으로 EntityManager 객체가 필요하며 이 객체를 생성하려면 공장 기능의 클래스인 LocalContainerEntityManagerFactoryBean 클래스를 bean 등록해야 한다. 이때 앞에서 설정한 DataSource와 JpaVendorAdapter를 의존성 주입한다.</p>
 <p>LocalContainerEntityManagerFactoryBean 클래스를 bean 등록할 때 다음과 같이 용속성 유닛 관련 설정을 같이 처리할 수 있다. 이렇게 설정한다면 앞에서 추가한 persistence.xml 파일은 제거해도 된다.(책 참조)</p>
 
+<H2>6.4 트랜잭션 설정 수정</H2>
+<p>우리는 앞에서 트랜잭션 관리를 스프링 컨테이너에 위임할 때 DataSourceTransactionManager 클래스를 bean 사용햇다. DataSourceTransactionManager는 SpirngJDBC나 Mybatis를 이용하여 DB연동을 처리할때 사용하는 트랜잭션 관리자 였다. 이제는 JPA를 이용해서 DB연동을 처리하고 있으므로 트랜잭션 관리자를 JpaTransactionManager로 변경한다.</p>
+<p>기존에 트랜잭션 설정에서 트랜잭션 관리 어드바이스가 참조하는 트랜잭션 매니저 클래스를 JpaTransactionManager로 변경한다. 그리고 LocalContainerEntityManagerFactoryBean 을 참조하도록 의존성 주입을 하면 끝난다.</p>
+<p></p>
 
 <H2></H2>
 <p></p>
