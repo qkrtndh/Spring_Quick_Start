@@ -520,7 +520,6 @@ EntityManager의 persist 메소드로 엔티티 객체를 영속화해야만 INS
 EntityManager를 이용해서 BoardDAOJPA 클래스를 구현한다.</p>
 <p>@PersistenceContext는 스프링 컨테이너가 관리하는 EntityManager 객체를 의존성 주입할때 사용하는 어노테이션이다. @PersistenceContext가 설정된 EntityManager 타입의 변수에 EntityManager 객체를 의존성 주입해준다. 그리고 이렇게 컨테이너로부터 주입받아서 사용해야만 컨테이너가 제공하는 트랜잭션 관리를 비롯한 다양한 기능을 사용할 수 있다.</p>
 
-<H2></H2>
-<p></p>
-<p></p>
-<p></p>
+<H2>6.6 BoardServiceImpl 클래스 수정및 테스트</H2>
+<p>마지막으로 BoardServiceImpl 클래스에서 추가된 BoardDAOJPA 클래스로 DB연동을 처리하면 된다.</p>
+<p>이제 새 글을 등록하면 시퀀스를 통해 입력할 게시글의 번호를 추출하고 사용자가 입력한 글이 BOARD테이블에 등록될 것이다. 그리고 등록될 글 목록이 화면에 출력되는데 이 과정에서 하이버네이트가 생성한 다양한 SQL 구문을 콘솔을 통해 확인할 수 있다.</p>
